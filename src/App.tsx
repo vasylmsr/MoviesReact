@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
+import * as AuthApi from './firebase/AuthApi';
+import { storeAuthUser } from './store/auth/login/actions';
+import { AppRoutes } from './components/AppRoutes';
+import { FAILURE_STATUS, SUCCESS_STATUS } from './utils/constants/other';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+export default function App() {
+  const dispatch = useDispatch();
+  const [hasUserInStorage, setAvailabilityUserInStorage] = useState(true);
+  const { checkingUserStatus } = useSelector((state: any) => state.auth);
+  // We don`t save data in LS because firebase save token inside IndexedDB
+  React.useEffect(
+    () =>
+      AuthApi.onAuthStateChanged((user: any) => {
+        if (user) {
+          dispatch(storeAuthUser(user));
+        } else {
+          setAvailabilityUserInStorage(false);
+        }
+      }),
+    [dispatch],
   );
-}
 
-export default App;
+  const finishedLoadingStatuses = [SUCCESS_STATUS, FAILURE_STATUS];
+  const isRoutesVisible = !hasUserInStorage || finishedLoadingStatuses.includes(checkingUserStatus);
+
+  return <SnackbarProvider maxSnack={3}>{isRoutesVisible && <AppRoutes />}</SnackbarProvider>;
+}
