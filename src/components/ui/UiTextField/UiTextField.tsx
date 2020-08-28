@@ -1,21 +1,16 @@
-// interface IUiTextField extends TextFieldProps{
-//   errors: [];
-//   name: string;
-// }
+import React from 'react';
+import { TextFieldProps } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import { FieldError } from 'react-hook-form/dist/types/form';
 
-// type IUiTextField = {
-//   [key]: TextFieldProps
-// }
-//
-// function UiTextField({ errors, name: string, ...props }: IUiTextField) {
-//   const currentError = errors[name];
-//   return (
-//     <TextField
-//       name={name}
-//       error={Boolean(currentError)}
-//       helperText={currentError?.message}
-//     />
-//   );
-// }
+type UiTextFieldProps = TextFieldProps & {
+  customError: FieldError | undefined;
+  name: string;
+};
 
-export default 1;
+export const UiTextField: React.FC<UiTextFieldProps> = (props: UiTextFieldProps) => {
+  const { customError, ...otherProps } = props;
+  return (
+    <TextField error={Boolean(customError)} helperText={customError?.message} {...otherProps} />
+  );
+};

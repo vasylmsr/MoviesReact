@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+ 
   }),
 );
 
@@ -34,7 +35,7 @@ export const MainMenu: React.FC<IMainMenuProps> = (props: IMainMenuProps): JSX.E
   const { openSidebar } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             edge="start"

@@ -5,6 +5,7 @@ import { SignIn } from './containers/auth/SignIn/SignIn';
 import { SignUp } from './containers/auth/Register/SignUp';
 import { UserPage } from './components/UserPage/UserPage';
 import { Landing } from './containers/Landing';
+import { EmailLink } from './containers/auth/EmailLink/EmailLink';
 
 export interface ISingleRoute {
   path: string;
@@ -34,6 +35,11 @@ const routes: routesType = [
     path: HOME,
     component: UserPage,
     isPrivate: true,
+  },
+  {
+    path: '/confirm',
+    component: EmailLink,
+    layout: AUTH_LAYOUT
   },
 ];
 

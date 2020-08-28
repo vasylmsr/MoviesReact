@@ -3,6 +3,8 @@ import 'firebase/auth';
 import db from './Firebase';
 import { IUserProfile } from '../store/auth/login/types';
 
+const POSTS_COLLECTION = 'posts';
+
 export interface IUserLoginCredentials {
   email: string;
   password: string;
@@ -41,13 +43,11 @@ export async function doCreateUserWithEmailAndPassword({
   return user;
 }
 
-export const doSignInWithEmailAndPassword = async ({ email, password }: IUserLoginCredentials) => {
-  const response: firebase.auth.UserCredential = await auth.signInWithEmailAndPassword(
-    email,
-    password,
-  );
-  return getUserProfile(response.user!.uid);
-};
+export const doSignInWithEmailAndPassword = async ({
+  email,
+  password,
+}: IUserLoginCredentials): Promise<firebase.auth.UserCredential> =>
+  auth.signInWithEmailAndPassword(email, password);
 
 export const doSignInWithGoogle = () => {
   auth.signInWithPopup(googleProvider).then(res => console.log(res));
@@ -56,6 +56,49 @@ export const doSignInWithGoogle = () => {
 export const onAuthStateChanged = (callback: any) => auth.onAuthStateChanged(callback);
 
 export const doLogout = () => auth.signOut();
+
+export const confirmEmail = (code: string) => auth.applyActionCode(code);
+
+export const createRef = (collection: string, docId: string) => db.doc(`${collection}/${docId}`);
+
+// title
+// description
+// updatedAt
+// const createdAt = app.database.ServerValue.TIMESTAMP;
+// user
+// photo
+// redirect_url
+// location
+
+export interface IPostData {
+  title: string;
+  description: string;
+  photoUrl?: string;
+  originalPostUrl?: string;
+  location?: string;
+  createdAt: string;
+  updatedAt: string;
+  user: string;
+}
+export const createPost = (postData: IPostData, uid: string) => {
+  const timestamp = app.firestore.FieldValue.serverTimestamp();
+  const fullPostData = {
+    ...postData,
+    createdAt: timestamp,
+    updatedAt: timestamp,
+    user: createRef(POSTS_COLLECTION, uid),
+  };
+  return db.collection(POSTS_COLLECTION).add(fullPostData);
+};
+
+export const editPost = (postData: IPostData) => {
+  const timestamp = app.firestore.FieldValue.serverTimestamp();
+  const fullPostData = {
+    ...postData,
+    updatedAt: timestamp,
+  };
+  return db.collection(POSTS_COLLECTION).add(fullPostData);
+};
 //
 // doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
 //

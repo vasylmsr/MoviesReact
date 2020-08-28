@@ -13,3 +13,4 @@ const config = {
 };
 
 export default firebase.initializeApp(config).firestore();
+

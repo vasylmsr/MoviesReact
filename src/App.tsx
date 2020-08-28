@@ -4,7 +4,7 @@ import { SnackbarProvider } from 'notistack';
 import * as AuthApi from './firebase/AuthApi';
 import { storeAuthUser } from './store/auth/login/actions';
 import { AppRoutes } from './components/AppRoutes';
-import { FAILURE_STATUS, SUCCESS_STATUS } from './utils/constants/other';
+import { SUCCESS_STATUS } from './utils/constants/other';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -23,8 +23,6 @@ export default function App() {
     [dispatch],
   );
 
-  const finishedLoadingStatuses = [SUCCESS_STATUS, FAILURE_STATUS];
-  const isRoutesVisible = !hasUserInStorage || finishedLoadingStatuses.includes(checkingUserStatus);
-
+  const isRoutesVisible = !hasUserInStorage || checkingUserStatus === SUCCESS_STATUS;
   return <SnackbarProvider maxSnack={3}>{isRoutesVisible && <AppRoutes />}</SnackbarProvider>;
 }

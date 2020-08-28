@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -20,18 +20,19 @@ import * as AuthApi from '../../../firebase/AuthApi';
 import GoogleIcon from '../../../assets/images/google.png';
 import signInValidationSchema from './SignInValidation';
 import { getDefaultAuthStyles } from '../styles';
-import { signIn } from '../../../store/auth/login/actions';
 import { UiButton } from '../../../components/ui/UiButton/UiButton';
-import { LOADING_STATUS } from '../../../utils/constants/other';
+import { UiTextField } from '../../../components/ui/UiTextField/UiTextField';
+import { signIn} from "../../../store/auth/login/actions";
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
 export const SignIn: React.FC = (): JSX.Element => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-  const { loginError, user, loginStatus } = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.auth);
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, errors } = useForm<AuthApi.IUserLoginCredentials>({
     resolver: yupResolver(signInValidationSchema),
     defaultValues: {
@@ -41,18 +42,20 @@ export const SignIn: React.FC = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (loginError) {
-      enqueueSnackbar(loginError.message, { variant: 'error' });
-    }
-  }, [loginError, enqueueSnackbar]);
-
-  useEffect(() => {
     if (user) {
       history.push(HOME);
     }
   }, [user, history]);
-  const onSubmit = handleSubmit(data => {
-    dispatch(signIn(data));
+
+  const onSubmit = handleSubmit(async data => {
+    try {
+      setLoading(true);
+      await dispatch(signIn(data));
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: 'error' });
+    } finally {
+      setLoading(false);
+    }
   });
 
   return (
@@ -65,30 +68,25 @@ export const SignIn: React.FC = (): JSX.Element => {
         Sign in
       </Typography>
       <form className={classes.form} noValidate onSubmit={onSubmit}>
-        <TextField
+        <UiTextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           label="Email Address"
           name="email"
           autoFocus
           inputRef={register}
-          helperText={errors.email?.message}
-          error={Boolean(errors.email)}
+          customError={errors.email}
         />
-        <TextField
+        <UiTextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           name="password"
           label="Password"
           type="password"
-          autoComplete="current-password"
           inputRef={register}
-          helperText={errors.password?.message}
-          error={Boolean(errors.password)}
+          customError={errors.password}
         />
 
         <FormControlLabel
@@ -106,7 +104,7 @@ export const SignIn: React.FC = (): JSX.Element => {
           variant="contained"
           color="primary"
           className={classes.submit}
-          loading={loginStatus === LOADING_STATUS}
+          loading={loading}
         >
           Sign In
         </UiButton>
