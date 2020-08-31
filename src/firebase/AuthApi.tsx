@@ -57,10 +57,14 @@ export const onAuthStateChanged = (callback: any) => auth.onAuthStateChanged(cal
 
 export const doLogout = () => auth.signOut();
 
-export const confirmEmail = (code: string) => auth.applyActionCode(code);
+export const applyActionCode = (code: string) => auth.applyActionCode(code);
 
 export const createRef = (collection: string, docId: string) => db.doc(`${collection}/${docId}`);
 
+export const sendPasswordResetEmail = (email: string) => auth.sendPasswordResetEmail(email);
+
+export const confirmPasswordReset = (code: string, newPassword: string) =>
+  auth.confirmPasswordReset(code, newPassword);
 // title
 // description
 // updatedAt

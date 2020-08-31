@@ -1,4 +1,4 @@
-import { CHECK_USER_FAILURE, CHECK_USER_REQUEST, CHECK_USER_SUCCESS } from './types';
+import { CHECK_USER_FAILURE, CHECK_USER_REQUEST, CHECK_USER_SUCCESS, LOGOUT } from './types';
 import * as AuthApi from '../../../firebase/AuthApi';
 import { IApiError } from '../../../utils/constants/other';
 import { IUserLoginCredentials } from '../../../firebase/AuthApi';
@@ -16,15 +16,28 @@ export const checkUserSuccess = (userProfile: any) => ({
   payload: userProfile,
 });
 
+export const logoutAction = () => ({
+  type: LOGOUT,
+  payload: null,
+});
+
 export const signIn = (data: IUserLoginCredentials) => () =>
   AuthApi.doSignInWithEmailAndPassword(data);
 
 export const signUp = (data: AuthApi.IUserRegisterCredentials) => () =>
   AuthApi.doCreateUserWithEmailAndPassword(data);
 
-export const verifyEmail = (code: string) => () => AuthApi.confirmEmail(code!);
+export const applyActionCode = (code: string) => () => AuthApi.applyActionCode(code!);
 
-export const logout = () => () => AuthApi.doLogout();
+export const logout = () => async (dispatch: any) => {
+  await AuthApi.doLogout();
+  dispatch(logoutAction());
+};
+
+export const resetPassword = (email: string) => () => AuthApi.sendPasswordResetEmail(email);
+
+export const confirmPasswordReset = (code: string, newPassword: string) => () =>
+  AuthApi.confirmPasswordReset(code, newPassword);
 
 export const storeAuthUser = (authUser: any) => async (dispatch: any) => {
   try {

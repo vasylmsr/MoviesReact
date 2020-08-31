@@ -4,6 +4,8 @@ export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
 export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
 export const CHECK_USER_FAILURE = 'CHECK_USER_FAILURE';
 
+export const LOGOUT = 'LOGOUT';
+
 export interface IUserProfile {
   uid: string;
   firstName: string;
@@ -35,8 +37,14 @@ export interface ICheckingUserSuccess {
   payload: any;
 }
 
+export interface ILogout {
+  type: typeof LOGOUT;
+  payload: any;
+}
+
 export type UserActionsType =
   | IActionSuccess
   | IActionFailure
   | IActionRequest
-  | ICheckingUserSuccess;
+  | ICheckingUserSuccess
+  | ILogout;

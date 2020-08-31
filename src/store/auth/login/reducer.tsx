@@ -3,6 +3,7 @@ import {
   CHECK_USER_REQUEST,
   CHECK_USER_SUCCESS,
   IAuthReducer,
+  LOGOUT,
   UserActionsType,
 } from './types';
 import {
@@ -44,6 +45,12 @@ export const authReducer = (
         ...prevState,
         user: action.payload,
         checkingUserStatus: SUCCESS_STATUS,
+      };
+
+    case LOGOUT:
+      return {
+        ...prevState,
+        user: null,
       };
 
     default:

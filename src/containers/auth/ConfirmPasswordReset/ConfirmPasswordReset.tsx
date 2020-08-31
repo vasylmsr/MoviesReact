@@ -6,42 +6,57 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import { Link as RouterLink } from 'react-router-dom';
 import { getDefaultAuthStyles } from '../styles';
 import { UiButton } from '../../../components/ui/UiButton/UiButton';
-import { resetPassword } from '../../../store/auth/login/actions';
-import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
+import { confirmPasswordReset } from '../../../store/auth/login/actions';
 import { AuthTextField } from '../../../components/auth/AuthTextField/AuthTextField';
+import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
+import { handleAsyncAction } from '../../../utils/helpers';
+import { password } from '../../../utils/validationRules';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
 const forgotPasswordValidationSchema = yup.object({
-  email: yup.string().required(),
+  newPassword: password().required(),
+  newPasswordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('newPassword')])
+    .required(),
 });
 
-export const ForgotPassword: React.FC = (): JSX.Element => {
+type ConfirmPasswordResetProps = {
+  code: string;
+};
+
+export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({
+  code,
+}: ConfirmPasswordResetProps): JSX.Element => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(forgotPasswordValidationSchema),
     defaultValues: {
-      email: '',
+      newPassword: '',
+      newPasswordConfirmation: '',
     },
   });
 
-  const onSubmit = handleSubmit(async ({ email }) => {
-    try {
-      setLoading(true);
-      await dispatch(resetPassword(email));
-      enqueueSnackbar(`Check ${email} email`);
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: 'error' });
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = handleSubmit(({ newPassword }) => {
+    handleAsyncAction({
+      async callback() {
+        await dispatch(confirmPasswordReset(code, newPassword));
+        enqueueSnackbar('Password successfully changed');
+        history.push(SIGN_IN);
+      },
+      setLoading,
+      enqueueSnackbar,
+    });
   });
 
   return (
@@ -51,11 +66,18 @@ export const ForgotPassword: React.FC = (): JSX.Element => {
       </Typography>
       <form className={classes.form} noValidate onSubmit={onSubmit}>
         <AuthTextField
-          label="Email Address"
-          name="email"
+          label="New password"
+          name="newPassword"
           autoFocus
           inputRef={register}
-          customError={errors.email}
+          customError={errors.newPassword}
+        />
+
+        <AuthTextField
+          label="Confirm new password"
+          name="newPasswordConfirmation"
+          inputRef={register}
+          customError={errors.newPasswordConfirmation}
         />
 
         <Grid container>
@@ -75,7 +97,7 @@ export const ForgotPassword: React.FC = (): JSX.Element => {
           className={classes.submit}
           loading={loading}
         >
-          Send verification email
+          Set new password
         </UiButton>
       </form>
     </>

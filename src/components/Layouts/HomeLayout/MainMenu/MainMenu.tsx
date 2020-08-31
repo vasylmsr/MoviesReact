@@ -6,8 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import { logout } from '../../../../store/auth/login/actions';
 import { UiButton } from '../../../ui/UiButton/UiButton';
+import { SIGN_IN } from '../../../../utils/constants/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
- 
   }),
 );
 
@@ -30,8 +31,12 @@ interface IMainMenuProps {
 
 export const MainMenu: React.FC<IMainMenuProps> = (props: IMainMenuProps): JSX.Element => {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
-  const signOut = () => dispatch(logout());
+  const signOut = async () => {
+    await dispatch(logout());
+    history.push(SIGN_IN);
+  };
   const { openSidebar } = props;
   return (
     <div className={classes.root}>
