@@ -5,15 +5,16 @@ import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { UiDialogActions, UiDialogContent, UiDialogTitle } from '../../ui/UiDialog/UiDialog';
-import * as AuthApi from '../../../firebase/AuthApi';
+import * as AuthApi from '../../../api/auth';
 import { UiTextField } from '../../ui/UiTextField/UiTextField';
-import { IPostData } from '../../../firebase/AuthApi';
+import { IPostData } from '../../../api/auth';
 import { UiButton } from '../../ui/UiButton/UiButton';
 
 type CreatePostDialogProps = DialogProps & {
   onClose: () => void;
   onSave: (data: IPostData) => void;
   title: string;
+  loading: boolean;
 };
 
 const postValidationSchema = yup.object({
@@ -39,7 +40,7 @@ const useStyles = makeStyles(() => ({
 export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
   props: CreatePostDialogProps,
 ): JSX.Element => {
-  const { title, open, onClose, onSave, ...otherProps } = props;
+  const { title, open, onClose, onSave, loading } = props;
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm<AuthApi.IPostData>({
     resolver: yupResolver(postValidationSchema),
@@ -58,11 +59,12 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
   });
 
   const onSubmit = handleSubmit(data => {
+    console.log(3333)
     onSave(data);
   });
 
   return (
-    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open} {...otherProps}>
+    <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
       <UiDialogTitle id="Create Post Dialog Title" onClose={onClose}>
         <span className={classes.dialogTitle}>{title}</span>
       </UiDialogTitle>
@@ -113,7 +115,7 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
         </form>
       </UiDialogContent>
       <UiDialogActions>
-        <UiButton type="submit" color="primary" onClick={onSubmit}>
+        <UiButton loading={loading} type="submit" color="primary" onClick={onSubmit}>
           Save changes
         </UiButton>
       </UiDialogActions>

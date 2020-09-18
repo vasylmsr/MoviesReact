@@ -19,16 +19,13 @@ export interface IAuthReducer {
   checkingUserError: IApiError | null;
 }
 
-export interface IActionSuccess {
-  type: string;
+export interface ICheckingUserRequest {
+  type: typeof CHECK_USER_REQUEST;
   payload: any;
 }
-export interface IActionFailure {
-  type: string;
-  payload: IApiError;
-}
-export interface IActionRequest {
-  type: string;
+
+export interface ICheckingUserFailure {
+  type: typeof CHECK_USER_FAILURE;
   payload: any;
 }
 
@@ -43,8 +40,7 @@ export interface ILogout {
 }
 
 export type UserActionsType =
-  | IActionSuccess
-  | IActionFailure
-  | IActionRequest
+  | ICheckingUserRequest
+  | ICheckingUserFailure
   | ICheckingUserSuccess
   | ILogout;

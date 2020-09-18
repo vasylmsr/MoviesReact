@@ -13,6 +13,7 @@ import { UiButton } from '../../../components/ui/UiButton/UiButton';
 import { resetPassword } from '../../../store/auth/login/actions';
 import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
 import { AuthTextField } from '../../../components/auth/AuthTextField/AuthTextField';
+import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
@@ -22,7 +23,6 @@ const forgotPasswordValidationSchema = yup.object({
 
 export const ForgotPassword: React.FC = (): JSX.Element => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { register, handleSubmit, errors } = useForm({
@@ -33,23 +33,18 @@ export const ForgotPassword: React.FC = (): JSX.Element => {
   });
 
   const onSubmit = handleSubmit(async ({ email }) => {
-    try {
-      setLoading(true);
-      await dispatch(resetPassword(email));
-      enqueueSnackbar(`Check ${email} email`);
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: 'error' });
-    } finally {
-      setLoading(false);
-    }
+    await dispatch(resetPassword(email));
+    enqueueSnackbar(`Check ${email} email`);
   });
+
+  const { loading, fullFunction: handleForgotPassword } = useAsyncAction(onSubmit);
 
   return (
     <>
       <Typography component="h1" variant="h5">
         Forgot password
       </Typography>
-      <form className={classes.form} noValidate onSubmit={onSubmit}>
+      <form className={classes.form} noValidate onSubmit={handleForgotPassword}>
         <AuthTextField
           label="Email Address"
           name="email"

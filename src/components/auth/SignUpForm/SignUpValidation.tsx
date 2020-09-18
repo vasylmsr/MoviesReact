@@ -4,4 +4,6 @@ import { password } from '../../../utils/validationRules';
 export const signUpValidationSchema = yup.object({
   email: yup.string().email().required(),
   password: password().required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
 });

@@ -30,7 +30,7 @@ export const authReducer = (
         ...prevState,
         user: null,
         checkingUserStatus: LOADING_STATUS,
-        checkingUserError: action.payload,
+        checkingUserError: null,
       };
 
     case CHECK_USER_FAILURE:

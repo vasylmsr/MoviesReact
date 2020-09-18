@@ -1,9 +1,8 @@
 import * as app from 'firebase/app';
 import 'firebase/auth';
-import db from './Firebase';
+import db from './db';
 import { IUserProfile } from '../store/auth/login/types';
-
-const POSTS_COLLECTION = 'posts';
+import { PROFILES_COLLECTION } from './helpers';
 
 export interface IUserLoginCredentials {
   email: string;
@@ -18,14 +17,13 @@ export interface IUserRegisterCredentials {
 }
 
 const auth = app.auth();
-const googleProvider = new app.auth.GoogleAuthProvider();
 
 export function createUserProfile(userData: any) {
-  return db.collection('profiles').doc(userData?.uid).set(userData);
+  return db.collection(PROFILES_COLLECTION).doc(userData?.uid).set(userData);
 }
 
 export async function getUserProfile(uid: string): Promise<IUserProfile> {
-  const snapshot = await db.collection('profiles').doc(uid).get();
+  const snapshot = await db.collection(PROFILES_COLLECTION).doc(uid).get();
   const { firstName, lastName } = snapshot.data()!;
   return { uid, firstName, lastName };
 }
@@ -49,67 +47,41 @@ export const doSignInWithEmailAndPassword = async ({
 }: IUserLoginCredentials): Promise<firebase.auth.UserCredential> =>
   auth.signInWithEmailAndPassword(email, password);
 
-export const doSignInWithGoogle = () => {
-  auth.signInWithPopup(googleProvider).then(res => console.log(res));
-};
-
 export const onAuthStateChanged = (callback: any) => auth.onAuthStateChanged(callback);
 
 export const doLogout = () => auth.signOut();
 
 export const applyActionCode = (code: string) => auth.applyActionCode(code);
 
-export const createRef = (collection: string, docId: string) => db.doc(`${collection}/${docId}`);
-
 export const sendPasswordResetEmail = (email: string) => auth.sendPasswordResetEmail(email);
 
 export const confirmPasswordReset = (code: string, newPassword: string) =>
   auth.confirmPasswordReset(code, newPassword);
-// title
-// description
-// updatedAt
-// const createdAt = app.database.ServerValue.TIMESTAMP;
-// user
-// photo
-// redirect_url
-// location
 
 export interface IPostData {
+  id: string;
   title: string;
   description: string;
   photoUrl?: string;
   originalPostUrl?: string;
   location?: string;
-  createdAt: string;
-  updatedAt: string;
-  user: string;
+  createdAt: any;
+  updatedAt: any;
+  user: any;
 }
-export const createPost = (postData: IPostData, uid: string) => {
-  const timestamp = app.firestore.FieldValue.serverTimestamp();
-  const fullPostData = {
-    ...postData,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-    user: createRef(POSTS_COLLECTION, uid),
-  };
-  return db.collection(POSTS_COLLECTION).add(fullPostData);
-};
 
-export const editPost = (postData: IPostData) => {
-  const timestamp = app.firestore.FieldValue.serverTimestamp();
-  const fullPostData = {
-    ...postData,
-    updatedAt: timestamp,
-  };
-  return db.collection(POSTS_COLLECTION).add(fullPostData);
-};
+// const googleProvider = new app.auth.GoogleAuthProvider();
+
+// export const doSignInWithGoogle = () => {
+//   auth.signInWithPopup(googleProvider).then(res => console.log(res));
+// };
+
 //
 // doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
 //
 // doSignInWithTwitter = () => this.auth.signInWithPopup(this.twitterProvider);
 //
-// doSignOut = () => this.auth.signOut();
-//
+
 // doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 //
 // doSendEmailVerification = () =>

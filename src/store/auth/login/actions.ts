@@ -1,7 +1,7 @@
 import { CHECK_USER_FAILURE, CHECK_USER_REQUEST, CHECK_USER_SUCCESS, LOGOUT } from './types';
-import * as AuthApi from '../../../firebase/AuthApi';
+import * as AuthApi from '../../../api/auth';
 import { IApiError } from '../../../utils/constants/other';
-import { IUserLoginCredentials } from '../../../firebase/AuthApi';
+import { IUserLoginCredentials } from '../../../api/auth';
 
 export const checkUserFailure = (error: IApiError) => ({
   type: CHECK_USER_FAILURE,

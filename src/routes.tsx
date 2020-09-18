@@ -1,12 +1,12 @@
 import React from 'react';
 import { AUTH_LAYOUT } from './utils/constants/layouts';
-import { FORGOT_PASSWORD, HOME, MAIN, SIGN_IN, SIGN_UP } from "./utils/constants/routes";
+import { FORGOT_PASSWORD, HOME, MAIN, SIGN_IN, SIGN_UP } from './utils/constants/routes';
 import { SignIn } from './containers/auth/SignIn/SignIn';
 import { SignUp } from './containers/auth/Register/SignUp';
-import { UserPage } from './components/UserPage/UserPage';
+import { PostsListPage } from './containers/Posts/PostsListPage';
 import { Landing } from './containers/Landing';
 import { EmailLink } from './containers/auth/EmailLink/EmailLink';
-import { ForgotPassword } from "./containers/auth/ForgotPassword/ForgotPassword";
+import { ForgotPassword } from './containers/auth/ForgotPassword/ForgotPassword';
 
 export interface ISingleRoute {
   path: string;
@@ -34,7 +34,7 @@ const routes: routesType = [
   },
   {
     path: HOME,
-    component: UserPage,
+    component: PostsListPage,
     isPrivate: true,
   },
   {
