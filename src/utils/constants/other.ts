@@ -5,6 +5,6 @@ export const FAILURE_STATUS = 'failure'; // data failed to fetch
 export type LoadingType = 'idle' | 'loading' | 'success' | 'failure';
 
 export interface IApiError {
-  code: string;
+  code?: string;
   message: string;
 }

@@ -22,6 +22,16 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    appBar: {
+      backgroundColor: 'black',
+    },
+    logoutButton: {
+      backgroundColor: 'white',
+      color: 'black',
+      '&:hover': {
+        background: '#e7e7e7',
+      },
+    },
   }),
 );
 
@@ -40,7 +50,7 @@ export const MainMenu: React.FC<IMainMenuProps> = (props: IMainMenuProps): JSX.E
   const { openSidebar } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -54,7 +64,7 @@ export const MainMenu: React.FC<IMainMenuProps> = (props: IMainMenuProps): JSX.E
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <UiButton color="secondary" onClick={signOut}>
+          <UiButton className={classes.logoutButton} onClick={signOut}>
             Logout
           </UiButton>
         </Toolbar>

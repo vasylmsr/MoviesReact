@@ -44,7 +44,9 @@ export const storeAuthUser = (authUser: any) => async (dispatch: any) => {
     dispatch(checkUserRequest());
     const userProfile = await AuthApi.getUserProfile(authUser.uid);
     dispatch(checkUserSuccess(userProfile));
+    throw new Error('aa')
   } catch (error) {
+    console.log(error)
     checkUserFailure(error);
   }
 };

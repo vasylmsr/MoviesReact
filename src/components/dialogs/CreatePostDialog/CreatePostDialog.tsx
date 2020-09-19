@@ -58,10 +58,7 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
     },
   });
 
-  const onSubmit = handleSubmit(data => {
-    console.log(3333)
-    onSave(data);
-  });
+  const onSubmit = handleSubmit(data => onSave(data));
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -80,11 +77,11 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
               size="small"
             />
             <UiTextField
-              label="Description *"
+              label="Location"
               inputRef={register}
-              name="description"
+              name="location"
+              customError={errors.location}
               size="small"
-              customError={errors.description}
             />
           </div>
           <div className={classes.line}>
@@ -103,15 +100,15 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
               customError={errors.originalPostUrl}
             />
           </div>
-          <div className={classes.line}>
-            <UiTextField
-              label="Location"
-              inputRef={register}
-              name="location"
-              customError={errors.location}
-              size="small"
-            />
-          </div>
+
+          <UiTextField
+            label="Description *"
+            inputRef={register}
+            name="description"
+            size="small"
+            customError={errors.description}
+            multiline
+          />
         </form>
       </UiDialogContent>
       <UiDialogActions>

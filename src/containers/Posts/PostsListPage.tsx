@@ -13,7 +13,7 @@ import { FAILURE_STATUS, LOADING_STATUS, SUCCESS_STATUS } from '../../utils/cons
 
 const useStyles = makeStyles(theme => ({
   header: {
-    color: theme.palette.primary.main,
+    color: 'black',
     textAlign: 'center',
     fontSize: '40px',
     fontWeight: 800,
