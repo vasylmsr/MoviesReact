@@ -5,6 +5,7 @@ import * as AuthApi from './api/auth';
 import { storeAuthUser } from './store/auth/login/actions';
 import { AppRoutes } from './components/AppRoutes';
 import { SUCCESS_STATUS } from './utils/constants/other';
+import './App.css';
 
 export default function App() {
   const dispatch = useDispatch();

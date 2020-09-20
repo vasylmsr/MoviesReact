@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +39,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+.slide-enter-active,
+.slide-exit-active {
+  transition-duration: 700ms;
+}
+
+.slide-enter {
+  /*transform: translateX(-20px);*/
+  opacity: 0;
+}
+
+.slide-enter-active {
+  /*transform: translateX(0px);*/
+  opacity: 1;
+}
+
+.slide-exit {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.slide-exit-active {
+  opacity: 0;
 }

@@ -16,39 +16,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element => {
-  const classes = useStyles();
-  const { post } = props;
+export const PostCard: React.FC<PostCardProps> = React.memo(
+  (props: PostCardProps): JSX.Element => {
+    const classes = useStyles();
+    const { post } = props;
 
-  const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
-  return (
-    <Paper>
-      <div>
-        <img
-          src={post.photoUrl || DefaultImg}
-          width="100%"
-          alt="News picture"
-          title="News picture"
-        />
-      </div>
-      <div className={classes.content}>
-        <Typography gutterBottom variant="h5" component="h3">
-          {post.title}
-        </Typography>
-        <Typography gutterBottom variant="subtitle1" component="p">
-          {formatDate(post.createdAt)}
-        </Typography>
-        {post.location && (
+    const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
+    return (
+      <Paper>
+        <div>
+          <img
+            src={post.photoUrl || DefaultImg}
+            width="100%"
+            alt="News picture"
+            title="News picture"
+          />
+        </div>
+        <div className={classes.content}>
+          <Typography gutterBottom variant="h5" component="h3">
+            {post.title}
+          </Typography>
           <Typography gutterBottom variant="subtitle1" component="p">
-            {post.location}
+            {formatDate(post.createdAt)}
           </Typography>
-        )}
-        {isNewsUpdated && (
-          <Typography align="right" variant="body2" color="textSecondary" component="p">
-            Updated {formatDate(post.updatedAt)}
-          </Typography>
-        )}
-      </div>
-    </Paper>
-  );
-};
+          {post.location && (
+            <Typography gutterBottom variant="subtitle1" component="p">
+              {post.location}
+            </Typography>
+          )}
+          {isNewsUpdated && (
+            <Typography align="right" variant="body2" color="textSecondary" component="p">
+              Updated {formatDate(post.updatedAt)}
+            </Typography>
+          )}
+        </div>
+      </Paper>
+    );
+  },
+);

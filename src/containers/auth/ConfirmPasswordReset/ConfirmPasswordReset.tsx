@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
@@ -14,8 +14,8 @@ import { UiButton } from '../../../components/ui/UiButton/UiButton';
 import { confirmPasswordReset } from '../../../store/auth/login/actions';
 import { AuthTextField } from '../../../components/auth/AuthTextField/AuthTextField';
 import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
-import { handleAsyncAction } from '../../../utils/helpers';
 import { password } from '../../../utils/validationRules';
+import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
@@ -35,7 +35,6 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({
   code,
 }: ConfirmPasswordResetProps): JSX.Element => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
@@ -47,18 +46,13 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({
     },
   });
 
-  const onSubmit = handleSubmit(({ newPassword }) => {
-    handleAsyncAction({
-      async callback() {
-        await dispatch(confirmPasswordReset(code, newPassword));
-        enqueueSnackbar('Password successfully changed');
-        history.push(SIGN_IN);
-      },
-      setLoading,
-      enqueueSnackbar,
-    });
+  const { loading, execute } = useAsyncAction(async (data: any) => {
+    await dispatch(confirmPasswordReset(code, data.newPassword));
+    enqueueSnackbar('Password successfully changed');
+    history.push(SIGN_IN);
   });
 
+  const onSubmit = handleSubmit(data => execute(data));
   return (
     <>
       <Typography component="h1" variant="h5">

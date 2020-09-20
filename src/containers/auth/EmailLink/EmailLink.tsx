@@ -1,33 +1,23 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { useSnackbar } from 'notistack';
 import { applyActionCode } from '../../../store/auth/login/actions';
 import { HOME, SIGN_IN } from '../../../utils/constants/routes';
-import { handleAsyncAction } from '../../../utils/helpers';
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
+import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
 export const EmailLink: React.FC = (props): JSX.Element => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { search } = useLocation();
   const history = useHistory();
   const queryParams = new URLSearchParams(search);
 
-  const callVerifyEmail = useCallback(
-    (code: string) => {
-      handleAsyncAction({
-        async callback() {
-          await dispatch(applyActionCode(code!));
-          history.push(HOME);
-        },
-        errorCallback() {
-          history.push(SIGN_IN);
-        },
-        enqueueSnackbar,
-      });
+  const { execute: callVerifyEmail } = useAsyncAction(
+    async () => {
+      await dispatch(applyActionCode(code!));
+      history.push(HOME);
     },
-    [history, dispatch, enqueueSnackbar],
+    () => history.push(SIGN_IN),
   );
 
   const mode = queryParams.get('mode');

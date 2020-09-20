@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
-import { SIGN_IN } from '../../utils/constants/routes';
+import { SIGN_IN } from '../../../utils/constants/routes';
 
 type IPrivateRouteProps = RouteProps;
 

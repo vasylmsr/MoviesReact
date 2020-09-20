@@ -1,34 +1,12 @@
-import React, { useState } from 'react';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useSnackbar } from 'notistack';
-import * as AuthApi from '../../../api/auth';
 import { signUp } from '../../../store/auth/login/actions';
 import { SignUpForm } from '../../../components/auth/SignUpForm/SignUpForm';
+import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
 export const SignUp: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
+  const { loading, execute } = useAsyncAction((data: any) => dispatch(signUp(data)));
 
-  const [loading, setLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
-
-  const onSubmit = async (data: AuthApi.IUserRegisterCredentials) => {
-    try {
-      setLoading(true);
-      await dispatch(signUp(data));
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: 'error' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <>
-      <Typography component="h1" variant="h5">
-        Sign Up
-      </Typography>
-      <SignUpForm onSignUp={onSubmit} loading={loading} />
-    </>
-  );
+  return <SignUpForm onSignUp={execute} loading={loading} />;
 };

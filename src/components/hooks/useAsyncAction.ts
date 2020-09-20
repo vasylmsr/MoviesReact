@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
-export function useAsyncAction(callback = () => {}, errorCallback = () => {}) {
+export function useAsyncAction(callback: any, errorCallback = () => {}) {
   const [loading, setLoading] = useState(false);
+
   const { enqueueSnackbar } = useSnackbar();
 
-  async function fullFunction() {
+  async function execute(data: any) {
     try {
       setLoading(true);
-      await Promise.resolve(callback);
+      await Promise.resolve(callback(data));
     } catch (error) {
       enqueueSnackbar(error.message, { variant: 'error' });
       errorCallback();
@@ -16,8 +17,9 @@ export function useAsyncAction(callback = () => {}, errorCallback = () => {}) {
       setLoading(false);
     }
   }
+
   return {
+    execute,
     loading,
-    fullFunction,
   };
 }

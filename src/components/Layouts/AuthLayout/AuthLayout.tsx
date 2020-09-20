@@ -2,8 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Copyright from '../../Copyright/Copyright';
 
 interface IAuthLayout {
   children: React.ReactNode;
@@ -26,13 +24,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(4, 4),
-  },
-  paper__content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 'auto',
-    marginBottom: 'auto',
   },
   copyrightWrapper: {
     marginTop: 'auto',
@@ -57,10 +48,7 @@ export default function AuthLayout({ children }: IAuthLayout) {
     <Grid container component="main" className={classes.root}>
       <Grid item sm={false} md={7} className={classes.image} />
       <Grid item xs={12} md={5} component={Paper} elevation={6} square className={classes.paper}>
-        <div className={classes.paper__content}>{children}</div>
-        <Box mt={5} className={classes.copyrightWrapper}>
-          <Copyright />
-        </Box>
+        {children}
       </Grid>
     </Grid>
   );

@@ -4,12 +4,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { UiButton } from '../../ui/UiButton/UiButton';
 import { FORGOT_PASSWORD, SIGN_IN } from '../../../utils/constants/routes';
 import * as AuthApi from '../../../api/auth';
 import { signUpValidationSchema } from './SignUpValidation';
 import { getDefaultAuthStyles } from '../../../containers/auth/styles';
+import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 type SignUpFormProps = {
   onSignUp: (data: AuthApi.IUserRegisterCredentials) => void;
@@ -38,54 +40,59 @@ export const SignUpForm: React.FC<SignUpFormProps> = (props: SignUpFormProps): J
   });
 
   return (
-    <form className={classes.form} noValidate onSubmit={onSubmit}>
-      <AuthTextField
-        label="Email Address"
-        name="email"
-        autoFocus
-        inputRef={register}
-        customError={errors.email}
-      />
-      <AuthTextField
-        name="password"
-        label="Password"
-        type="password"
-        inputRef={register}
-        customError={errors.password}
-      />
-
-      <AuthTextField
-        name="firstName"
-        label="First Name"
-        inputRef={register}
-        customError={errors.firstName}
-      />
-
-      <AuthTextField
-        name="lastName"
-        label="Last Name"
-        inputRef={register}
-        customError={errors.lastName}
-      />
-
-      <UiButton
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        className={classes.submit}
-        loading={loading}
-      >
+    <AuthFormLayout>
+      <Typography component="h1" variant="h5">
         Sign Up
-      </UiButton>
-      <Grid container>
-        <Grid item xs>
-          <RouterLink to={FORGOT_PASSWORD}>Forgot password?</RouterLink>
+      </Typography>
+      <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <AuthTextField
+          label="Email Address"
+          name="email"
+          autoFocus
+          inputRef={register}
+          customError={errors.email}
+        />
+        <AuthTextField
+          name="password"
+          label="Password"
+          type="password"
+          inputRef={register}
+          customError={errors.password}
+        />
+
+        <AuthTextField
+          name="firstName"
+          label="First Name"
+          inputRef={register}
+          customError={errors.firstName}
+        />
+
+        <AuthTextField
+          name="lastName"
+          label="Last Name"
+          inputRef={register}
+          customError={errors.lastName}
+        />
+
+        <UiButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          loading={loading}
+        >
+          Sign Up
+        </UiButton>
+        <Grid container>
+          <Grid item xs>
+            <RouterLink to={FORGOT_PASSWORD}>Forgot password?</RouterLink>
+          </Grid>
+          <Grid item>
+            <RouterLink to={SIGN_IN}>Sign In</RouterLink>
+          </Grid>
         </Grid>
-        <Grid item>
-          <RouterLink to={SIGN_IN}>Sign In</RouterLink>
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </AuthFormLayout>
   );
 };
