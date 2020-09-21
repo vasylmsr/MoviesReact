@@ -16,6 +16,7 @@ import { AuthTextField } from '../../../components/auth/AuthTextField/AuthTextFi
 import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
 import { password } from '../../../utils/validationRules';
 import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
+import { AuthFormLayout } from "../../../components/Layouts/AuthLayout/AuthFormLayout/AuthFormLayout";
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
@@ -54,7 +55,7 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({
 
   const onSubmit = handleSubmit(data => execute(data));
   return (
-    <>
+    <AuthFormLayout>
       <Typography component="h1" variant="h5">
         Forgot password
       </Typography>
@@ -94,6 +95,6 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({
           Set new password
         </UiButton>
       </form>
-    </>
+    </AuthFormLayout>
   );
 };

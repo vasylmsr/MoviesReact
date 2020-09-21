@@ -7,6 +7,9 @@ import {
   FETCH_POSTS_SUCCESS,
   IPostsReducer,
   PostsActionsType,
+  REMOVE_POST_FAILURE,
+  REMOVE_POST_REQUEST,
+  REMOVE_POST_SUCCESS,
 } from './types';
 import {
   FAILURE_STATUS,
@@ -14,6 +17,7 @@ import {
   LOADING_STATUS,
   SUCCESS_STATUS,
 } from '../../utils/constants/other';
+import { LOGOUT } from '../auth/login/types';
 
 export const initialState: IPostsReducer = {
   posts: [],
@@ -51,6 +55,24 @@ export const postsReducer = (
     }
     case ADD_POST_FAILURE: {
       return { ...state, addPostStatus: FAILURE_STATUS, addPostError: action.payload };
+    }
+
+    case REMOVE_POST_REQUEST: {
+      return { ...state, removePostStatus: IDLE_STATUS };
+    }
+    case REMOVE_POST_SUCCESS: {
+      return {
+        ...state,
+        removePostStatus: SUCCESS_STATUS,
+        posts: state.posts.filter(post => post.id === action.payload.id),
+      };
+    }
+    case REMOVE_POST_FAILURE: {
+      return { ...state, removePostStatus: FAILURE_STATUS };
+    }
+
+    case LOGOUT: {
+      return { ...initialState };
     }
 
     default:

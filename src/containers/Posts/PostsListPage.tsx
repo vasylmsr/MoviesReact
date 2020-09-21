@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import Grid from '@material-ui/core/Grid';
 import { CreatePostDialog } from '../../components/dialogs/CreatePostDialog/CreatePostDialog';
 import { addPost, getPosts } from '../../store/posts/actions';
 import { IPostData } from '../../api/auth';
@@ -18,27 +19,27 @@ const useStyles = makeStyles(theme => ({
     fontSize: '40px',
     fontWeight: 800,
     marginBottom: theme.spacing(2),
-    textDecoration: 'uppercase',
+    textTransform: 'uppercase',
   },
   modalBody: {
     width: '200px',
   },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 0,
-    alignItems: 'center',
-  },
   posts: {
     marginTop: theme.spacing(3),
+  },
+  root: {
+    justifyContent: 'center',
+  },
+  createPostBtn: {
+    width: '100%',
   },
 }));
 
 export const PostsListPage: React.FC = (): JSX.Element => {
   const {
     isOpened: isCreatingPostModalOpened,
-    handleOpen: handleOpenCreationPost,
-    handleClose: handleCloseCreationPost,
+    handleOpen: handleOpenPostCreation,
+    handleClose: handleClosePostCreation,
   } = useModalState();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -58,29 +59,36 @@ export const PostsListPage: React.FC = (): JSX.Element => {
     if (addPostStatus === FAILURE_STATUS) {
       enqueueSnackbar(addPostError.message, { variant: 'error' });
     } else if (addPostStatus === SUCCESS_STATUS) {
-      handleCloseCreationPost();
+      handleClosePostCreation();
     }
-  }, [handleCloseCreationPost, addPostStatus, enqueueSnackbar, addPostError]);
+  }, [handleClosePostCreation, addPostStatus, enqueueSnackbar, addPostError]);
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h1" className={classes.header}>
-        My Posts
-      </Typography>
-
-      <Button variant="outlined" color="primary" onClick={handleOpenCreationPost}>
-        Create a Post
-      </Button>
+    <Grid container className={classes.root}>
+      <Grid item xs={12}>
+        <Typography variant="h1" className={classes.header}>
+          My Posts
+        </Typography>
+      </Grid>
+      <Grid item md={3} sm={4} xs={12}>
+        <Button
+          className={classes.createPostBtn}
+          variant="outlined"
+          onClick={handleOpenPostCreation}
+        >
+          Create a Post
+        </Button>
+      </Grid>
 
       <CreatePostDialog
         title="Create a Post"
         onSave={savePost}
-        onClose={handleCloseCreationPost}
+        onClose={handleClosePostCreation}
         open={isCreatingPostModalOpened}
         loading={addPostStatus === LOADING_STATUS}
       />
 
       <PostsList posts={posts} className={classes.posts} />
-    </div>
+    </Grid>
   );
 };

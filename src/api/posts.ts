@@ -18,6 +18,15 @@ export const fetchPost = async (postId: string) => {
   return modifyPostFromFirebase(snapshot.data());
 };
 
+export const fetchPosts = async (uid: string): Promise<Array<IPostData>> => {
+  const snapshot = await db
+    .collection(POSTS_COLLECTION)
+    .where('user', '==', createRef(PROFILES_COLLECTION, uid))
+    .get();
+  const serverPosts = snapshot.docs.map(doc => doc.data()) as Array<IPostData>;
+  return Promise.all(serverPosts.map((post: IPostData) => modifyPostFromFirebase(post)));
+};
+
 export const createPost = async (postData: IPostData, uid: string) => {
   const timestamp = app.firestore.FieldValue.serverTimestamp();
   const fullPostData = {
@@ -45,11 +54,4 @@ export const editPost = async (postData: IPostData) => {
   return fetchPost(postId);
 };
 
-export const getPosts = async (uid: string): Promise<Array<IPostData>> => {
-  const snapshot = await db
-    .collection(POSTS_COLLECTION)
-    .where('user', '==', createRef(PROFILES_COLLECTION, uid))
-    .get();
-  const serverPosts = snapshot.docs.map(doc => doc.data()) as Array<IPostData>;
-  return Promise.all(serverPosts.map((post: IPostData) => modifyPostFromFirebase(post)));
-};
+// todo: remove post

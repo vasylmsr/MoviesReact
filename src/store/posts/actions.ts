@@ -51,7 +51,7 @@ export const getPosts = () => async (dispatch: any, getState: any) => {
   dispatch(fetchPostsRequest());
   try {
     const { user } = getState().auth;
-    const posts: Array<IPostData> = await PostsApi.getPosts(user.uid);
+    const posts: Array<IPostData> = await PostsApi.fetchPosts(user.uid);
     dispatch(fetchPostsSuccess(posts));
   } catch (error) {
     dispatch(fetchPostsFailure(error));
