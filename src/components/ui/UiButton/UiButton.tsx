@@ -38,7 +38,6 @@ export const UiButton: React.FC<UiButtonProps> = ({
       <Button
         className={className}
         variant="contained"
-        color="primary"
         disabled={disabled || loading}
         onClick={onClick}
         {...props}

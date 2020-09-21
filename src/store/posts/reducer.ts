@@ -64,7 +64,7 @@ export const postsReducer = (
       return {
         ...state,
         removePostStatus: SUCCESS_STATUS,
-        posts: state.posts.filter(post => post.id === action.payload.id),
+        posts: state.posts.filter(post => post.id !== action.payload.id),
       };
     }
     case REMOVE_POST_FAILURE: {
