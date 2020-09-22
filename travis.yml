@@ -1,0 +1,9 @@
+node_js:
+  - "10"
+script:
+  - echo "Deploying!"
+install:
+  - yarn
+after_success:
+  - yarn build
+  - firebase deploy --token $FIREBASE_TOKEN
