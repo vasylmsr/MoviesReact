@@ -30,6 +30,7 @@ export const PostCard: React.FC<PostCardProps> = React.memo(
             width="100%"
             alt="News picture"
             title="News picture"
+            loading="lazy"
           />
         </div>
         <div className={classes.content}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useHistory } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -7,13 +7,28 @@ import { UiButton } from '../components/ui/UiButton/UiButton';
 import { HOME } from '../utils/constants/routes';
 import landingCity from '../assets/images/landing_city3.jpg';
 
+const animations = {
+  '@keyframes upToDown': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateY(-50px)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'translateY(0)',
+    },
+  },
+};
 const useStyles = makeStyles((theme: Theme) => ({
+  ...animations,
   header: {
     textTransform: 'uppercase',
     fontSize: '65px',
     '@media (max-width:600px)': {
       fontSize: '4em',
     },
+    animationName: '$upToDown',
+    animationDuration: '2s',
   },
   text: {
     color: 'white',
@@ -22,7 +37,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     textShadow: '3px 7px 15px rgba(2,2,2)',
   },
-
+  quote: {
+    opacity: 0,
+    animationName: '$upToDown',
+    animationDuration: '2s',
+    animationDelay: '0.7s',
+    animationFillMode: 'forwards',
+  },
   mainSection: {
     backgroundImage: `url(${landingCity})`,
     backgroundPosition: 'center center',
@@ -50,10 +71,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+function getRandomQuote(): string {
+  const quotes: Array<string> = [
+    'It does not matter how slowly you go so long as you do not stop.',
+    'Success does not come to you … you go to it',
+    'There are no shortcuts to any place worth going', // «К достойной цели нет коротких путей».
+  ];
+  const randomQuoteNumber = Math.round(Math.random() * (quotes.length - 1));
+  return quotes[randomQuoteNumber];
+}
+
 export const Landing: React.FC = () => {
   const history = useHistory();
   const goToApplication = () => history.push(HOME);
   const classes = useStyles();
+  const quote = useMemo(() => getRandomQuote(), []);
   return (
     <>
       <section className={classes.mainSection}>
@@ -61,8 +93,10 @@ export const Landing: React.FC = () => {
           Vasyl Mysiura
         </Typography>
         <hr className={classes.line} />
-        <Typography className={classes.text} component="h2" variant="h4">
-          &laquo;Success does not come to you … you go to it&raquo;
+        <Typography className={clsx(classes.text, classes.quote)} component="h2" variant="h4">
+          &laquo;
+          {quote}
+          &raquo;
         </Typography>
 
         <UiButton className={classes.mainSection__button} onClick={goToApplication}>
