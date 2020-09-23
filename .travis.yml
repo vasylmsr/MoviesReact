@@ -1,5 +1,12 @@
+language: node_js
+cache:
+  directories:
+    - node_modules
+branches:
+  only:
+    - master
 node_js:
-  - "10"
+  - "8.12.0"
 script:
   - echo "Deploying!"
 install:

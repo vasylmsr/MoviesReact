@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
@@ -22,7 +22,7 @@ const forgotPasswordValidationSchema = yup.object({
   email: yup.string().email().required(),
 });
 
-export const ForgotPassword: React.FC = (): JSX.Element => {
+const ForgotPassword: React.FC = (): JSX.Element => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -77,3 +77,5 @@ export const ForgotPassword: React.FC = (): JSX.Element => {
     </AuthFormLayout>
   );
 };
+
+export default ForgotPassword;

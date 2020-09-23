@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { AUTH_LAYOUT } from './utils/constants/layouts';
 import { FORGOT_PASSWORD, HOME, MAIN, SIGN_IN, SIGN_UP } from './utils/constants/routes';
-import { SignIn } from './containers/auth/SignIn/SignIn';
-import { SignUp } from './containers/auth/Register/SignUp';
-import { PostsListPage } from './containers/Posts/PostsListPage';
-import { Landing } from './containers/Landing';
-import { EmailLink } from './containers/auth/EmailLink/EmailLink';
-import { ForgotPassword } from './containers/auth/ForgotPassword/ForgotPassword';
+
+const SignIn = lazy(() => import('./containers/auth/SignIn/SignIn'));
+const SignUp = lazy(() => import('./containers/auth/Register/SignUp'));
+const PostsListPage = lazy(() => import('./containers/Posts/PostsListPage'));
+const Landing = lazy(() => import('./containers/Landing'));
+const EmailLink = lazy(() => import('./containers/auth/EmailLink/EmailLink'));
+const ForgotPassword = lazy(() => import('./containers/auth/ForgotPassword/ForgotPassword'));
 
 export interface ISingleRoute {
   path: string;

@@ -76,12 +76,15 @@ function getRandomQuote(): string {
     'It does not matter how slowly you go so long as you do not stop.',
     'Success does not come to you … you go to it',
     'There are no shortcuts to any place worth going', // «К достойной цели нет коротких путей».
+    'It’s never too late to be what you might have been',
+    'Memories take us back, dreams take us forward',
+    'Remember that the most dangerous prison is the one in your head',
   ];
   const randomQuoteNumber = Math.round(Math.random() * (quotes.length - 1));
   return quotes[randomQuoteNumber];
 }
 
-export const Landing: React.FC = () => {
+const Landing: React.FC = () => {
   const history = useHistory();
   const goToApplication = () => history.push(HOME);
   const classes = useStyles();
@@ -106,3 +109,5 @@ export const Landing: React.FC = () => {
     </>
   );
 };
+
+export default Landing;

@@ -6,7 +6,7 @@ import { HOME, SIGN_IN } from '../../../utils/constants/routes';
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
 import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
-export const EmailLink: React.FC = (props): JSX.Element => {
+const EmailLink: React.FC = (props): JSX.Element => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const history = useHistory();
@@ -39,3 +39,5 @@ export const EmailLink: React.FC = (props): JSX.Element => {
       return <div>Invalid mode</div>;
   }
 };
+
+export default EmailLink;

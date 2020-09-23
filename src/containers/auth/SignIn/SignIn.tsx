@@ -6,7 +6,7 @@ import { signIn } from '../../../store/auth/login/actions';
 import { SignInForm } from '../../../components/auth/SignInForm/SignInForm';
 import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
-export const SignIn: React.FC = (): JSX.Element => {
+const SignIn: React.FC = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.auth);
@@ -21,3 +21,5 @@ export const SignIn: React.FC = (): JSX.Element => {
 
   return <SignInForm onSignIn={execute} loading={loading} />;
 };
+
+export default SignIn;

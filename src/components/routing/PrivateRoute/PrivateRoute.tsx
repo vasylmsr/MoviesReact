@@ -16,7 +16,9 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
       path={path}
       render={componentProps => {
         return user ? (
-          <Route component={component} {...componentProps} />
+          <React.Suspense fallback="Loading...">
+            <Route component={component} {...componentProps} />
+          </React.Suspense>
         ) : (
           <Redirect to={SIGN_IN} />
         );

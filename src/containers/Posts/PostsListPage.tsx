@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const PostsListPage: React.FC = (): JSX.Element => {
+const PostsListPage: React.FC = (): JSX.Element => {
   const {
     isOpened: isCreatingPostModalOpened,
     handleOpen: handleOpenPostCreation,
@@ -92,3 +92,5 @@ export const PostsListPage: React.FC = (): JSX.Element => {
     </Grid>
   );
 };
+
+export default PostsListPage;

@@ -8,6 +8,7 @@ import '../App.css';
 
 import { useSpecialRoutes } from './hooks/useSpecialRoutes';
 import { AuthRoutes } from './routing/AuthRoutes/AuthRoutes';
+import RouteSuspense from './routing/RouteSuspense/RouteSuspense';
 
 export const AppRoutes: React.FC = (): JSX.Element => {
   const { specialRoutesPaths: authPaths, specialRoutes: authRoutes } = useSpecialRoutes(route =>
@@ -15,18 +16,24 @@ export const AppRoutes: React.FC = (): JSX.Element => {
   );
 
   const { specialRoutes: privateRoutes } = useSpecialRoutes(route => Boolean(route.isPrivate));
-
+  const Landing = landingRoute!.component;
   return (
     <>
       <Switch>
-        <Route exact component={landingRoute!.component} path={landingRoute!.path} />
+        <Route exact path={landingRoute!.path}>
+          <RouteSuspense>
+            <Landing />
+          </RouteSuspense>
+        </Route>
         <Route path={authPaths}>
           <AuthRoutes routes={authRoutes} />
         </Route>
         <Route path="*">
           <HomeLayout>
             {privateRoutes.map((route: ISingleRoute) => (
-              <PrivateRoute component={route.component} path={route.path} key={route.path} />
+              <RouteSuspense>
+                <PrivateRoute component={route.component} path={route.path} key={route.path} />
+              </RouteSuspense>
             ))}
           </HomeLayout>
         </Route>

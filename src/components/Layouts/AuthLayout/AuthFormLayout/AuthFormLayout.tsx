@@ -24,11 +24,11 @@ export const AuthFormLayout: React.FC<AuthFormLayoutProps> = ({ children }: Auth
   const classes = useStyles();
 
   return (
-    <div>
+    <>
       <div className={classes.body}>{children}</div>
       <Box mt={5} className={classes.copyrightWrapper}>
         <Copyright />
       </Box>
-    </div>
+    </>
   );
 };
