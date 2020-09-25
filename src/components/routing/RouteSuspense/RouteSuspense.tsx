@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     height: '100%',
     width: '100%',
+    padding: '20px',
   },
 }));
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import * as AuthApi from './api/auth';
 import { storeAuthUser } from './store/auth/login/actions';
-import { AppRoutes } from './components/AppRoutes';
+import { AppRoutes } from './components/routing/AppRoutes';
 import { SUCCESS_STATUS } from './utils/constants/other';
 import './App.css';
 

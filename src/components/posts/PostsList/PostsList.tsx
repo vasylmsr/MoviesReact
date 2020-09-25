@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Masonry from 'react-masonry-css';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { IPostData } from '../../../api/auth';
 import { PostCard } from '../PostCard/PostCard';
 
 type PostListProps = {
   posts: Array<IPostData>;
   className: string;
+  loading: boolean;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -25,11 +27,14 @@ const useStyles = makeStyles(theme => ({
       marginTop: '20px',
     },
   },
+  loaderWrapper: {
+    padding: theme.spacing(4),
+  },
 }));
 
 export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.Element => {
   const classes = useStyles();
-  const { posts, className } = props;
+  const { posts, loading, className } = props;
   const theme = useTheme();
 
   const breakpointCols = {
@@ -42,14 +47,22 @@ export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.El
   };
 
   return (
-    <Masonry
-      breakpointCols={breakpointCols}
-      className={clsx(classes.masonry, className)}
-      columnClassName={classes.masonryColumn}
-    >
-      {posts.map((post: IPostData) => (
-        <PostCard post={post} key={post.id} />
-      ))}
-    </Masonry>
+    <>
+      {loading ? (
+        <div className={classes.loaderWrapper}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Masonry
+          breakpointCols={breakpointCols}
+          className={clsx(classes.masonry, className)}
+          columnClassName={classes.masonryColumn}
+        >
+          {posts.map((post: IPostData) => (
+            <PostCard post={post} key={post.id} />
+          ))}
+        </Masonry>
+      )}
+    </>
   );
 };

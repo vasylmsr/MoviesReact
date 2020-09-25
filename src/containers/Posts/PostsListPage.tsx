@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
 import { CreatePostDialog } from '../../components/dialogs/CreatePostDialog/CreatePostDialog';
-import { addPost, getPosts } from '../../store/posts/actions';
+import { boundAddPost, boundGetPosts } from '../../store/posts/actions';
 import { IPostData } from '../../api/auth';
 import { PostsList } from '../../components/posts/PostsList/PostsList';
 import { useModalState } from '../../components/hooks/useModalState';
 import { FAILURE_STATUS, LOADING_STATUS, SUCCESS_STATUS } from '../../utils/constants/other';
+import { useAsyncAction } from '../../components/hooks/useAsyncAction';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -34,34 +35,23 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
 }));
-
+// const { search } = useLocation();
+// const queryParams = new URLSearchParams(search);
 const PostsListPage: React.FC = (): JSX.Element => {
   const {
     isOpened: isCreatingPostModalOpened,
     handleOpen: handleOpenPostCreation,
     handleClose: handleClosePostCreation,
   } = useModalState();
+
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
-
-  // const { search } = useLocation();
-  // const queryParams = new URLSearchParams(search);
-
-  const savePost = (data: IPostData) => dispatch(addPost(data));
-
-  const { posts, addPostError, addPostStatus } = useSelector((store: any) => store.posts);
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  const { loading: addPostLoading, execute: savePost } = useAsyncAction(boundAddPost);
+  const { loading: fetchPostsLoading, execute: fetchPosts } = useAsyncAction(boundGetPosts);
+  const { posts } = useSelector((store: any) => store.posts);
 
   useEffect(() => {
-    if (addPostStatus === FAILURE_STATUS) {
-      enqueueSnackbar(addPostError.message, { variant: 'error' });
-    } else if (addPostStatus === SUCCESS_STATUS) {
-      handleClosePostCreation();
-    }
-  }, [handleClosePostCreation, addPostStatus, enqueueSnackbar, addPostError]);
+    fetchPosts();
+  }, [fetchPosts]);
 
   return (
     <Grid container className={classes.root}>
@@ -85,10 +75,12 @@ const PostsListPage: React.FC = (): JSX.Element => {
         onSave={savePost}
         onClose={handleClosePostCreation}
         open={isCreatingPostModalOpened}
-        loading={addPostStatus === LOADING_STATUS}
+        loading={addPostLoading}
       />
 
-      <PostsList posts={posts} className={classes.posts} />
+      <Grid item container xs={12} alignItems="center" justify="center">
+        <PostsList loading={fetchPostsLoading} posts={posts} className={classes.posts} />
+      </Grid>
     </Grid>
   );
 };

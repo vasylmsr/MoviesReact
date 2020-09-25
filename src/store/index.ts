@@ -15,6 +15,8 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const { NODE_ENV } = process.env;
+const isDev = NODE_ENV !== 'production';
+const composeEnhancers = (isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 export type RootStateType = ReturnType<typeof rootReducer>;
 export default createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

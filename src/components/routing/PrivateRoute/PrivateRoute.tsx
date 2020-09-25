@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
 import { SIGN_IN } from '../../../utils/constants/routes';
+import RouteSuspense from '../RouteSuspense/RouteSuspense';
 
 type IPrivateRouteProps = RouteProps;
 
@@ -16,9 +17,9 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
       path={path}
       render={componentProps => {
         return user ? (
-          <React.Suspense fallback="Loading...">
+          <RouteSuspense>
             <Route component={component} {...componentProps} />
-          </React.Suspense>
+          </RouteSuspense>
         ) : (
           <Redirect to={SIGN_IN} />
         );
