@@ -2,12 +2,16 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Grid from '@material-ui/core/Grid';
 import { IPostData } from '../../../api/auth';
 import DefaultImg from '../../../assets/images/default.png';
 import { formatDate } from '../../../utils/helpers';
 
 type PostCardProps = {
   post: IPostData;
+  onRemovePost: any;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -19,19 +23,13 @@ const useStyles = makeStyles(theme => ({
 export const PostCard: React.FC<PostCardProps> = React.memo(
   (props: PostCardProps): JSX.Element => {
     const classes = useStyles();
-    const { post } = props;
+    const { post, onRemovePost } = props;
 
     const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
     return (
       <Paper>
         <div>
-          <img
-            src={post.photoUrl || DefaultImg}
-            width="100%"
-            alt="News picture"
-            title="News picture"
-            loading="lazy"
-          />
+          <img src={post.photoUrl || DefaultImg} width="100%" alt="Post" title="Post" />
         </div>
         <div className={classes.content}>
           <Typography gutterBottom variant="h5" component="h3">
@@ -51,6 +49,12 @@ export const PostCard: React.FC<PostCardProps> = React.memo(
             </Typography>
           )}
         </div>
+
+        <Grid container direction="row" justify="flex-end" alignItems="center">
+          <IconButton aria-label="delete" onClick={() => onRemovePost(post)}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
       </Paper>
     );
   },

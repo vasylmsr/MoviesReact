@@ -16,25 +16,17 @@ export const postsReducer = (
   action: PostsActionsType,
 ): IPostsReducer => {
   switch (action.type) {
-    case FETCH_POSTS_SUCCESS: {
+    case FETCH_POSTS_SUCCESS:
       return { ...state, posts: action.payload };
-    }
-
-    case ADD_POST_SUCCESS: {
+    case ADD_POST_SUCCESS:
       return { ...state, posts: [action.payload, ...state.posts] };
-    }
-
-    case REMOVE_POST_SUCCESS: {
+    case REMOVE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.filter(post => post.id !== action.payload.id),
+        posts: state.posts.filter(post => post.id !== action.payload),
       };
-    }
-
-    case LOGOUT: {
+    case LOGOUT:
       return { ...initialState };
-    }
-
     default:
       return { ...state };
   }

@@ -1,4 +1,4 @@
-import * as app from 'firebase';
+import app from 'firebase/app';
 import db from './db';
 import { IPostData } from './auth';
 import { createRef, POSTS_COLLECTION, PROFILES_COLLECTION } from './helpers';
@@ -36,12 +36,17 @@ export const createPost = async (postData: IPostData, uid: string) => {
     user: createRef('profiles', uid),
   };
   const { id } = await db.collection(POSTS_COLLECTION).add(fullPostData);
-  await db.doc(`posts/${id}`).update({
-    ...fullPostData,
-    id,
-  });
+  await db
+    .collection(POSTS_COLLECTION)
+    .doc(id)
+    .update({
+      ...fullPostData,
+      id,
+    });
   return fetchPost(id);
 };
+
+export const removePost = (postId: string) => db.collection(POSTS_COLLECTION).doc(postId).delete();
 
 export const editPost = async (postData: IPostData) => {
   const postId = postData.id;

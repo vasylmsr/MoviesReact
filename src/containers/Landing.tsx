@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -89,6 +89,11 @@ const Landing: React.FC = () => {
   const goToApplication = () => history.push(HOME);
   const classes = useStyles();
   const quote = useMemo(() => getRandomQuote(), []);
+
+  useEffect(() => {
+    document.title = 'Vasyl Mysiura';
+  }, []);
+
   return (
     <>
       <section className={classes.mainSection}>

@@ -15,6 +15,7 @@ declare global {
   }
 }
 
+// Todo: typification of redux
 const { NODE_ENV } = process.env;
 const isDev = NODE_ENV !== 'production';
 const composeEnhancers = (isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

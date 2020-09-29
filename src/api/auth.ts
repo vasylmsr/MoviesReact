@@ -1,4 +1,4 @@
-import * as app from 'firebase/app';
+import app from 'firebase/app';
 import 'firebase/auth';
 import db from './db';
 import { IUserProfile } from '../store/auth/login/types';

@@ -11,15 +11,11 @@ export default function App() {
   const dispatch = useDispatch();
   const [hasUserInStorage, setAvailabilityUserInStorage] = useState(true);
   const { checkingUserStatus } = useSelector((state: any) => state.auth);
-  // We don`t save data in LS because api save token inside IndexedDB
+  // We don`t save data in LS because api(firebase) saves token inside IndexedDB
   React.useEffect(
     () =>
       AuthApi.onAuthStateChanged((user: any) => {
-        if (user) {
-          dispatch(storeAuthUser(user));
-        } else {
-          setAvailabilityUserInStorage(false);
-        }
+        user ? dispatch(storeAuthUser(user)) : setAvailabilityUserInStorage(false);
       }),
     [dispatch],
   );

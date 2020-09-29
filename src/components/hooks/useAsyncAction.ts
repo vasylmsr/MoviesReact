@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 export function useAsyncAction(callback: any, errorCallback?: any) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const execute = useCallback(

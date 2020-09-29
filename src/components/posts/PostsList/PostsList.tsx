@@ -3,14 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Masonry from 'react-masonry-css';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { IPostData } from '../../../api/auth';
 import { PostCard } from '../PostCard/PostCard';
+import FullSizeProgress from '../../ui/UiFullSizeProgress/UiFullSizeProgress';
 
 type PostListProps = {
   posts: Array<IPostData>;
   className: string;
   loading: boolean;
+  onRemovePost: any;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -27,14 +28,11 @@ const useStyles = makeStyles(theme => ({
       marginTop: '20px',
     },
   },
-  loaderWrapper: {
-    padding: theme.spacing(4),
-  },
 }));
 
 export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.Element => {
   const classes = useStyles();
-  const { posts, loading, className } = props;
+  const { posts, loading, className, onRemovePost } = props;
   const theme = useTheme();
 
   const breakpointCols = {
@@ -49,9 +47,7 @@ export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.El
   return (
     <>
       {loading ? (
-        <div className={classes.loaderWrapper}>
-          <CircularProgress />
-        </div>
+        <FullSizeProgress />
       ) : (
         <Masonry
           breakpointCols={breakpointCols}
@@ -59,7 +55,7 @@ export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.El
           columnClassName={classes.masonryColumn}
         >
           {posts.map((post: IPostData) => (
-            <PostCard post={post} key={post.id} />
+            <PostCard post={post} key={post.id} onRemovePost={onRemovePost} />
           ))}
         </Masonry>
       )}
