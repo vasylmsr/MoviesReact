@@ -14,7 +14,7 @@ const RemovePostDialog: React.FC<RemovePostDialogProps> = (
   return (
     <AlertDialog
       {...props}
-      onAgree={onAgree(post!.id)}
+      onAgree={() => onAgree(post!.id)}
       title="Are you sure want to remove this post?"
     />
   );

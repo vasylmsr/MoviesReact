@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Masonry from 'react-masonry-css';
 import { IPostData } from '../../../api/auth';
-import { PostCard } from '../PostCard/PostCard';
+import PostCard from '../PostCard/PostCard';
 import FullSizeProgress from '../../ui/UiFullSizeProgress/UiFullSizeProgress';
 
 type PostListProps = {

@@ -20,42 +20,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const PostCard: React.FC<PostCardProps> = React.memo(
-  (props: PostCardProps): JSX.Element => {
-    const classes = useStyles();
-    const { post, onRemovePost } = props;
+const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element => {
+  const classes = useStyles();
+  const { post, onRemovePost } = props;
 
-    const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
-    return (
-      <Paper>
-        <div>
-          <img src={post.photoUrl || DefaultImg} width="100%" alt="Post" title="Post" />
-        </div>
-        <div className={classes.content}>
-          <Typography gutterBottom variant="h5" component="h3">
-            {post.title}
-          </Typography>
+  const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
+  return (
+    <Paper>
+      <div>
+        <img src={post.photoUrl || DefaultImg} width="100%" alt="Post" title="Post" />
+      </div>
+      <div className={classes.content}>
+        <Typography gutterBottom variant="h5" component="h3">
+          {post.title}
+        </Typography>
+        <Typography gutterBottom variant="subtitle1" component="p">
+          {formatDate(post.createdAt)}
+        </Typography>
+        {post.location && (
           <Typography gutterBottom variant="subtitle1" component="p">
-            {formatDate(post.createdAt)}
+            {post.location}
           </Typography>
-          {post.location && (
-            <Typography gutterBottom variant="subtitle1" component="p">
-              {post.location}
-            </Typography>
-          )}
-          {isNewsUpdated && (
-            <Typography align="right" variant="body2" color="textSecondary" component="p">
-              Updated {formatDate(post.updatedAt)}
-            </Typography>
-          )}
-        </div>
+        )}
+        {isNewsUpdated && (
+          <Typography align="right" variant="body2" color="textSecondary" component="p">
+            Updated {formatDate(post.updatedAt)}
+          </Typography>
+        )}
+      </div>
 
-        <Grid container direction="row" justify="flex-end" alignItems="center">
-          <IconButton aria-label="delete" onClick={() => onRemovePost(post)}>
-            <DeleteIcon />
-          </IconButton>
-        </Grid>
-      </Paper>
-    );
-  },
-);
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+        <IconButton aria-label="delete" onClick={() => onRemovePost(post)}>
+          <DeleteIcon />
+        </IconButton>
+      </Grid>
+    </Paper>
+  );
+};
+export default React.memo(PostCard);
