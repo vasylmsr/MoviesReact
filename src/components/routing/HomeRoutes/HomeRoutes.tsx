@@ -11,11 +11,13 @@ type AuthRoutesProps = {
 
 const HomeRoutes: React.FC<AuthRoutesProps> = ({ routes }: AuthRoutesProps) => {
   return (
-    <HomeLayout>
-      {routes.map((route: ISingleRoute) => (
-        <PrivateRoute component={route.component} path={route.path} key={route.path} />
-      ))}
-    </HomeLayout>
+    <RouteSuspense>
+      <HomeLayout>
+        {routes.map((route: ISingleRoute) => (
+          <PrivateRoute component={route.component} path={route.path} key={route.path} />
+        ))}
+      </HomeLayout>
+    </RouteSuspense>
   );
 };
 
