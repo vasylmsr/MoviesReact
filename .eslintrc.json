@@ -2,10 +2,12 @@
   "env": {
     "browser": true
   },
-  "extends": ["airbnb", "prettier", "react-app"],
-  "plugins": ["react", "react-hooks","@typescript-eslint", "prettier"],
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["react-hooks","@typescript-eslint", "prettier"],
   "parser": "@typescript-eslint/parser",
   "rules": {
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "import/no-unresolved": 0,
@@ -13,7 +15,7 @@
     "react/react-in-jsx-scope": 0,
     "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }], //ці формати можуть містити jsx
     "prettier/prettier": ["error"],
-
+    "no-param-reassign": 0,
     "no-unused-vars": "off", //Доводиться вимикати, бо eslint не розуміє, чи заюзав я наприклад інтерфейс.
     "@typescript-eslint/no-unused-vars": "error", //Вмикаю, щоб показувало помилки для всіх незаюзаних, але заімпортованих елементів
 
@@ -23,7 +25,9 @@
         "ts": "never",
         "tsx": "never",
         "js": "never",
-        "jsx": "never"
+        "jsx": "never",
+        "jpg": "always",
+        "png": "always"
       }
     ]
   }

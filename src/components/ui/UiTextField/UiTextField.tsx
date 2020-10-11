@@ -9,7 +9,7 @@ export type UiTextFieldProps = TextFieldProps & {
   name: string;
 };
 
-export const UiTextField: React.FC<UiTextFieldProps> = (props: UiTextFieldProps): JSX.Element => {
+export const UiTextField: React.FC<UiTextFieldProps> = props => {
   const { customError, ...otherProps } = props;
   return (
     <TextField

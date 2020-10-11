@@ -3,10 +3,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Copyright from '../../../Copyright/Copyright';
 
-type AuthFormLayoutProps = {
-  children: React.ReactNode;
-};
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   copyrightWrapper: {
     marginTop: 'auto',
     padding: '20px',
@@ -20,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const AuthFormLayout: React.FC<AuthFormLayoutProps> = ({ children }: AuthFormLayoutProps) => {
+export const AuthFormLayout: React.FC = ({ children }) => {
   const classes = useStyles();
 
   return (

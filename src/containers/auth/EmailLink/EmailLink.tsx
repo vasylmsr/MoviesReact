@@ -1,16 +1,19 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { applyActionCode } from '../../../store/auth/login/actions';
+import { applyActionCode } from '../../../store/auth/sagas';
 import { HOME, SIGN_IN } from '../../../utils/constants/routes';
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
 import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
 
-const EmailLink: React.FC = (props): JSX.Element => {
+const EmailLink: React.FC = () => {
   const dispatch = useDispatch();
   const { search } = useLocation();
   const history = useHistory();
   const queryParams = new URLSearchParams(search);
+
+  const mode = queryParams.get('mode');
+  const code = queryParams.get('oobCode') || '';
 
   const { execute: callVerifyEmail } = useAsyncAction(
     async () => {
@@ -20,8 +23,6 @@ const EmailLink: React.FC = (props): JSX.Element => {
     () => history.push(SIGN_IN),
   );
 
-  const mode = queryParams.get('mode');
-  const code = queryParams.get('oobCode') || '';
   switch (mode) {
     case 'resetPassword':
       // Display reset password handler and UI.
@@ -33,7 +34,7 @@ const EmailLink: React.FC = (props): JSX.Element => {
       // handleRecoverEmail(auth, actionCode, lang);
       return <div>recoverEmail</div>;
     case 'verifyEmail':
-      callVerifyEmail(code!);
+      callVerifyEmail(code);
       return <div>verifyEmail</div>;
     default:
       return <div>Invalid mode</div>;

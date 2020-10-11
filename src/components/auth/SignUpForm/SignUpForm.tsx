@@ -1,16 +1,14 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Typography, makeStyles, Grid } from '@material-ui/core';
+import { UiButton } from 'components/ui';
+import { FORGOT_PASSWORD, SIGN_IN } from 'utils/constants/routes';
+import * as AuthApi from 'api/auth';
+import { getDefaultAuthStyles } from 'containers/auth/styles';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
-import { UiButton } from '../../ui/UiButton/UiButton';
-import { FORGOT_PASSWORD, SIGN_IN } from '../../../utils/constants/routes';
-import * as AuthApi from '../../../api/auth';
 import { signUpValidationSchema } from './SignUpValidation';
-import { getDefaultAuthStyles } from '../../../containers/auth/styles';
 import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 type SignUpFormProps = {
@@ -35,7 +33,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = (props: SignUpFormProps): J
     },
   });
 
-  const onSubmit = handleSubmit(async (data: AuthApi.IUserRegisterCredentials) => {
+  const onSubmit = handleSubmit((data: AuthApi.IUserRegisterCredentials) => {
     onSignUp(data);
   });
 

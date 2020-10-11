@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { MetaTitle } from 'components/MetaTitle';
+import { RootStateType } from 'store';
 import { HOME } from '../../../utils/constants/routes';
-import { signIn } from '../../../store/auth/login/actions';
 import { SignInForm } from '../../../components/auth/SignInForm/SignInForm';
-import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
+import { signInAction } from '../../../store/auth/reducer';
+import { LOADING_STATUS } from '../../../utils/constants/other';
 
 const SignIn: React.FC = (): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: RootStateType) => state.auth);
+  const { status: signInStatus } = useSelector((state: RootStateType) => state.auth.signIn);
 
   useEffect(() => {
     if (user) {
@@ -17,9 +20,15 @@ const SignIn: React.FC = (): JSX.Element => {
     }
   }, [user, history]);
 
-  const { loading, execute } = useAsyncAction((data: any) => dispatch(signIn(data)));
-
-  return <SignInForm onSignIn={execute} loading={loading} />;
+  return (
+    <>
+      <MetaTitle title="Sign In" />
+      <SignInForm
+        onSignIn={(data: any) => dispatch(signInAction(data))}
+        loading={signInStatus === LOADING_STATUS}
+      />
+    </>
+  );
 };
 
 export default SignIn;

@@ -1,4 +1,3 @@
-import { ILogout } from '../auth/login/types';
 import { IPostData } from '../../api/auth';
 
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -34,5 +33,4 @@ export type PostsActionsType =
   | IFetchPostsSuccess
   | IAddPostSuccess
   | IRemovePostSuccess
-  | IEditPostSuccess
-  | ILogout;
+  | IEditPostSuccess;

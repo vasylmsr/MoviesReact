@@ -1,16 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
-import { SIGN_IN } from '../../../utils/constants/routes';
+import { SIGN_IN } from 'utils/constants/routes';
 import RouteSuspense from '../RouteSuspense/RouteSuspense';
 
-type IPrivateRouteProps = RouteProps;
-
-export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
-  component,
-  path,
-  ...props
-}: IPrivateRouteProps): JSX.Element => {
+export const PrivateRoute: React.FC<RouteProps> = props => {
+  const { component, path, ...otherProps } = props;
   const { user } = useSelector((state: any) => state.auth);
   return (
     <Route
@@ -24,7 +19,7 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
           <Redirect to={SIGN_IN} />
         );
       }}
-      {...props}
+      {...otherProps}
     />
   );
 };

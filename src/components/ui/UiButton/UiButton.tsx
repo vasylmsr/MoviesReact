@@ -30,7 +30,7 @@ export const UiButton: React.FC<UiButtonProps> = ({
   disabled,
   className,
   ...props
-}: UiButtonProps): JSX.Element => {
+}) => {
   const classes = useStyles();
 
   return (

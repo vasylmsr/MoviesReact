@@ -49,7 +49,7 @@ export const createPost = async (postData: IPostData, uid: string) => {
 export const removePost = (postId: string) => db.collection(POSTS_COLLECTION).doc(postId).delete();
 
 export const editPost = async (postData: IPostData) => {
-  // Todo: in this case user is object, not reference. We need to fix it.
+  // Todo: in this case user is an object, not reference. We need to fix it.
   // eslint-disable-next-line no-param-reassign
   delete postData.user;
   const postId = postData.id;

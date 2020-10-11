@@ -10,7 +10,7 @@ import RouteSuspense from './RouteSuspense/RouteSuspense';
 import HomeRoutes from './HomeRoutes/HomeRoutes';
 import NotFound from '../../containers/NotFound/NotFound';
 
-export const AppRoutes: React.FC = (): JSX.Element => {
+export const AppRoutes: React.FC = () => {
   const { specialRoutesPaths: authPaths, specialRoutes: authRoutes } = useSpecialRoutes(route =>
     Boolean(route.layout === AUTH_LAYOUT),
   );
@@ -19,7 +19,6 @@ export const AppRoutes: React.FC = (): JSX.Element => {
     specialRoutesPaths: privatePaths,
     specialRoutes: privateRoutes,
   } = useSpecialRoutes(route => Boolean(route.isPrivate));
-
   const Landing = landingRoute!.component;
   return (
     <Switch>

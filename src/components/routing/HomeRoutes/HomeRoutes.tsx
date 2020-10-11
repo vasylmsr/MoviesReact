@@ -9,7 +9,7 @@ type AuthRoutesProps = {
   routes: Array<ISingleRoute>;
 };
 
-const HomeRoutes: React.FC<AuthRoutesProps> = ({ routes }: AuthRoutesProps) => {
+const HomeRoutes: React.FC<AuthRoutesProps> = ({ routes }) => {
   return (
     <RouteSuspense>
       <HomeLayout>

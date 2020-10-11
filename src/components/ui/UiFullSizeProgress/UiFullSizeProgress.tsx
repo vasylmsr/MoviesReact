@@ -1,6 +1,6 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   progressWrapper: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FullSizeProgress: React.FC = (): JSX.Element => {
+export const FullSizeProgress: React.FC = () => {
   const classes = useStyles();
   return (
     <div className={classes.progressWrapper}>
@@ -22,5 +22,3 @@ const FullSizeProgress: React.FC = (): JSX.Element => {
     </div>
   );
 };
-
-export default FullSizeProgress;

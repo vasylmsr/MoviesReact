@@ -1,18 +1,14 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
+import { Avatar, Grid, Typography, makeStyles, CssBaseline } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
+import { UiButton } from 'components/ui';
 import { FORGOT_PASSWORD, SIGN_UP } from '../../../utils/constants/routes';
 import * as AuthApi from '../../../api/auth';
 import SignInValidation from '../../../containers/auth/SignIn/SignInValidation';
 import { getDefaultAuthStyles } from '../../../containers/auth/styles';
-import { UiButton } from '../../ui/UiButton/UiButton';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
@@ -23,7 +19,7 @@ type SignInProps = {
   loading: boolean;
 };
 
-export const SignInForm: React.FC<SignInProps> = (props: SignInProps): JSX.Element => {
+export const SignInForm: React.FC<SignInProps> = props => {
   const { onSignIn, loading } = props;
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm<AuthApi.IUserLoginCredentials>({

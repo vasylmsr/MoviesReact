@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { UiButton } from 'components/ui';
 import { UiDialogActions, UiDialogContent, UiDialogTitle } from '../../ui/UiDialog/UiDialog';
 import * as AuthApi from '../../../api/auth';
 import { UiTextField } from '../../ui/UiTextField/UiTextField';
 import { IPostData } from '../../../api/auth';
-import { UiButton } from '../../ui/UiButton/UiButton';
 
 type CreatePostDialogProps = DialogProps & {
   onClose: () => void;
@@ -61,8 +61,7 @@ const PostDialog: React.FC<CreatePostDialogProps> = (props: CreatePostDialogProp
   useEffect(() => {
     setTimeout(() => {
       if (post) {
-        // Todo: fix
-        // eslint-disable-next-line guard-for-in
+        // eslint-disable-next-line guard-for-in,no-restricted-syntax
         for (const key in post) {
           // @ts-ignore
           setValue(key, post[key]);

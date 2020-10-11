@@ -6,7 +6,6 @@ import {
   PostsActionsType,
   REMOVE_POST_SUCCESS,
 } from './types';
-import { LOGOUT } from '../auth/login/types';
 
 export const initialState: IPostsReducer = {
   posts: [],
@@ -38,8 +37,6 @@ export const postsReducer = (
         ...state,
         posts: getArrayWithUpdatedObject(action.payload, state.posts),
       };
-    case LOGOUT:
-      return { ...initialState };
     default:
       return { ...state };
   }

@@ -3,11 +3,12 @@ import { IPostData } from '../../api/auth';
 import {
   ADD_POST_SUCCESS,
   EDIT_POST_SUCCESS,
-  FETCH_POSTS_SUCCESS, IAddPostSuccess,
+  FETCH_POSTS_SUCCESS,
+  IAddPostSuccess,
   IEditPostSuccess,
   IRemovePostSuccess,
-  REMOVE_POST_SUCCESS
-} from "./types";
+  REMOVE_POST_SUCCESS,
+} from './types';
 import store from '../index';
 
 const { dispatch: storeDispatch } = store;
@@ -49,17 +50,12 @@ export const removePost = (postId: string) => async (dispatch: any) => {
   dispatch(removePostSuccess(postId));
 };
 
-export const editPost = (postData: IPostData) => async (dispatch: any, getState: any) => {
+export const editPost = (postData: IPostData) => async (dispatch: any) => {
   const newPostData = await PostsApi.editPost(postData);
   dispatch(editPostSuccess(newPostData));
 };
 
-// Todo: fix ts-ignore
-// @ts-ignore
 export const boundAddPost = (postData: IPostData) => store.dispatch(addPost(postData));
-// @ts-ignore
 export const boundGetPosts = () => storeDispatch(getPosts());
-// @ts-ignore
-export const boundRemovePost = postId => storeDispatch(removePost(postId));
-// @ts-ignore
-export const boundEditPost = postId => storeDispatch(editPost(postId));
+export const boundRemovePost = (postId: string) => storeDispatch(removePost(postId));
+export const boundEditPost = (post: IPostData) => storeDispatch(editPost(post));

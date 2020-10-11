@@ -1,13 +1,7 @@
-import React, { ReactNode } from 'react';
-import FullSizeProgress from '../../ui/UiFullSizeProgress/UiFullSizeProgress';
+import React from 'react';
+import { FullSizeProgress } from 'components/ui';
 
-type RouteSuspenseProps = {
-  children: ReactNode;
-};
-
-const RouteSuspense: React.FC<RouteSuspenseProps> = ({
-  children,
-}: RouteSuspenseProps): JSX.Element => {
+const RouteSuspense: React.FC = ({ children }) => {
   return <React.Suspense fallback={<FullSizeProgress />}>{children}</React.Suspense>;
 };
 

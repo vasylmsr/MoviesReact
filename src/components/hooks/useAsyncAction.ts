@@ -12,6 +12,7 @@ export function useAsyncAction(callback: any, errorCallback?: any) {
         await Promise.resolve(callback(data));
       } catch (error) {
         enqueueSnackbar(error.message, { variant: 'error' });
+        // eslint-disable-next-line no-unused-expressions
         errorCallback && errorCallback();
       } finally {
         setLoading(false);

@@ -1,18 +1,12 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-
-interface IAuthLayout {
-  children: React.ReactNode;
-}
+import { Grid, Paper, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/featured/?programming,react,vue,nature)',
+    backgroundImage: 'url(https://source.unsplash.com/featured/?programming,react,vue)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -34,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -42,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AuthLayout({ children }: IAuthLayout) {
+const AuthLayout: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <Grid container component="main" className={classes.root}>
@@ -52,4 +46,6 @@ export default function AuthLayout({ children }: IAuthLayout) {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default AuthLayout;

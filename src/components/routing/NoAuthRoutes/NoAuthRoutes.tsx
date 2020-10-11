@@ -9,7 +9,7 @@ type AuthRoutesProps = {
   routes: Array<ISingleRoute>;
 };
 
-export const NoAuthRoutes: React.FC<AuthRoutesProps> = ({ routes }: AuthRoutesProps): JSX.Element => {
+export const NoAuthRoutes: React.FC<AuthRoutesProps> = React.memo(({ routes }) => {
   const location = useLocation();
   return (
     <RouteSuspense>
@@ -33,4 +33,4 @@ export const NoAuthRoutes: React.FC<AuthRoutesProps> = ({ routes }: AuthRoutesPr
       </AuthLayout>
     </RouteSuspense>
   );
-};
+});

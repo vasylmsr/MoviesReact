@@ -1,7 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import db from './db';
-import { IUserProfile } from '../store/auth/login/types';
+import { IUserProfile } from '../store/auth/types';
 import { PROFILES_COLLECTION } from './helpers';
 
 export interface IUserLoginCredentials {
@@ -41,7 +41,7 @@ export async function doCreateUserWithEmailAndPassword({
   return user;
 }
 
-export const doSignInWithEmailAndPassword = async ({
+export const doSignInWithEmailAndPassword = ({
   email,
   password,
 }: IUserLoginCredentials): Promise<firebase.auth.UserCredential> =>

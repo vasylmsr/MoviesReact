@@ -1,11 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import useTheme from '@material-ui/core/styles/useTheme';
 import Masonry from 'react-masonry-css';
+import { FullSizeProgress } from 'components/ui';
 import { IPostData } from '../../../api/auth';
 import PostCard from '../PostCard/PostCard';
-import FullSizeProgress from '../../ui/UiFullSizeProgress/UiFullSizeProgress';
 
 type PostListProps = {
   posts: Array<IPostData>;

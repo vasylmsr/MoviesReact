@@ -3,10 +3,11 @@ import { useModalState } from './useModalState';
 
 export function useModalWithData<T>() {
   const { isOpened, handleOpen, handleClose } = useModalState();
+  const [data, setData] = useState<T | undefined>(undefined);
+
   const closeModal = useCallback(() => {
     setData(undefined);
   }, []);
-  const [data, setData] = useState<T | undefined>(undefined);
   useEffect(() => {
     if (data) {
       handleOpen();

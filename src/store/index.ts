@@ -1,6 +1,7 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { authReducer } from './auth/login/reducer';
+import createSagaMiddleware from 'redux-saga';
+import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/toolkit';
+import rootSaga from './rootSaga';
+import { authReducer } from './auth/reducer';
 import { postsReducer } from './posts/reducer';
 
 const rootReducer = combineReducers({
@@ -8,16 +9,13 @@ const rootReducer = combineReducers({
   posts: postsReducer,
 });
 
-declare global {
-  interface Window {
-    // eslint-disable-next-line no-undef
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-
-// Todo: typification of redux
-const { NODE_ENV } = process.env;
-const isDev = NODE_ENV !== 'production';
-const composeEnhancers = (isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 export type RootStateType = ReturnType<typeof rootReducer>;
-export default createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+const sagaMiddleware = createSagaMiddleware();
+const store: any = configureStore({
+  reducer: rootReducer,
+  middleware: [...getDefaultMiddleware({ thunk: true, serializableCheck: false }), sagaMiddleware],
+});
+sagaMiddleware.run(rootSaga);
+
+export default store;

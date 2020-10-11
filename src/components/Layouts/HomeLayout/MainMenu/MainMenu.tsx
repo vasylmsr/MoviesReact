@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { logout } from '../../../../store/auth/login/actions';
+import { logout } from '../../../../store/auth/sagas';
 import { UiButton } from '../../../ui/UiButton/UiButton';
 import { SIGN_IN } from '../../../../utils/constants/routes';
 
@@ -39,7 +39,7 @@ interface IMainMenuProps {
   openSidebar: () => void;
 }
 
-export const MainMenu: React.FC<IMainMenuProps> = (props: IMainMenuProps): JSX.Element => {
+export const MainMenu: React.FC<IMainMenuProps> = props => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();

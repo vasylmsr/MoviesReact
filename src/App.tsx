@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import * as AuthApi from './api/auth';
-import { storeAuthUser } from './store/auth/login/actions';
 import { AppRoutes } from './components/routing/AppRoutes';
 import { SUCCESS_STATUS } from './utils/constants/other';
 import './App.css';
+import { checkUser } from './store/auth/reducer';
+import { RootStateType } from './store';
 
 export default function App() {
   const dispatch = useDispatch();
   const [hasUserInStorage, setAvailabilityUserInStorage] = useState(true);
-  const { checkingUserStatus } = useSelector((state: any) => state.auth);
+  const { status: checkingUserStatus } = useSelector(
+    (state: RootStateType) => state.auth.checkingUser,
+  );
   // We don`t save data in LS because api(firebase) saves token inside IndexedDB
   React.useEffect(
     () =>
       AuthApi.onAuthStateChanged((user: any) => {
-        user ? dispatch(storeAuthUser(user)) : setAvailabilityUserInStorage(false);
+        if (user) {
+          dispatch(checkUser(user));
+        } else {
+          setAvailabilityUserInStorage(false);
+        }
       }),
     [dispatch],
   );

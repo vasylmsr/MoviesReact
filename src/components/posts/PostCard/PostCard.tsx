@@ -1,14 +1,9 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Grid from '@material-ui/core/Grid';
-import EditIcon from '@material-ui/icons/Edit';
-import { IPostData } from '../../../api/auth';
-import DefaultImg from '../../../assets/images/default.png';
-import { formatDate } from '../../../utils/helpers';
+import { makeStyles, IconButton, Grid, Paper, Typography } from '@material-ui/core';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
+import { IPostData } from 'api/auth';
+import DefaultImg from 'assets/images/default.png';
+import { formatDate } from 'utils/helpers';
 
 type PostCardProps = {
   post: IPostData;
@@ -46,7 +41,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element =>
         )}
         {isNewsUpdated && (
           <Typography align="right" variant="body2" color="textSecondary" component="p">
-            Updated {formatDate(post.updatedAt)}
+            {`Updated ${formatDate(post.updatedAt)}`}
           </Typography>
         )}
       </div>
@@ -55,7 +50,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element =>
         <IconButton aria-label="edit" onClick={() => onEditPost(post)}>
           <EditIcon />
         </IconButton>
-        
+
         <IconButton aria-label="delete" onClick={() => onRemovePost(post)}>
           <DeleteIcon />
         </IconButton>

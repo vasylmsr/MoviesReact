@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const HomeLayout: React.FC<IHomeProps> = (props: IHomeProps): JSX.Element => {
+const HomeLayout: React.FC<IHomeProps> = props => {
   const { children } = props;
   const classes = useStyles();
   const [isSidebarVisible, setSidebarVisibility] = useState(false);

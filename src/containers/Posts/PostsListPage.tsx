@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Button, Typography, Grid, makeStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import PostDialog from '../../components/dialogs/PostDialog/PostDialog';
 import {
   boundAddPost,
@@ -17,6 +14,7 @@ import { useModalWithData } from '../../components/hooks/useModalWithState';
 import { useAsyncAction } from '../../components/hooks/useAsyncAction';
 import RemovePostDialog from '../../components/posts/RemovePostDialog/RemovePostDialog';
 import { IPostData } from '../../api/auth';
+import { MetaTitle } from '../../components/MetaTitle';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -57,7 +55,7 @@ const PostsListPage: React.FC = (): JSX.Element => {
     closeModal: closeEditingPostModal,
     data: postForEditing,
     setData: setPostForEditing,
-  } = useModalWithData();
+  } = useModalWithData<IPostData>();
 
   const {
     isOpened: isRemovingPostModalOpened,
@@ -99,57 +97,60 @@ const PostsListPage: React.FC = (): JSX.Element => {
   }, [fetchPosts]);
 
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs={12}>
-        <Typography variant="h1" className={classes.header}>
-          My Posts
-        </Typography>
-      </Grid>
-      <Grid item md={3} sm={4} xs={12}>
-        <Button
-          className={classes.createPostBtn}
-          variant="outlined"
-          onClick={handleOpenPostCreation}
-        >
-          Create a Post
-        </Button>
-      </Grid>
+    <>
+      <MetaTitle title="My posts" />
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
+          <Typography variant="h1" className={classes.header}>
+            My Posts
+          </Typography>
+        </Grid>
+        <Grid item md={3} sm={4} xs={12}>
+          <Button
+            className={classes.createPostBtn}
+            variant="outlined"
+            onClick={handleOpenPostCreation}
+          >
+            Create a Post
+          </Button>
+        </Grid>
 
-      <RemovePostDialog
-        open={isRemovingPostModalOpened}
-        onAgree={removePost}
-        loading={removePostLoading}
-        onClose={closeRemovingPostModal}
-        post={postForRemoving}
-      />
-
-      <PostDialog
-        title="Create a Post"
-        onSave={savePost}
-        onClose={handleClosePostCreation}
-        open={isCreatingPostModalOpened}
-        loading={addPostLoading}
-      />
-
-      <PostDialog
-        title="Edit a Post"
-        onSave={editPost}
-        onClose={closeEditingPostModal}
-        open={isEditingPostModalOpened}
-        loading={editPostLoading}
-        post={postForEditing}
-      />
-
-      <Grid item container xs={12} alignItems="center" justify="center">
-        <PostsList
-          loading={fetchPostsLoading}
-          posts={posts}
-          className={classes.posts}
-          onRemovePost={setPostForRemoving}
-          onEditPost={setPostForEditing}
+        <RemovePostDialog
+          open={isRemovingPostModalOpened}
+          onAgree={removePost}
+          loading={removePostLoading}
+          onClose={closeRemovingPostModal}
+          post={postForRemoving}
         />
+
+        <PostDialog
+          title="Create a Post"
+          onSave={savePost}
+          onClose={handleClosePostCreation}
+          open={isCreatingPostModalOpened}
+          loading={addPostLoading}
+        />
+
+        <PostDialog
+          title="Edit a Post"
+          onSave={editPost}
+          onClose={closeEditingPostModal}
+          open={isEditingPostModalOpened}
+          loading={editPostLoading}
+          post={postForEditing}
+        />
+
+        <Grid item container xs={12} alignItems="center" justify="center">
+          <PostsList
+            loading={fetchPostsLoading}
+            posts={posts}
+            className={classes.posts}
+            onRemovePost={setPostForRemoving}
+            onEditPost={setPostForEditing}
+          />
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

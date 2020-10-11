@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useHistory } from 'react-router';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { UiButton } from '../components/ui/UiButton/UiButton';
-import { HOME } from '../utils/constants/routes';
-import landingCity from '../assets/images/landing_city3.jpg';
+import { makeStyles, Theme, Typography } from '@material-ui/core';
+import { UiButton } from 'components/ui';
+import { MetaTitle } from 'components/MetaTitle';
+import { HOME } from 'utils/constants/routes';
+import landingCity from 'assets/images/landing_city3.jpg';
 
 const animations = {
   '@keyframes upToDown': {
@@ -86,16 +86,13 @@ function getRandomQuote(): string {
 
 const Landing: React.FC = () => {
   const history = useHistory();
-  const goToApplication = () => history.push(HOME);
   const classes = useStyles();
   const quote = useMemo(() => getRandomQuote(), []);
-
-  useEffect(() => {
-    document.title = 'Vasyl Mysiura';
-  }, []);
+  const goToApplication = () => history.push(HOME);
 
   return (
     <>
+      <MetaTitle title="Vasyl Mysiura" />
       <section className={classes.mainSection}>
         <Typography component="h1" variant="h1" className={clsx(classes.header, classes.text)}>
           Vasyl Mysiura
