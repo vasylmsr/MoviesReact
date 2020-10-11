@@ -1,15 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import { CreatePostDialog } from '../../components/dialogs/CreatePostDialog/CreatePostDialog';
-import { boundAddPost, boundGetPosts, boundRemovePost } from '../../store/posts/actions';
+import PostDialog from '../../components/dialogs/PostDialog/PostDialog';
+import {
+  boundAddPost,
+  boundGetPosts,
+  boundRemovePost,
+  boundEditPost,
+} from '../../store/posts/actions';
 import { PostsList } from '../../components/posts/PostsList/PostsList';
 import { useModalState } from '../../components/hooks/useModalState';
+import { useModalWithData } from '../../components/hooks/useModalWithState';
 import { useAsyncAction } from '../../components/hooks/useAsyncAction';
 import RemovePostDialog from '../../components/posts/RemovePostDialog/RemovePostDialog';
+import { IPostData } from '../../api/auth';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -35,6 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 // const { search } = useLocation();
 // const queryParams = new URLSearchParams(search);
+
 const PostsListPage: React.FC = (): JSX.Element => {
   const classes = useStyles();
 
@@ -45,35 +53,50 @@ const PostsListPage: React.FC = (): JSX.Element => {
   } = useModalState();
 
   const {
+    isOpened: isEditingPostModalOpened,
+    closeModal: closeEditingPostModal,
+    data: postForEditing,
+    setData: setPostForEditing,
+  } = useModalWithData();
+
+  const {
     isOpened: isRemovingPostModalOpened,
-    handleOpen: openRemovingPostModal,
-    handleClose: closeRemovingPostModal,
-  } = useModalState();
+    closeModal: closeRemovingPostModal,
+    data: postForRemoving,
+    setData: setPostForRemoving,
+  } = useModalWithData<IPostData>();
 
-  const removePostCallback = useCallback(async postId => {
-    await boundRemovePost(postId);
-    setPostForRemoving(null);
-  }, []);
+  const addPostCallback = async (post: IPostData) => {
+    await boundAddPost(post);
+    handleClosePostCreation();
+  };
 
-  const [postForRemoving, setPostForRemoving] = useState(null);
+  const removePostCallback = useCallback(
+    async postId => {
+      await boundRemovePost(postId);
+      setPostForRemoving(undefined);
+    },
+    [setPostForRemoving],
+  );
 
-  const { loading: addPostLoading, execute: savePost } = useAsyncAction(boundAddPost);
+  const editPostCallback = useCallback(
+    async post => {
+      await boundEditPost(post);
+      setPostForEditing(undefined);
+    },
+    [setPostForEditing],
+  );
+
+  const { loading: addPostLoading, execute: savePost } = useAsyncAction(addPostCallback);
   const { loading: fetchPostsLoading, execute: fetchPosts } = useAsyncAction(boundGetPosts);
   const { loading: removePostLoading, execute: removePost } = useAsyncAction(removePostCallback);
+  const { loading: editPostLoading, execute: editPost } = useAsyncAction(editPostCallback);
 
   const { posts } = useSelector((store: any) => store.posts);
 
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
-
-  useEffect(() => {
-    if (postForRemoving) {
-      openRemovingPostModal();
-    } else {
-      closeRemovingPostModal();
-    }
-  }, [postForRemoving, closeRemovingPostModal, openRemovingPostModal]);
 
   return (
     <Grid container className={classes.root}>
@@ -96,16 +119,25 @@ const PostsListPage: React.FC = (): JSX.Element => {
         open={isRemovingPostModalOpened}
         onAgree={removePost}
         loading={removePostLoading}
-        onClose={() => setPostForRemoving(null)}
+        onClose={closeRemovingPostModal}
         post={postForRemoving}
       />
 
-      <CreatePostDialog
+      <PostDialog
         title="Create a Post"
         onSave={savePost}
         onClose={handleClosePostCreation}
         open={isCreatingPostModalOpened}
         loading={addPostLoading}
+      />
+
+      <PostDialog
+        title="Edit a Post"
+        onSave={editPost}
+        onClose={closeEditingPostModal}
+        open={isEditingPostModalOpened}
+        loading={editPostLoading}
+        post={postForEditing}
       />
 
       <Grid item container xs={12} alignItems="center" justify="center">
@@ -114,6 +146,7 @@ const PostsListPage: React.FC = (): JSX.Element => {
           posts={posts}
           className={classes.posts}
           onRemovePost={setPostForRemoving}
+          onEditPost={setPostForEditing}
         />
       </Grid>
     </Grid>

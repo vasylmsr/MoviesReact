@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
+import EditIcon from '@material-ui/icons/Edit';
 import { IPostData } from '../../../api/auth';
 import DefaultImg from '../../../assets/images/default.png';
 import { formatDate } from '../../../utils/helpers';
@@ -12,6 +13,7 @@ import { formatDate } from '../../../utils/helpers';
 type PostCardProps = {
   post: IPostData;
   onRemovePost: any;
+  onEditPost: any;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element => {
   const classes = useStyles();
-  const { post, onRemovePost } = props;
+  const { post, onRemovePost, onEditPost } = props;
 
   const isNewsUpdated = post.createdAt.getTime() !== post.updatedAt.getTime();
   return (
@@ -50,6 +52,10 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps): JSX.Element =>
       </div>
 
       <Grid container direction="row" justify="flex-end" alignItems="center">
+        <IconButton aria-label="edit" onClick={() => onEditPost(post)}>
+          <EditIcon />
+        </IconButton>
+        
         <IconButton aria-label="delete" onClick={() => onRemovePost(post)}>
           <DeleteIcon />
         </IconButton>

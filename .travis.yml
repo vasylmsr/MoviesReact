@@ -9,6 +9,8 @@ node_js:
   - "10.16.3"
 script:
   - echo "Deploying!"
+before_install:
+  - yarn global add firebase-tools
 install:
   - yarn
 after_success:

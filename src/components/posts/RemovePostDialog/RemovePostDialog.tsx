@@ -3,7 +3,7 @@ import AlertDialog, { AlertDialogProps } from '../../dialogs/AlertDialog/AlertDi
 import { IPostData } from '../../../api/auth';
 
 type RemovePostDialogProps = AlertDialogProps & {
-  post: IPostData | null;
+  post?: IPostData;
   title?: string;
 };
 

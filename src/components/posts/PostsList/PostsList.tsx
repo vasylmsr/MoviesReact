@@ -12,6 +12,7 @@ type PostListProps = {
   className: string;
   loading: boolean;
   onRemovePost: any;
+  onEditPost: any;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.Element => {
   const classes = useStyles();
-  const { posts, loading, className, onRemovePost } = props;
+  const { posts, loading, className, onRemovePost, onEditPost } = props;
   const theme = useTheme();
 
   const breakpointCols = {
@@ -55,7 +56,12 @@ export const PostsList: React.FC<PostListProps> = (props: PostListProps): JSX.El
           columnClassName={classes.masonryColumn}
         >
           {posts.map((post: IPostData) => (
-            <PostCard post={post} key={post.id} onRemovePost={onRemovePost} />
+            <PostCard
+              post={post}
+              key={post.id}
+              onRemovePost={onRemovePost}
+              onEditPost={onEditPost}
+            />
           ))}
         </Masonry>
       )}

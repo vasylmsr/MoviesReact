@@ -1,5 +1,6 @@
 import {
   ADD_POST_SUCCESS,
+  EDIT_POST_SUCCESS,
   FETCH_POSTS_SUCCESS,
   IPostsReducer,
   PostsActionsType,
@@ -9,6 +10,13 @@ import { LOGOUT } from '../auth/login/types';
 
 export const initialState: IPostsReducer = {
   posts: [],
+};
+
+export const getArrayWithUpdatedObject = (updatedObject: any, arr: any) => {
+  const newArr = [...arr];
+  const indexUpdatedObject = newArr.findIndex(item => updatedObject.id === item.id);
+  newArr[indexUpdatedObject] = { ...updatedObject };
+  return newArr;
 };
 
 export const postsReducer = (
@@ -24,6 +32,11 @@ export const postsReducer = (
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.payload),
+      };
+    case EDIT_POST_SUCCESS:
+      return {
+        ...state,
+        posts: getArrayWithUpdatedObject(action.payload, state.posts),
       };
     case LOGOUT:
       return { ...initialState };

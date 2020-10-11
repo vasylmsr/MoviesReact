@@ -49,14 +49,15 @@ export const createPost = async (postData: IPostData, uid: string) => {
 export const removePost = (postId: string) => db.collection(POSTS_COLLECTION).doc(postId).delete();
 
 export const editPost = async (postData: IPostData) => {
+  // Todo: in this case user is object, not reference. We need to fix it.
+  // eslint-disable-next-line no-param-reassign
+  delete postData.user;
   const postId = postData.id;
   const timestamp = app.firestore.FieldValue.serverTimestamp();
   const fullPostData = {
     ...postData,
     updatedAt: timestamp,
   };
-  await db.doc(`posts/${postId}`).update(fullPostData);
+  await db.doc(`${POSTS_COLLECTION}/${postId}`).update(fullPostData);
   return fetchPost(postId);
 };
-
-// todo: remove post

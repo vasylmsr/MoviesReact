@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog, { DialogProps } from '@material-ui/core/Dialog/Dialog';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
@@ -15,6 +15,7 @@ type CreatePostDialogProps = DialogProps & {
   onSave: (data: IPostData) => void;
   title: string;
   loading: boolean;
+  post?: IPostData;
 };
 
 const postValidationSchema = yup.object({
@@ -37,15 +38,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
-  props: CreatePostDialogProps,
-): JSX.Element => {
-  const { title, open, onClose, onSave, loading } = props;
+const PostDialog: React.FC<CreatePostDialogProps> = (props: CreatePostDialogProps): JSX.Element => {
+  const { title, open, onClose, onSave, loading, post } = props;
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm<AuthApi.IPostData>({
+  const { register, handleSubmit, errors, setValue } = useForm<AuthApi.IPostData>({
     resolver: yupResolver(postValidationSchema),
     mode: 'onSubmit',
     defaultValues: {
+      id: '',
       title: '',
       description: '',
       photoUrl: '',
@@ -58,7 +58,20 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
     },
   });
 
-  const onSubmit = handleSubmit(data => onSave(data));
+  useEffect(() => {
+    setTimeout(() => {
+      if (post) {
+        // Todo: fix
+        // eslint-disable-next-line guard-for-in
+        for (const key in post) {
+          // @ts-ignore
+          setValue(key, post[key]);
+        }
+      }
+    }, 0);
+  }, [post, setValue]);
+
+  const onSubmit = handleSubmit(data => onSave({ ...post, ...data }));
 
   return (
     <Dialog onClose={onClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -119,3 +132,5 @@ export const CreatePostDialog: React.FC<CreatePostDialogProps> = (
     </Dialog>
   );
 };
+
+export default PostDialog;
