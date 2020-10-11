@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const resolve = require('resolve');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -137,6 +138,11 @@ module.exports = function(webpackEnv) {
         ? 'source-map'
         : false
       : isEnvDevelopment && 'cheap-module-source-map',
+
+    externals: {
+      'react': 'React',
+    },
+    // libraryTarget: 'umd',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -326,23 +332,23 @@ module.exports = function(webpackEnv) {
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
-        {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                cache: true,
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname,
-                
-              },
-              loader: require.resolve('eslint-loader'),
-            },
-          ],
-          include: paths.appSrc,
-        },
+        // {
+        //   test: /\.(js|mjs|jsx|ts|tsx)$/,
+        //   enforce: 'pre',
+        //   use: [
+        //     {
+        //       options: {
+        //         cache: true,
+        //         formatter: require.resolve('react-dev-utils/eslintFormatter'),
+        //         eslintPath: require.resolve('eslint'),
+        //         resolvePluginsRelativeTo: __dirname,
+        //
+        //       },
+        //       loader: require.resolve('eslint-loader'),
+        //     },
+        //   ],
+        //   include: paths.appSrc,
+        // },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
@@ -369,7 +375,7 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -411,7 +417,7 @@ module.exports = function(webpackEnv) {
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
-                
+
                 // Babel sourcemaps are needed for debugging into node_modules
                 // code.  Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
@@ -534,6 +540,16 @@ module.exports = function(webpackEnv) {
             : undefined
         )
       ),
+
+      new HtmlWebpackTagsPlugin({
+        tags: isEnvDevelopment ? [
+          '/node_modules/react/umd/react.development.js',
+        ] : [
+          'https://unpkg.com/react@16/umd/react.development.js',
+        ],
+        append: false,
+        usePublicPath: false,
+      }),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
