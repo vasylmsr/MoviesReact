@@ -1,5 +1,5 @@
-import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 function Copyright() {
   const currentDate = new Date().getFullYear();

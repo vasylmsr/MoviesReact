@@ -1,15 +1,17 @@
+// Core
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { logout } from '../../../../store/auth/sagas';
-import { UiButton } from '../../../ui/UiButton/UiButton';
-import { SIGN_IN } from '../../../../utils/constants/routes';
+
+// UI
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import MenuIcon from '@material-ui/icons/Menu';
+import { UiButton } from 'components/ui';
+
+// Other
+import { logout } from 'store/auth/sagas';
+import { SIGN_IN } from 'utils/constants/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

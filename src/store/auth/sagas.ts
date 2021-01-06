@@ -2,11 +2,11 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as AuthApi from '../../api/auth';
 import {
-  checkUser,
+  getFullAuthData,
   checkUserFailure,
   checkUserRequest,
   checkUserSuccess,
-  logout as logoutAction,
+  logoutSuccess,
   signInAction,
   signInRequest,
   signInFailure,
@@ -15,13 +15,23 @@ import {
   signUpRequest,
   signUpFailure,
   signUpSuccess,
+  resetPasswordAction,
+  resetPasswordRequest,
+  resetPasswordSuccess,
+  resetPasswordFailure,
+  confirmResetPasswordAction,
+  confirmPasswordResetRequest,
+  confirmPasswordResetSuccess,
+  confirmPasswordResetFailure,
+  logoutAction,
 } from './reducer';
 
 function* onCheckUser({ payload }: PayloadAction<any>) {
   try {
+    const { uid, displayName, email, emailVerified } = payload;
     yield put(checkUserRequest());
-    const userProfile = yield call(AuthApi.getUserProfile, payload.uid);
-    yield put(checkUserSuccess(userProfile));
+    // const userProfile = yield call(AuthApi.getUserProfile, payload.uid);
+    yield put(checkUserSuccess({ uid, displayName, email, emailVerified }));
   } catch (error) {
     yield put(checkUserFailure(error));
   }
@@ -41,29 +51,52 @@ function* onSignUp({ payload }: PayloadAction<AuthApi.IUserRegisterCredentials>)
   try {
     yield put(signUpRequest());
     yield call(AuthApi.doCreateUserWithEmailAndPassword, payload);
+    console.log('sign up');
     yield put(signUpSuccess());
   } catch (error) {
     yield put(signUpFailure(error));
   }
 }
 
-export function* watchAuthSagas() {
-  yield takeEvery(checkUser, onCheckUser);
-  yield takeEvery(signInAction, onSignIn);
-  yield takeEvery(signUpAction, onSignUp);
+function* onResetPassword({ payload }: PayloadAction<string>) {
+  try {
+    yield put(resetPasswordRequest());
+    yield call(AuthApi.sendPasswordResetEmail, payload);
+    yield put(resetPasswordSuccess());
+  } catch (error) {
+    yield put(resetPasswordFailure(error));
+  }
 }
 
-export const signIn = (data: AuthApi.IUserLoginCredentials) => () =>
-  AuthApi.doSignInWithEmailAndPassword(data);
+function* onConfirmResetPassword({ payload }: PayloadAction<any>) {
+  try {
+    yield put(confirmPasswordResetRequest());
+    yield call(AuthApi.confirmPasswordReset, payload.code, payload.newPasword);
+    yield put(confirmPasswordResetSuccess());
+  } catch (error) {
+    yield put(confirmPasswordResetFailure(error));
+  }
+}
 
-export const signUp = (data: AuthApi.IUserRegisterCredentials) => () =>
-  AuthApi.doCreateUserWithEmailAndPassword(data);
+function* onLogout() {
+  yield call(AuthApi.doLogout);
+  yield put(logoutSuccess);
+}
+
+export function* watchAuthSagas() {
+  yield takeEvery(getFullAuthData, onCheckUser);
+  yield takeEvery(signInAction, onSignIn);
+  yield takeEvery(signUpAction, onSignUp);
+  yield takeEvery(logoutAction, onLogout);
+  yield takeEvery(resetPasswordAction, onResetPassword);
+  yield takeEvery(confirmResetPasswordAction, onConfirmResetPassword);
+}
 
 export const applyActionCode = (code: string) => () => AuthApi.applyActionCode(code!);
 
 export const logout = () => async (dispatch: any) => {
   await AuthApi.doLogout();
-  dispatch(logoutAction());
+  dispatch(logoutSuccess());
 };
 
 export const resetPassword = (email: string) => () => AuthApi.sendPasswordResetEmail(email);

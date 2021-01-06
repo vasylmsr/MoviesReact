@@ -13,7 +13,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { MAIN } from 'utils/constants/routes';
+import { HOME, MAIN, USER_PROFILE_ROUTE } from 'utils/constants/routes';
+import { RootStateType } from 'store';
 
 interface ISidebarProps {
   onClose: () => void;
@@ -30,20 +31,27 @@ export const Sidebar: React.FC<ISidebarProps> = props => {
   const { onClose, isVisible } = props;
   const history = useHistory();
   const classes = useStyles();
-  const { user } = useSelector((state: any) => state.auth);
-  const userName: string = `${user?.firstName} ${user?.lastName}`;
+  const { user } = useSelector((state: RootStateType) => state.auth);
   return (
     <Drawer open={isVisible} onClose={onClose}>
       <div className={classes.list}>
         <List component="nav">
           <ListItem>
-            <Typography variant="h6">{`Hello,  ${userName}!`}</Typography>
+            <Typography variant="h6">{`Hello,  ${user?.displayName}!`}</Typography>
           </ListItem>
 
           <Divider />
 
           <ListItem button onClick={() => history.push(MAIN)}>
             <ListItemText primary="Landing" />
+          </ListItem>
+
+          <ListItem button onClick={() => history.push(HOME)}>
+            <ListItemText primary="Posts" />
+          </ListItem>
+
+          <ListItem button onClick={() => history.push(USER_PROFILE_ROUTE)}>
+            <ListItemText primary="Profile" />
           </ListItem>
         </List>
       </div>

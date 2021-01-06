@@ -1,83 +1,41 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
-import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import Grid from '@material-ui/core/Grid';
-import { Link as RouterLink } from 'react-router-dom';
-import { UiButton } from 'components/ui';
-import { getDefaultAuthStyles } from '../styles';
-import { resetPassword } from '../../../store/auth/sagas';
-import { SIGN_IN, SIGN_UP } from '../../../utils/constants/routes';
-import { AuthTextField } from '../../../components/auth/AuthTextField/AuthTextField';
-import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
-import { AuthFormLayout } from '../../../components/Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
-import { MetaTitle } from '../../../components/MetaTitle';
+import { RootStateType } from 'store';
 
-const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
-
-const forgotPasswordValidationSchema = yup.object({
-  email: yup.string().email().required(),
-});
+import { MetaTitle } from 'components/MetaTitle';
+import { ForgotPasswordForm } from 'components/auth/ForgotPasswordForm/ForgotPasswordForm';
+import { resetPasswordAction, clearResetPasswordState } from 'store/auth/reducer';
+import { LOADING_STATUS, SUCCESS_STATUS } from 'utils/constants/other';
+import useErrorNotificator from 'components/hooks/useErrorNotificator';
 
 const ForgotPassword: React.FC = (): JSX.Element => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(forgotPasswordValidationSchema),
-    defaultValues: {
-      email: '',
-    },
-  });
+  const { status, error } = useSelector((state: RootStateType) => state.auth.resetPassword);
 
-  const { loading, execute } = useAsyncAction(async (email: string) => {
-    await dispatch(resetPassword(email));
-    enqueueSnackbar(`Check ${email} email`);
-  });
+  const onSubmit = ({ email }: { email: string }) => {
+    dispatch(resetPasswordAction(email));
+  };
 
-  const onSubmit = handleSubmit(({ email }) => execute(email));
+  useErrorNotificator(error);
+
+  useEffect(() => {
+    if (status === SUCCESS_STATUS) {
+      enqueueSnackbar(`Check your email`);
+    }
+  }, [status, enqueueSnackbar]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearResetPasswordState());
+    };
+  }, [dispatch]);
 
   return (
     <>
       <MetaTitle title="Forgot Password" />
-      <AuthFormLayout>
-        <Typography component="h1" variant="h5">
-          Forgot password
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
-          <AuthTextField
-            label="Email Address"
-            name="email"
-            autoFocus
-            inputRef={register}
-            customError={errors.email}
-          />
-
-          <Grid container>
-            <Grid item xs>
-              <RouterLink to={SIGN_IN}>Sign In</RouterLink>
-            </Grid>
-            <Grid item>
-              <RouterLink to={SIGN_UP}>Don`t have an account? Sign Up</RouterLink>
-            </Grid>
-          </Grid>
-
-          <UiButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            loading={loading}
-          >
-            Send verification email
-          </UiButton>
-        </form>
-      </AuthFormLayout>
+      <ForgotPasswordForm onForgotPassword={onSubmit} loading={status === LOADING_STATUS} />
     </>
   );
 };

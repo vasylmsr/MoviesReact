@@ -12,7 +12,7 @@ import { PostsList } from '../../components/posts/PostsList/PostsList';
 import { useModalState } from '../../components/hooks/useModalState';
 import { useModalWithData } from '../../components/hooks/useModalWithState';
 import { useAsyncAction } from '../../components/hooks/useAsyncAction';
-import RemovePostDialog from '../../components/posts/RemovePostDialog/RemovePostDialog';
+import { RemovePostDialog } from '../../components/posts/RemovePostDialog/RemovePostDialog';
 import { IPostData } from '../../api/auth';
 import { MetaTitle } from '../../components/MetaTitle';
 

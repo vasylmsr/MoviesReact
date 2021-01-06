@@ -1,14 +1,9 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
-import Copyright from '../../../Copyright/Copyright';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
-  copyrightWrapper: {
-    marginTop: 'auto',
-    padding: '20px',
-  },
   body: {
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     marginTop: 'auto',
@@ -20,12 +15,5 @@ const useStyles = makeStyles(() => ({
 export const AuthFormLayout: React.FC = ({ children }) => {
   const classes = useStyles();
 
-  return (
-    <>
-      <div className={classes.body}>{children}</div>
-      <Box mt={5} className={classes.copyrightWrapper}>
-        <Copyright />
-      </Box>
-    </>
-  );
+  return <div className={classes.body}>{children}</div>;
 };

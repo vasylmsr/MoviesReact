@@ -1,1 +1,1 @@
-export const AUTH_LAYOUT = 'AUTH_LAYOUT';
+export const AUTH_LAYOUT: string = 'AUTH_LAYOUT';

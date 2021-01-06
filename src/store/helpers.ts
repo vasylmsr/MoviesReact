@@ -21,6 +21,10 @@ export const setFetchingError = (state: any, error: ErrorType) => {
   state.status = FAILURE_STATUS;
   state.error = error;
 };
+export const clearState = (state: any) => {
+  state.status = IDLE_STATUS;
+  state.error = null;
+};
 
 export type StatusType<T = {}> = T & {
   status: LoadingType;

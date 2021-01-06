@@ -1,28 +1,38 @@
+// Core
 import React from 'react';
-import { useHistory, useLocation } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { applyActionCode } from '../../../store/auth/sagas';
-import { HOME, SIGN_IN } from '../../../utils/constants/routes';
+import { useLocation } from 'react-router';
+// import { useDispatch } from 'react-redux';
+
+// Other
+// import { applyActionCode } from 'store/auth/sagas';
+// import { HOME, SIGN_IN } from 'utils/constants/routes';
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
-import { useAsyncAction } from '../../../components/hooks/useAsyncAction';
+// import { useAsyncAction } from 'components/hooks/useAsyncAction';
+import * as AuthApi from 'api/auth';
+// import { useSnackbar } from 'notistack';
 
 const EmailLink: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { search } = useLocation();
-  const history = useHistory();
+  // const history = useHistory();
   const queryParams = new URLSearchParams(search);
+  // const { enqueueSnackbar } = useSnackbar();
 
   const mode = queryParams.get('mode');
   const code = queryParams.get('oobCode') || '';
 
-  const { execute: callVerifyEmail } = useAsyncAction(
-    async () => {
-      await dispatch(applyActionCode(code!));
-      history.push(HOME);
-    },
-    () => history.push(SIGN_IN),
-  );
-
+  // const { execute: callVerifyEmail } = useAsyncAction(
+  //   async () => {
+  //     console.log('before Q');
+  //     const q = await dispatch(applyActionCode(code!));
+  //     console.log('q', q);
+  //     // enqueueSnackbar('Email has been verified successfully', { variant: 'success' });
+  //     // history.push(HOME);
+  //   },
+  //   () => history.push(SIGN_IN),
+  // );
+  // AuthApi.applyActionCode(code!
+  console.log('mode', mode);
   switch (mode) {
     case 'resetPassword':
       // Display reset password handler and UI.
@@ -34,8 +44,8 @@ const EmailLink: React.FC = () => {
       // handleRecoverEmail(auth, actionCode, lang);
       return <div>recoverEmail</div>;
     case 'verifyEmail':
-      callVerifyEmail(code);
-      return <div>verifyEmail</div>;
+      AuthApi.applyActionCode(code);
+      return <div>Email verification...</div>;
     default:
       return <div>Invalid mode</div>;
   }

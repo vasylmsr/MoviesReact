@@ -11,6 +11,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "import/no-unresolved": 0,
+    "import/order": 0,
     "import/prefer-default-export": 0,
     "react/react-in-jsx-scope": 0,
     "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }], //ці формати можуть містити jsx

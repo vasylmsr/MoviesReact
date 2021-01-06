@@ -1,3 +1,4 @@
+// Todo: refactor file: 1) Move form to separate file; 2) Move validation rule to separate file
 import React from 'react';
 import { Typography, Grid, makeStyles } from '@material-ui/core';
 import { useForm } from 'react-hook-form';

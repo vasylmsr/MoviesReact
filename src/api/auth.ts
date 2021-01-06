@@ -1,7 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import db from './db';
-import { IUserProfile } from '../store/auth/types';
+import { IUserProfile } from 'store/auth/types';
 import { PROFILES_COLLECTION } from './helpers';
 
 export interface IUserLoginCredentials {
@@ -24,8 +24,8 @@ export function createUserProfile(userData: any) {
 
 export async function getUserProfile(uid: string): Promise<IUserProfile> {
   const snapshot = await db.collection(PROFILES_COLLECTION).doc(uid).get();
-  const { firstName, lastName } = snapshot.data()!;
-  return { uid, firstName, lastName };
+  const { displayName, emailVerified, email } = snapshot.data()!;
+  return { uid, displayName, emailVerified, email };
 }
 
 export async function doCreateUserWithEmailAndPassword({
@@ -34,10 +34,13 @@ export async function doCreateUserWithEmailAndPassword({
   firstName,
   lastName,
 }: IUserRegisterCredentials) {
-  const response = await auth.createUserWithEmailAndPassword(email, password);
-  await createUserProfile({ uid: response?.user?.uid, firstName, lastName });
+  await auth.createUserWithEmailAndPassword(email, password);
   const user = auth.currentUser;
-  await user?.sendEmailVerification();
+  await user!.updateProfile({
+    displayName: `${firstName} ${lastName}`,
+  });
+
+  await user!.sendEmailVerification();
   return user;
 }
 
@@ -47,15 +50,18 @@ export const doSignInWithEmailAndPassword = ({
 }: IUserLoginCredentials): Promise<firebase.auth.UserCredential> =>
   auth.signInWithEmailAndPassword(email, password);
 
-export const onAuthStateChanged = (callback: any) => auth.onAuthStateChanged(callback);
+type authStateChangedCallbackType = (user: firebase.User | null) => void;
+export const onAuthStateChanged = (callback: authStateChangedCallbackType) =>
+  auth.onAuthStateChanged(callback);
 
-export const doLogout = () => auth.signOut();
+export const doLogout = (): Promise<any> => auth.signOut();
 
-export const applyActionCode = (code: string) => auth.applyActionCode(code);
+export const applyActionCode = (code: string): Promise<any> => auth.applyActionCode(code);
 
-export const sendPasswordResetEmail = (email: string) => auth.sendPasswordResetEmail(email);
+export const sendPasswordResetEmail = (email: string): Promise<any> =>
+  auth.sendPasswordResetEmail(email);
 
-export const confirmPasswordReset = (code: string, newPassword: string) =>
+export const confirmPasswordReset = (code: string, newPassword: string): Promise<any> =>
   auth.confirmPasswordReset(code, newPassword);
 
 export interface IPostData {

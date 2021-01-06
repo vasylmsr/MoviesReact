@@ -1,9 +1,10 @@
 import React from 'react';
-import { Grid, Paper, makeStyles } from '@material-ui/core';
+import { Grid, Paper, makeStyles, Box } from '@material-ui/core';
+import Copyright from '../../Copyright/Copyright';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100vh',
+    minHeight: '100vh',
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/featured/?programming,react,vue)',
@@ -14,9 +15,9 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: 'center',
   },
   paper: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     padding: theme.spacing(4, 4),
   },
   copyrightWrapper: {
@@ -34,6 +35,13 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  content: {
+    position: 'relative',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 }));
 
 const AuthLayout: React.FC = ({ children }) => {
@@ -42,7 +50,10 @@ const AuthLayout: React.FC = ({ children }) => {
     <Grid container component="main" className={classes.root}>
       <Grid item sm={false} md={7} className={classes.image} />
       <Grid item xs={12} md={5} component={Paper} elevation={6} square className={classes.paper}>
-        {children}
+        <div className={classes.content}>{children}</div>
+        <Box mt={5} className={classes.copyrightWrapper}>
+          <Copyright />
+        </Box>
       </Grid>
     </Grid>
   );

@@ -1,27 +1,26 @@
+// Core
 import React, { useEffect } from 'react';
-import Dialog, { DialogProps } from '@material-ui/core/Dialog/Dialog';
+
+// Validation
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import * as yup from 'yup';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import { UiButton } from 'components/ui';
-import { UiDialogActions, UiDialogContent, UiDialogTitle } from '../../ui/UiDialog/UiDialog';
-import * as AuthApi from '../../../api/auth';
-import { UiTextField } from '../../ui/UiTextField/UiTextField';
-import { IPostData } from '../../../api/auth';
+import { postValidationSchema } from './PostValidationSchema';
+
+// UI
+import { Dialog, DialogProps, makeStyles } from '@material-ui/core';
+import { UiButton, UiTextField } from 'components/ui';
+import { UiDialogActions, UiDialogContent, UiDialogTitle } from 'components/ui/UiDialog/UiDialog';
+
+// Other
+import * as AuthApi from 'api/auth';
 
 type CreatePostDialogProps = DialogProps & {
   onClose: () => void;
-  onSave: (data: IPostData) => void;
+  onSave: (data: AuthApi.IPostData) => void;
   title: string;
   loading: boolean;
-  post?: IPostData;
+  post?: AuthApi.IPostData;
 };
-
-const postValidationSchema = yup.object({
-  title: yup.string().max(128).required(),
-  description: yup.string().max(512).required(),
-});
 
 const useStyles = makeStyles(() => ({
   dialogTitle: {

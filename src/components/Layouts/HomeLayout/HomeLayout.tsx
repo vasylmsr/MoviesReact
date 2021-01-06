@@ -1,11 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { MainMenu } from './MainMenu/MainMenu';
 import { Sidebar } from './Sidebar/Sidebar';
-
-interface IHomeProps {
-  children: ReactNode;
-}
 
 const useStyles = makeStyles(theme => ({
   body: {
@@ -13,10 +9,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const HomeLayout: React.FC<IHomeProps> = props => {
+const HomeLayout: React.FC = props => {
   const { children } = props;
   const classes = useStyles();
-  const [isSidebarVisible, setSidebarVisibility] = useState(false);
+  const [isSidebarVisible, setSidebarVisibility] = useState<boolean>(false);
   return (
     <div>
       <Sidebar onClose={() => setSidebarVisibility(false)} isVisible={isSidebarVisible} />

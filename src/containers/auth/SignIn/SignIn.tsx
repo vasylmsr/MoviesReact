@@ -1,31 +1,36 @@
+// Core
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { MetaTitle } from 'components/MetaTitle';
 import { RootStateType } from 'store';
-import { HOME } from '../../../utils/constants/routes';
-import { SignInForm } from '../../../components/auth/SignInForm/SignInForm';
-import { signInAction } from '../../../store/auth/reducer';
-import { LOADING_STATUS } from '../../../utils/constants/other';
+
+import { clearSignInState, signInAction } from 'store/auth/reducer';
+import { MetaTitle } from 'components/MetaTitle';
+import { SignInForm } from 'components/auth/SignInForm/SignInForm';
+import { LOADING_STATUS } from 'utils/constants/other';
+import useErrorNotificator from 'components/hooks/useErrorNotificator';
+import { IUserLoginCredentials } from 'api/auth';
 
 const SignIn: React.FC = (): JSX.Element => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootStateType) => state.auth);
-  const { status: signInStatus } = useSelector((state: RootStateType) => state.auth.signIn);
+  const { status: signInStatus, error } = useSelector((state: RootStateType) => state.auth.signIn);
+  const { status: checkingUserStatus } = useSelector(
+    (state: RootStateType) => state.auth.checkingUser,
+  );
+
+  useErrorNotificator(error);
 
   useEffect(() => {
-    if (user) {
-      history.push(HOME);
-    }
-  }, [user, history]);
+    return () => {
+      dispatch(clearSignInState());
+    };
+  }, [dispatch]);
 
   return (
     <>
       <MetaTitle title="Sign In" />
       <SignInForm
-        onSignIn={(data: any) => dispatch(signInAction(data))}
-        loading={signInStatus === LOADING_STATUS}
+        onSignIn={(data: IUserLoginCredentials) => dispatch(signInAction(data))}
+        loading={signInStatus === LOADING_STATUS || checkingUserStatus === LOADING_STATUS}
       />
     </>
   );

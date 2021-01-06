@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertDialog, { AlertDialogProps } from '../../dialogs/AlertDialog/AlertDialog';
+import { AlertDialog, AlertDialogProps } from '../../dialogs/AlertDialog/AlertDialog';
 import { IPostData } from '../../../api/auth';
 
 type RemovePostDialogProps = AlertDialogProps & {
@@ -7,7 +7,7 @@ type RemovePostDialogProps = AlertDialogProps & {
   title?: string;
 };
 
-const RemovePostDialog: React.FC<RemovePostDialogProps> = (
+export const RemovePostDialog: React.FC<RemovePostDialogProps> = (
   props: RemovePostDialogProps,
 ): JSX.Element => {
   const { post, onAgree } = props;
@@ -19,5 +19,3 @@ const RemovePostDialog: React.FC<RemovePostDialogProps> = (
     />
   );
 };
-
-export default RemovePostDialog;

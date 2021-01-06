@@ -1,11 +1,16 @@
+// Core
 import React, { useMemo } from 'react';
 import { useHistory } from 'react-router';
-import clsx from 'clsx';
+
+// UI
 import { makeStyles, Theme, Typography } from '@material-ui/core';
 import { UiButton } from 'components/ui';
-import { MetaTitle } from 'components/MetaTitle';
-import { HOME } from 'utils/constants/routes';
 import landingCity from 'assets/images/landing_city3.jpg';
+
+// Other
+import clsx from 'clsx';
+import { HOME } from 'utils/constants/routes';
+import { MetaTitle } from 'components/MetaTitle';
 
 const animations = {
   '@keyframes upToDown': {

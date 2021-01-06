@@ -1,15 +1,22 @@
+// Core
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+
+// Validation
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
+import signUpValidationSchema from './SignUpValidation';
+
+// UI
 import { Typography, makeStyles, Grid } from '@material-ui/core';
 import { UiButton } from 'components/ui';
-import { FORGOT_PASSWORD, SIGN_IN } from 'utils/constants/routes';
-import * as AuthApi from 'api/auth';
 import { getDefaultAuthStyles } from 'containers/auth/styles';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
-import { signUpValidationSchema } from './SignUpValidation';
 import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+
+// Other
+import { FORGOT_PASSWORD, SIGN_IN } from 'utils/constants/routes';
+import * as AuthApi from 'api/auth';
 
 type SignUpFormProps = {
   onSignUp: (data: AuthApi.IUserRegisterCredentials) => void;
