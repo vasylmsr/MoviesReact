@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, IconButton, Grid, Paper, Typography } from '@material-ui/core';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
-import { IPostData } from 'api/auth';
+import { IPostData } from 'api/main/auth';
 import DefaultImg from 'assets/images/default.png';
 import { formatDate } from 'utils/helpers';
 

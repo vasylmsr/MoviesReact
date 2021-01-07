@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
-import * as AuthApi from '../../api/auth';
+import * as AuthApi from '../../api/main/auth';
 import {
   getFullAuthData,
   checkUserFailure,

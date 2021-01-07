@@ -8,6 +8,6 @@ type MetaTitleProps = {
 
 export const MetaTitle: React.FC<MetaTitleProps> = props => {
   const { title } = props;
-  const fullTitle = `${title} - Posts App`;
+  const fullTitle = `${title} | Movies App`;
   return <ReactTitle title={fullTitle} />;
 };

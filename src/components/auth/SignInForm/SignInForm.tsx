@@ -13,12 +13,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { UiButton } from 'components/ui';
 import { getDefaultAuthStyles } from 'containers/auth/styles';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
-import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+import { AuthFormLayout } from '../../layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 // Other
 import { FORGOT_PASSWORD, SIGN_UP } from 'utils/constants/routes';
-import * as AuthApi from 'api/auth';
-import { IUserLoginCredentials } from 'api/auth';
+import * as AuthApi from 'api/main/auth';
+import { IUserLoginCredentials } from 'api/main/auth';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 

@@ -1,9 +1,9 @@
 import React, { lazy } from 'react';
-import { ISingleRoute } from '../../../routes';
+import { ISingleRoute } from 'routes';
 import { RouteSuspense } from '../RouteSuspense/RouteSuspense';
 import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
 
-const HomeLayout = lazy(() => import('../../Layouts/HomeLayout/HomeLayout'));
+const HomeLayout = lazy(() => import('../../layouts/HomeLayout/HomeLayout'));
 
 type AuthRoutesProps = {
   routes: Array<ISingleRoute>;

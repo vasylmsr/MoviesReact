@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers';
 import { forgotPasswordValidationSchema } from './forgotPasswordValidationSchema';
 
 // UI
-import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+import { AuthFormLayout } from '../../layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 import { Typography, Grid, makeStyles } from '@material-ui/core';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { UiButton } from 'components/ui';

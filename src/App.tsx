@@ -10,7 +10,7 @@ import { AppRoutes } from './components/routing/AppRoutes';
 
 // Other
 import { SnackbarProvider } from 'notistack';
-import * as AuthApi from './api/auth';
+import * as AuthApi from './api/main/auth';
 import './App.css';
 import { getFullAuthData, setUser } from './store/auth/reducer';
 

@@ -13,7 +13,7 @@ import { useModalState } from '../../components/hooks/useModalState';
 import { useModalWithData } from '../../components/hooks/useModalWithState';
 import { useAsyncAction } from '../../components/hooks/useAsyncAction';
 import { RemovePostDialog } from '../../components/posts/RemovePostDialog/RemovePostDialog';
-import { IPostData } from '../../api/auth';
+import { IPostData } from '../../api/main/auth';
 import { MetaTitle } from '../../components/MetaTitle';
 
 const useStyles = makeStyles(theme => ({

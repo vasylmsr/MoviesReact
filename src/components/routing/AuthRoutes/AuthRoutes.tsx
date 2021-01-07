@@ -6,7 +6,7 @@ import { AuthRoute } from '../AuthRoute/AuthRoute';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './styles.css';
 
-const AuthLayout = lazy(() => import('../../Layouts/AuthLayout/AuthLayout'));
+const AuthLayout = lazy(() => import('../../layouts/AuthLayout/AuthLayout'));
 
 type AuthRoutesProps = {
   routes: Array<ISingleRoute>;

@@ -5,7 +5,7 @@ import {
   LOADING_STATUS,
   LoadingType,
   SUCCESS_STATUS,
-} from '../utils/constants/other';
+} from 'utils/constants/other';
 
 export type ErrorType = IApiError | null;
 

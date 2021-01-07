@@ -5,6 +5,7 @@ import {
   FORGOT_PASSWORD,
   HOME,
   MAIN,
+  MOVIES_ROUTE,
   SIGN_IN,
   SIGN_UP,
   USER_PROFILE_ROUTE,
@@ -17,6 +18,7 @@ const Landing = lazy(() => import('./containers/Landing'));
 const EmailLink = lazy(() => import('./containers/auth/EmailLink/EmailLink'));
 const ForgotPassword = lazy(() => import('./containers/auth/ForgotPassword/ForgotPassword'));
 const UserProfile = lazy(() => import('./containers/UserProfile/UserProfile'));
+const MoviesPage = lazy(() => import('./containers/MoviesPage/MoviesPage'));
 
 export interface ISingleRoute {
   path: string;
@@ -64,6 +66,11 @@ const routes: routesType = [
     path: FORGOT_PASSWORD,
     component: ForgotPassword,
     layout: AUTH_LAYOUT,
+  },
+  {
+    path: MOVIES_ROUTE,
+    component: MoviesPage,
+    isPrivate: true,
   },
 ];
 

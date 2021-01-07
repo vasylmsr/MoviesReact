@@ -9,7 +9,7 @@ import {
   setFetchingRequest,
   setFetchingSuccess,
 } from '../helpers';
-import { IUserLoginCredentials, IUserRegisterCredentials } from '../../api/auth';
+import { IUserLoginCredentials, IUserRegisterCredentials } from '../../api/main/auth';
 
 const initialState: IAuthReducer = {
   user: null,

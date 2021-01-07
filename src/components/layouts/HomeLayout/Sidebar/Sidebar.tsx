@@ -13,7 +13,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { HOME, MAIN, USER_PROFILE_ROUTE } from 'utils/constants/routes';
+import { HOME, MAIN, MOVIES_ROUTE, USER_PROFILE_ROUTE } from 'utils/constants/routes';
 import { RootStateType } from 'store';
 
 interface ISidebarProps {
@@ -52,6 +52,10 @@ export const Sidebar: React.FC<ISidebarProps> = props => {
 
           <ListItem button onClick={() => history.push(USER_PROFILE_ROUTE)}>
             <ListItemText primary="Profile" />
+          </ListItem>
+
+          <ListItem button onClick={() => history.push(MOVIES_ROUTE)}>
+            <ListItemText primary="Movies" />
           </ListItem>
         </List>
       </div>

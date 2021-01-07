@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Masonry from 'react-masonry-css';
 import { FullSizeProgress } from 'components/ui';
-import { IPostData } from 'api/auth';
+import { IPostData } from 'api/main/auth';
 import PostCard from '../PostCard/PostCard';
 
 type PostListProps = {

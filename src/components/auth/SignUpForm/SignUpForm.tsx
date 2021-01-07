@@ -12,11 +12,11 @@ import { Typography, makeStyles, Grid } from '@material-ui/core';
 import { UiButton } from 'components/ui';
 import { getDefaultAuthStyles } from 'containers/auth/styles';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
-import { AuthFormLayout } from '../../Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+import { AuthFormLayout } from '../../layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 // Other
 import { FORGOT_PASSWORD, SIGN_IN } from 'utils/constants/routes';
-import * as AuthApi from 'api/auth';
+import * as AuthApi from 'api/main/auth';
 
 type SignUpFormProps = {
   onSignUp: (data: AuthApi.IUserRegisterCredentials) => void;

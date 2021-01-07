@@ -1,4 +1,4 @@
-import { IPostData } from '../../api/auth';
+import { IPostData } from '../../api/main/auth';
 
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS';

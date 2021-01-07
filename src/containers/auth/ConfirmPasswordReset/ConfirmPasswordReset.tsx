@@ -14,7 +14,7 @@ import { AuthTextField } from 'components/auth/AuthTextField/AuthTextField';
 import { SIGN_IN, SIGN_UP } from 'utils/constants/routes';
 import { password } from 'utils/validationRules';
 import { useAsyncAction } from 'components/hooks/useAsyncAction';
-import { AuthFormLayout } from 'components/Layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+import { AuthFormLayout } from 'components/layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 import { getDefaultAuthStyles } from '../styles';
 import { MetaTitle } from '../../../components/MetaTitle';
 

@@ -3,10 +3,12 @@ import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/
 import rootSaga from './rootSaga';
 import { authReducer } from './auth/reducer';
 import { postsReducer } from './posts/reducer';
+import { moviesReducer } from './movies/reducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   posts: postsReducer,
+  movies: moviesReducer,
 });
 
 export type RootStateType = ReturnType<typeof rootReducer>;

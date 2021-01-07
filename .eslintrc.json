@@ -19,7 +19,7 @@
     "no-param-reassign": 0,
     "no-unused-vars": "off", //Доводиться вимикати, бо eslint не розуміє, чи заюзав я наприклад інтерфейс.
     "@typescript-eslint/no-unused-vars": "error", //Вмикаю, щоб показувало помилки для всіх незаюзаних, але заімпортованих елементів
-
+    "camelcase": 0,
     "import/extensions": [
       "error",
       {

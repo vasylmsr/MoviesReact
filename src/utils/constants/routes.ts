@@ -5,3 +5,4 @@ export const HOME = '/home';
 export const FORGOT_PASSWORD = '/forgot-password';
 export const CONFIRM_EMAIL_LINK = '/confirm';
 export const USER_PROFILE_ROUTE = '/profile';
+export const MOVIES_ROUTE = '/movies';

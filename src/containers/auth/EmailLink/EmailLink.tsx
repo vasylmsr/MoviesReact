@@ -8,7 +8,7 @@ import { useLocation } from 'react-router';
 // import { HOME, SIGN_IN } from 'utils/constants/routes';
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
 // import { useAsyncAction } from 'components/hooks/useAsyncAction';
-import * as AuthApi from 'api/auth';
+import * as AuthApi from 'api/main/auth';
 // import { useSnackbar } from 'notistack';
 
 const EmailLink: React.FC = () => {

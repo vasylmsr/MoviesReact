@@ -9,8 +9,8 @@ import landingCity from 'assets/images/landing_city3.jpg';
 
 // Other
 import clsx from 'clsx';
-import { HOME } from 'utils/constants/routes';
 import { MetaTitle } from 'components/MetaTitle';
+import { MOVIES_ROUTE } from 'utils/constants/routes';
 
 const animations = {
   '@keyframes upToDown': {
@@ -93,7 +93,7 @@ const Landing: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
   const quote = useMemo(() => getRandomQuote(), []);
-  const goToApplication = () => history.push(HOME);
+  const goToApplication = () => history.push(MOVIES_ROUTE);
 
   return (
     <>
@@ -110,7 +110,7 @@ const Landing: React.FC = () => {
         </Typography>
 
         <UiButton className={classes.mainSection__button} onClick={goToApplication}>
-          View Posts App
+          View Movies App
         </UiButton>
       </section>
     </>

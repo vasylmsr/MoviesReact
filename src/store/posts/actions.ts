@@ -1,5 +1,5 @@
-import * as PostsApi from '../../api/posts';
-import { IPostData } from '../../api/auth';
+import * as PostsApi from '../../api/main/posts';
+import { IPostData } from '../../api/main/auth';
 import {
   ADD_POST_SUCCESS,
   EDIT_POST_SUCCESS,

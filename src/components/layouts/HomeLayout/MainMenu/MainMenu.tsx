@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      height: 100,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -52,7 +53,7 @@ export const MainMenu: React.FC<IMainMenuProps> = props => {
   const { openSidebar } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
