@@ -9,9 +9,9 @@ import {
   boundEditPost,
 } from '../../store/posts/actions';
 import { PostsList } from '../../components/posts/PostsList/PostsList';
-import { useModalState } from '../../components/hooks/useModalState';
-import { useModalWithData } from '../../components/hooks/useModalWithState';
-import { useAsyncAction } from '../../components/hooks/useAsyncAction';
+import { useModalState } from '../../hooks/useModalState';
+import { useModalWithData } from '../../hooks/useModalWithState';
+import { useAsyncAction } from '../../hooks/useAsyncAction';
 import { RemovePostDialog } from '../../components/posts/RemovePostDialog/RemovePostDialog';
 import { IPostData } from '../../api/main/auth';
 import { MetaTitle } from '../../components/MetaTitle';

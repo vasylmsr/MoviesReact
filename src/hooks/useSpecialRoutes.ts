@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import routes, { ISingleRoute } from '../../routes';
+import routes, { ISingleRoute } from 'routes';
 
 export function useSpecialRoutes(getRoutesCallback: (route: ISingleRoute) => boolean) {
   const specialRoutes = useMemo(

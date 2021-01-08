@@ -7,7 +7,7 @@ import { clearSignInState, signInAction } from 'store/auth/reducer';
 import { MetaTitle } from 'components/MetaTitle';
 import { SignInForm } from 'components/auth/SignInForm/SignInForm';
 import { LOADING_STATUS } from 'utils/constants/other';
-import useErrorNotificator from 'components/hooks/useErrorNotificator';
+import useErrorNotificator from 'hooks/useErrorNotificator';
 import { IUserLoginCredentials } from 'api/main/auth';
 
 const SignIn: React.FC = (): JSX.Element => {

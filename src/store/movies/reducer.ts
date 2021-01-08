@@ -8,7 +8,7 @@ const initialState: IMoviesReducer = {
   totalPages: 1,
   filters: {
     page: 1,
-    filterBy: 'popular',
+    sortBy: 'popular',
   },
   meta: {
     status: IDLE_STATUS,

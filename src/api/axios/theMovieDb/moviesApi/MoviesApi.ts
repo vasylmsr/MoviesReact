@@ -6,11 +6,11 @@ class MoviesApi extends BaseMovieDbApi {
   private resource = '/movie';
 
   getMovies(params: any): Promise<AxiosResponse<IGetMoviesData>> {
-    const filterBy = params?.filterBy || 'popular';
+    const sortBy = params?.sortBy || 'popular';
     const newParams = { ...params };
     // eslint-disable-next-line no-unused-expressions
-    newParams?.filterBy && delete newParams?.filterBy;
-    return this.get(`${this.resource}/${filterBy}`, { params });
+    newParams?.sortBy && delete newParams?.sortBy;
+    return this.get(`${this.resource}/${sortBy}`, { params });
   }
 }
 

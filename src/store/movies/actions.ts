@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { commonMoviesModule } from './types';
 import moviesApi from '../../api/axios/theMovieDb/moviesApi/MoviesApi';
-import { IGetMoviesData } from '../../api/axios/theMovieDb/moviesApi/types';
+import { IGetMoviesData } from 'api/axios/theMovieDb/moviesApi/types';
 
 export const fetchMovies = createAsyncThunk(
   `${commonMoviesModule}/fetchMoviesStatus`,

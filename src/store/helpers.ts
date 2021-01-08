@@ -1,13 +1,13 @@
 import {
   FAILURE_STATUS,
-  IApiError,
+  IFirebaseApiError,
   IDLE_STATUS,
   LOADING_STATUS,
   LoadingType,
   SUCCESS_STATUS,
 } from 'utils/constants/other';
 
-export type ErrorType = IApiError | null;
+export type ErrorType = IFirebaseApiError | null;
 
 export const setFetchingRequest = (state: any) => {
   state.status = LOADING_STATUS;

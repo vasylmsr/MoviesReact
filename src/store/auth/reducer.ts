@@ -1,7 +1,7 @@
 // Todo: split file
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAuthReducer, IUserProfile } from './types';
-import { IApiError } from '../../utils/constants/other';
+import { IFirebaseApiError } from 'utils/constants/other';
 import {
   clearState,
   getStatusObj,
@@ -9,7 +9,7 @@ import {
   setFetchingRequest,
   setFetchingSuccess,
 } from '../helpers';
-import { IUserLoginCredentials, IUserRegisterCredentials } from '../../api/main/auth';
+import { IUserLoginCredentials, IUserRegisterCredentials } from 'api/main/auth';
 
 const initialState: IAuthReducer = {
   user: null,
@@ -30,30 +30,6 @@ function setUserReducer(state: any, action: UserActionPayloadType) {
   state.isAuthResolved = true;
   state.isUserConfirmed = action.payload?.emailVerified;
 }
-
-// function createOwnSlice({ name, prevState }: any): Slice {
-//   return createSlice({
-//     name,
-//     initialState: prevState,
-//     reducers: {
-//       [`${name}Request`](state) {
-//         setFetchingRequest(state[name]);
-//       },
-//       [`${name}Success`](state) {
-//         setFetchingSuccess(state[name]);
-//       },
-//       [`${name}Failure`](state, action: PayloadAction<IApiError>) {
-//         setFetchingError(state[name], action.payload);
-//       },
-//     },
-//   });
-// }
-//
-// const q = createOwnSlice({
-//   name: 'checkUsera',
-// });
-//
-// const { checkUse, checkUseraSuccess } = q.actions;
 
 const authSlice = createSlice({
   name: moduleName,
@@ -79,7 +55,7 @@ const authSlice = createSlice({
     signInSuccess(state) {
       setFetchingSuccess(state.signIn);
     },
-    signInFailure(state, action: PayloadAction<IApiError>) {
+    signInFailure(state, action: PayloadAction<IFirebaseApiError>) {
       setFetchingError(state.signIn, action.payload);
     },
     clearSignInState(state) {
@@ -92,7 +68,7 @@ const authSlice = createSlice({
     signUpSuccess(state) {
       setFetchingSuccess(state.signUp);
     },
-    signUpFailure(state, action: PayloadAction<IApiError>) {
+    signUpFailure(state, action: PayloadAction<IFirebaseApiError>) {
       setFetchingError(state.signUp, action.payload);
     },
     clearSignUpState(state) {
@@ -105,7 +81,7 @@ const authSlice = createSlice({
     resetPasswordSuccess(state) {
       setFetchingSuccess(state.resetPassword);
     },
-    resetPasswordFailure(state, action: PayloadAction<IApiError>) {
+    resetPasswordFailure(state, action: PayloadAction<IFirebaseApiError>) {
       setFetchingError(state.resetPassword, action.payload);
     },
     clearResetPasswordState(state) {
@@ -118,7 +94,7 @@ const authSlice = createSlice({
     confirmPasswordResetSuccess(state) {
       setFetchingSuccess(state.confirmPasswordReset);
     },
-    confirmPasswordResetFailure(state, action: PayloadAction<IApiError>) {
+    confirmPasswordResetFailure(state, action: PayloadAction<IFirebaseApiError>) {
       setFetchingError(state.confirmPasswordReset, action.payload);
     },
     clearConfirmResetPasswordState(state) {

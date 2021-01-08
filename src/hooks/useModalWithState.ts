@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useModalState } from './useModalState';
+import { useModalState } from 'hooks/useModalState';
 
 export function useModalWithData<T>() {
   const { isOpened, handleOpen, handleClose } = useModalState();

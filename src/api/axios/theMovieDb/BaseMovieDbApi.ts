@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import BaseApi from '../common/BaseApi';
 
-const baseURL = 'https://api.themoviedb.org/3';
+const TMDB_API_VERSION = 3;
+const baseURL = `https://api.themoviedb.org/${TMDB_API_VERSION}`;
 const apiKey = process.env.REACT_APP_TMDB_API_KEY;
 // @ts-ignore
 // eslint-disable-next-line new-cap

@@ -7,7 +7,7 @@ import { RootStateType } from 'store';
 import { SignUpForm } from 'components/auth/SignUpForm/SignUpForm';
 import { MetaTitle } from 'components/MetaTitle';
 import { clearSignUpState, signUpAction } from 'store/auth/reducer';
-import useErrorNotificator from 'components/hooks/useErrorNotificator';
+import useErrorNotificator from 'hooks/useErrorNotificator';
 import { LOADING_STATUS } from 'utils/constants/other';
 
 const SignUp: React.FC = (): JSX.Element => {

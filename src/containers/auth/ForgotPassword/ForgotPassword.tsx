@@ -7,7 +7,7 @@ import { MetaTitle } from 'components/MetaTitle';
 import { ForgotPasswordForm } from 'components/auth/ForgotPasswordForm/ForgotPasswordForm';
 import { resetPasswordAction, clearResetPasswordState } from 'store/auth/reducer';
 import { LOADING_STATUS, SUCCESS_STATUS } from 'utils/constants/other';
-import useErrorNotificator from 'components/hooks/useErrorNotificator';
+import useErrorNotificator from 'hooks/useErrorNotificator';
 
 const ForgotPassword: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

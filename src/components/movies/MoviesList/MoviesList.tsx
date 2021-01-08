@@ -1,7 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, makeStyles } from '@material-ui/core';
 import MovieSimpleCard from '../MovieSimpleCard/MovieSimpleCard';
-import { Grid } from '@material-ui/core';
 import { IMovie, MoviesType } from 'api/axios/theMovieDb/moviesApi/types';
 
 type MoviesListProps = {
@@ -18,19 +17,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const MoviesList: React.FC<MoviesListProps> = props => {
+const MoviesList: React.FC<MoviesListProps> = props => {
   const classes = useStyles();
   const { movies } = props;
 
   return (
     <>
-      <Grid container spacing={4} justify="space-between">
+      <Grid container spacing={4} justify="center">
         {movies.map((movie: IMovie) => (
-          <Grid item key={movie.id} className={classes.card}>
-            <MovieSimpleCard movie={movie} />
+          <Grid item key={movie.id}>
+            <MovieSimpleCard movie={movie} className={classes.card} />
           </Grid>
         ))}
       </Grid>
     </>
   );
 };
+
+export default MoviesList;
