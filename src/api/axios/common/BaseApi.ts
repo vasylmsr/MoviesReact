@@ -8,7 +8,7 @@ interface IMainApi {
 }
 
 export default class MainApi implements IMainApi {
-  private axiosInstance: AxiosInstance;
+  protected axiosInstance: AxiosInstance;
 
   constructor(axiosInstance: AxiosInstance) {
     this.axiosInstance = axiosInstance;

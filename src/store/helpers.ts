@@ -6,8 +6,9 @@ import {
   LoadingType,
   SUCCESS_STATUS,
 } from 'utils/constants/other';
+import { ITmdbError } from 'api/axios/theMovieDb/types';
 
-export type ErrorType = IFirebaseApiError | null;
+export type ErrorType = IFirebaseApiError | ITmdbError | null;
 
 export const setFetchingRequest = (state: any) => {
   state.status = LOADING_STATUS;

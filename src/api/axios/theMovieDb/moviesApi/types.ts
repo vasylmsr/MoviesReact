@@ -11,12 +11,26 @@ export interface IMovie {
   release_date: string | null;
   backdrop_path: string | null;
   poster_path: string | null;
+  vote_average: number | null;
 }
 
 export type MoviesType = Array<IMovie>;
 
+// getMovies, searchMovies
 export interface IGetMoviesData {
   total_pages: number;
   results: MoviesType;
   page: number;
+}
+
+// getMovies params
+export interface ICommonMoviesFilters {
+  page: number;
+  sortBy: MovieSortingType;
+}
+
+// searchMovies params
+export interface ISearchedMoviesFilters {
+  page: number;
+  query: string;
 }

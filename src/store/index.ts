@@ -3,7 +3,7 @@ import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/
 import rootSaga from './rootSaga';
 import { authReducer } from './auth/reducer';
 import { postsReducer } from './posts/reducer';
-import { moviesReducer } from './movies/reducer';
+import { moviesReducer } from 'store/movies/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,

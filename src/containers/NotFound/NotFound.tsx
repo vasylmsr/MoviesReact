@@ -1,5 +1,5 @@
 import React from 'react';
-import { MetaTitle } from '../../components/MetaTitle';
+import { MetaTitle } from 'components/MetaTitle';
 
 const NotFound: React.FC = () => (
   <>

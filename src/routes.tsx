@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { AUTH_LAYOUT } from './utils/constants/layouts';
+import { AUTH_LAYOUT } from 'utils/constants/layouts';
 import {
   CONFIRM_EMAIL_LINK,
   FORGOT_PASSWORD,
@@ -9,7 +9,7 @@ import {
   SIGN_IN,
   SIGN_UP,
   USER_PROFILE_ROUTE,
-} from './utils/constants/routes';
+} from 'utils/constants/routes';
 
 const SignIn = lazy(() => import('./containers/auth/SignIn/SignIn'));
 const SignUp = lazy(() => import('./containers/auth/SignUp/SignUp'));

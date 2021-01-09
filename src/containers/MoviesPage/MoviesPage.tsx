@@ -3,10 +3,9 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Store
-import { fetchMovies } from 'store/movies/actions';
 import { RootStateType } from 'store';
-import { setFilter } from 'store/movies/reducer';
-
+import { setFilter } from 'store/movies/commonMovies/slice';
+import { fetchMovies } from 'store/movies/commonMovies/actions';
 // UI
 import { Container, Grid } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
@@ -21,7 +20,7 @@ import { isSortingType } from 'api/axios/theMovieDb/moviesApi/types';
 // Todo: implement data types
 function getCheckedMoviesFilters(data: any) {
   return {
-    page: Number(data.page) || 1,
+    page: data.page > 0 && data.page <= 1000 ? Number(data.page) : 1,
     sortBy: isSortingType(data.sortBy) ? data.sortBy : 'popular',
   };
 }
@@ -29,10 +28,9 @@ function getCheckedMoviesFilters(data: any) {
 const MoviesPage: React.FC = () => {
   // Store
   const dispatch = useDispatch();
-  const { moviesList, totalPages, filters } = useSelector(
+  const { list, totalPages, filters } = useSelector(
     (state: RootStateType) => state.movies.commonMovies,
   );
-
   // Make a query after first 'filters' changing
   const mountRef = useRef(false);
   useEffect(() => {
@@ -72,7 +70,7 @@ const MoviesPage: React.FC = () => {
         </Grid>
 
         <Grid container justify="center">
-          <MoviesList movies={moviesList} />
+          <MoviesList movies={list} />
           <Pagination
             style={{ marginTop: 30 }}
             count={totalPages}

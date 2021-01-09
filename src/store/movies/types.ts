@@ -1,14 +1,9 @@
 import { StatusType } from '../helpers';
-import { MovieSortingType, MoviesType } from 'api/axios/theMovieDb/moviesApi/types';
+import { MoviesType } from 'api/axios/theMovieDb/moviesApi/types';
 
-export interface IMoviesReducer {
-  moviesList: MoviesType;
+export interface IMoviesReducer<FiltersType> {
+  list: MoviesType;
   totalPages: number;
-  filters: {
-    page: number;
-    sortBy: MovieSortingType;
-  };
   meta: StatusType;
+  filters: FiltersType;
 }
-
-export const commonMoviesModule = 'movies';

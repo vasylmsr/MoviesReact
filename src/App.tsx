@@ -5,14 +5,14 @@ import { RootStateType } from './store';
 import firebase from 'firebase';
 
 // Components
-import { FullSizeProgress } from './components/ui';
-import { AppRoutes } from './components/routing/AppRoutes';
+import { FullSizeProgress } from 'components/ui';
+import { AppRoutes } from 'components/routing/AppRoutes';
 
 // Other
 import { SnackbarProvider } from 'notistack';
 import * as AuthApi from './api/main/auth';
+import { getFullAuthData, setUser } from 'store/auth/reducer';
 import './App.css';
-import { getFullAuthData, setUser } from './store/auth/reducer';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { MetaTitle } from '../../components/MetaTitle';
 import { useSelector } from 'react-redux';
 import { RootStateType } from '../../store';
 
-const UserProfile: React.FC = () => {
+const MovieDetails: React.FC = () => {
   const { user } = useSelector((store: RootStateType) => store.auth);
   return (
     <>
@@ -13,4 +13,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default UserProfile;
+export default MovieDetails;
