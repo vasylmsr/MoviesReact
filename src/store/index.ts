@@ -4,11 +4,13 @@ import rootSaga from './rootSaga';
 import { authReducer } from './auth/reducer';
 import { postsReducer } from './posts/reducer';
 import { moviesReducer } from 'store/movies/slice';
+import { layoutReducer } from 'store/layout/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   posts: postsReducer,
   movies: moviesReducer,
+  layout: layoutReducer,
 });
 
 export type RootStateType = ReturnType<typeof rootReducer>;

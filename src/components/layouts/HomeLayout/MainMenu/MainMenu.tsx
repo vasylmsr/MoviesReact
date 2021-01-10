@@ -1,10 +1,10 @@
 // Core
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 // UI
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, LinearProgress } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { UiButton } from 'components/ui';
@@ -12,6 +12,7 @@ import { UiButton } from 'components/ui';
 // Other
 import { logout } from 'store/auth/sagas';
 import { SIGN_IN } from 'utils/constants/routes';
+import { RootStateType } from 'store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,6 +47,8 @@ export const MainMenu: React.FC<IMainMenuProps> = props => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { status } = useSelector((state: RootStateType) => state.layout.mainLayoutLoading);
+
   const signOut = async () => {
     await dispatch(logout());
     history.push(SIGN_IN);
@@ -71,6 +74,7 @@ export const MainMenu: React.FC<IMainMenuProps> = props => {
             Logout
           </UiButton>
         </Toolbar>
+        {status && <LinearProgress color="primary" />}
       </AppBar>
     </div>
   );

@@ -16,6 +16,7 @@ import SortingGroupButton from 'components/movies/SortingGroupButton/SortingGrou
 import { getQueryStringValues, setQueryStringValues } from 'utils/queryString';
 import { MetaTitle } from 'components/MetaTitle';
 import { isSortingType } from 'api/axios/theMovieDb/moviesApi/types';
+import useMainLayoutLoading from 'hooks/useMainLayoutLoader';
 
 // Todo: implement data types
 function getCheckedMoviesFilters(data: any) {
@@ -28,9 +29,12 @@ function getCheckedMoviesFilters(data: any) {
 const MoviesPage: React.FC = () => {
   // Store
   const dispatch = useDispatch();
-  const { list, totalPages, filters } = useSelector(
+  const { list, totalPages, filters, meta } = useSelector(
     (state: RootStateType) => state.movies.commonMovies,
   );
+
+  useMainLayoutLoading(meta.status);
+
   // Make a query after first 'filters' changing
   const mountRef = useRef(false);
   useEffect(() => {
