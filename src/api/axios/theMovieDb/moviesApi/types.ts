@@ -5,13 +5,28 @@ export const isSortingType = (value: MovieSortingType): value is MovieSortingTyp
   return sortingTypes.some(element => element === value);
 };
 
+export interface IMovieGenre {
+  id: number;
+  name: string;
+}
+
+export interface IMovieVideo {
+  id: number;
+  key: string;
+  name: string;
+}
+
 export interface IMovie {
-  id: number | string;
+  id: number;
   title: string;
   release_date: string | null;
   backdrop_path: string | null;
   poster_path: string | null;
   vote_average: number | null;
+  overview?: string;
+  tagline?: string;
+  genres?: Array<IMovieGenre>;
+  videos?: { results: Array<IMovieVideo> };
 }
 
 export type MoviesType = Array<IMovie>;

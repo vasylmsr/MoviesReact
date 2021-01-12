@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
 import { SIGN_IN, USER_PROFILE_ROUTE } from 'utils/constants/routes';
 import { RootStateType } from 'store';
-import { ISingleRoute } from '../../../routes';
+import { ISingleRoute } from 'routes';
 import { useSnackbar } from 'notistack';
 import { RouteSuspense } from '../RouteSuspense/RouteSuspense';
 

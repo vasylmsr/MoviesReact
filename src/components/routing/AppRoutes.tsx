@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import { landingRoute } from 'routes';
 import { AUTH_LAYOUT } from 'utils/constants/layouts';
 
-import { useSpecialRoutes } from '../../hooks/useSpecialRoutes';
+import { useSpecialRoutes } from 'hooks/useSpecialRoutes';
 import { AuthRoutes } from './AuthRoutes/AuthRoutes';
 import { RouteSuspense } from './RouteSuspense/RouteSuspense';
 import { HomeRoutes } from './HomeRoutes/HomeRoutes';

@@ -1,12 +1,20 @@
 import BaseMovieDbApi from '../BaseMovieDbApi';
 import { AxiosResponse } from 'axios';
-import { ICommonMoviesFilters, IGetMoviesData, ISearchedMoviesFilters } from './types';
+import { ICommonMoviesFilters, IGetMoviesData, IMovie, ISearchedMoviesFilters } from './types';
 
 class MoviesApi extends BaseMovieDbApi {
   private resource = '/movie';
 
   getMovies(params: ICommonMoviesFilters): Promise<AxiosResponse<IGetMoviesData>> {
     return this.get(`${this.resource}/${params.sortBy}`, { params });
+  }
+
+  getMovie(movieId: number): Promise<AxiosResponse<IMovie>> {
+    return this.get(`${this.resource}/${movieId}`, {
+      params: {
+        append_to_response: 'videos',
+      },
+    });
   }
 
   searchMovies(params: ISearchedMoviesFilters): Promise<AxiosResponse<IGetMoviesData>> {

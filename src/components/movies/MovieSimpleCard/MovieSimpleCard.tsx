@@ -14,20 +14,27 @@ const useStyles = makeStyles({
 
 type MovieSimpleCardProps = {
   movie: IMovie;
+  onCardClick: (id: number) => void;
   className?: any;
 };
 
 const MovieSimpleCard: React.FC<MovieSimpleCardProps> = props => {
   const classes = useStyles();
 
-  const { movie, className } = props;
+  const { movie, className, onCardClick } = props;
   const posterImg = `${TMDB_IMAGE_URL.medium}${movie.poster_path || movie.backdrop_path}`;
   const releaseDate = movie.release_date && formatDate(movie.release_date);
 
   return (
     <Card className={clsx(classes.root, className)}>
       <div>
-        <CardMedia component="img" height="330" image={posterImg} alt={movie.title} />
+        <CardMedia
+          component="img"
+          height="330"
+          image={posterImg}
+          alt={movie.title}
+          onClick={() => onCardClick(movie.id)}
+        />
         <CardContent>
           <Typography gutterBottom variant="subtitle1" component="h2">
             {movie.title}

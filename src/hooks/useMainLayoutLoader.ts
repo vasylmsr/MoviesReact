@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { startMainLayoutLoading, stopMainLayoutLoading } from 'store/layout/slice';
 import { FAILURE_STATUS, LOADING_STATUS, LoadingType, SUCCESS_STATUS } from 'utils/constants/other';
 
-export default function useMainLayoutLoading(loadingStatus: LoadingType) {
+export default function useMainLayoutLoader(loadingStatus: LoadingType) {
   const dispatch = useDispatch();
 
   useEffect(() => {
