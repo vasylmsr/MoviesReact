@@ -55,7 +55,11 @@ export const editPost = (postData: IPostData) => async (dispatch: any) => {
   dispatch(editPostSuccess(newPostData));
 };
 
+// @ts-ignore
 export const boundAddPost = (postData: IPostData) => store.dispatch(addPost(postData));
+// @ts-ignore
 export const boundGetPosts = () => storeDispatch(getPosts());
+// @ts-ignore
 export const boundRemovePost = (postId: string) => storeDispatch(removePost(postId));
+// @ts-ignore
 export const boundEditPost = (post: IPostData) => storeDispatch(editPost(post));

@@ -3,7 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from 'store';
 
-import { clearSignInState, signInAction } from 'store/auth/reducer';
+import { clearSignInState } from 'store/auth/slice';
+import { signIn } from 'store/auth/asyncActions';
+
 import { MetaTitle } from 'components/MetaTitle';
 import { SignInForm } from 'components/auth/SignInForm/SignInForm';
 import { LOADING_STATUS } from 'utils/constants/other';
@@ -13,9 +15,6 @@ import { IUserLoginCredentials } from 'api/main/auth';
 const SignIn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const { status: signInStatus, error } = useSelector((state: RootStateType) => state.auth.signIn);
-  const { status: checkingUserStatus } = useSelector(
-    (state: RootStateType) => state.auth.checkingUser,
-  );
 
   useErrorNotificator(error);
 
@@ -29,8 +28,8 @@ const SignIn: React.FC = (): JSX.Element => {
     <>
       <MetaTitle title="Sign In" />
       <SignInForm
-        onSignIn={(data: IUserLoginCredentials) => dispatch(signInAction(data))}
-        loading={signInStatus === LOADING_STATUS || checkingUserStatus === LOADING_STATUS}
+        onSignIn={(data: IUserLoginCredentials) => dispatch(signIn(data))}
+        loading={signInStatus === LOADING_STATUS}
       />
     </>
   );

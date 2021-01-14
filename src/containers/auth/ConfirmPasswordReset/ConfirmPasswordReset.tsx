@@ -1,5 +1,5 @@
 // Todo: refactor file: 1) Move form to separate file; 2) Move validation rule to separate file
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Grid, makeStyles } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
@@ -9,14 +9,15 @@ import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import { UiButton } from 'components/ui';
-import { confirmPasswordReset } from 'store/auth/sagas';
+import { clearConfirmResetPasswordState } from 'store/auth/slice';
+import { confirmPasswordReset } from 'store/auth/asyncActions';
 import { AuthTextField } from 'components/auth/AuthTextField/AuthTextField';
 import { SIGN_IN, SIGN_UP } from 'utils/constants/routes';
 import { password } from 'utils/validationRules';
 import { useAsyncAction } from 'hooks/useAsyncAction';
 import { AuthFormLayout } from 'components/layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 import { getDefaultAuthStyles } from '../styles';
-import { MetaTitle } from '../../../components/MetaTitle';
+import { MetaTitle } from 'components/MetaTitle';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
@@ -46,10 +47,16 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({ code
   });
 
   const { loading, execute } = useAsyncAction(async (data: any) => {
-    await dispatch(confirmPasswordReset(code, data.newPassword));
+    await dispatch(confirmPasswordReset({ code, newPassword: data.newPassword }));
     enqueueSnackbar('Password successfully changed');
     history.push(SIGN_IN);
   });
+
+  useEffect(() => {
+    return () => {
+      clearConfirmResetPasswordState();
+    };
+  }, []);
 
   const onSubmit = handleSubmit(data => execute(data));
   return (

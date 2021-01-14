@@ -1,7 +1,7 @@
 // Core
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootStateType } from './store';
+import { RootStateType } from 'store';
 import firebase from 'firebase';
 
 // Components
@@ -11,7 +11,7 @@ import { AppRoutes } from 'components/routing/AppRoutes';
 // Other
 import { SnackbarProvider } from 'notistack';
 import * as AuthApi from './api/main/auth';
-import { getFullAuthData, setUser } from 'store/auth/reducer';
+import { setUser } from 'store/auth/slice';
 import './App.css';
 
 const App: React.FC = () => {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
   React.useEffect(() => {
     // This method always works after first render
     const unsubscribeAuth = AuthApi.onAuthStateChanged((user: firebase.User | null) => {
-      dispatch(user ? getFullAuthData(user) : setUser(null));
+      dispatch(setUser(user));
     });
     return () => {
       unsubscribeAuth();

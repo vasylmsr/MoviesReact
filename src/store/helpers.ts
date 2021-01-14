@@ -8,7 +8,7 @@ import {
 } from 'utils/constants/other';
 import { ITmdbError } from 'api/axios/theMovieDb/types';
 
-export type ErrorType = IFirebaseApiError | ITmdbError | null;
+export type ErrorType = IFirebaseApiError | ITmdbError | null | undefined;
 
 export const setFetchingRequest = (state: any) => {
   state.status = LOADING_STATUS;

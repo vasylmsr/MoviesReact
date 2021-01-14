@@ -25,7 +25,7 @@ type SignUpFormProps = {
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
 
-export const SignUpForm: React.FC<SignUpFormProps> = (props: SignUpFormProps): JSX.Element => {
+export const SignUpForm: React.FC<SignUpFormProps> = props => {
   const { onSignUp, loading } = props;
 
   const classes = useStyles();
