@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import AppLogo from 'assets/images/logo192.png';
+import AppLogo from 'assets/images/appLogo.png';
 import { useHistory } from 'react-router';
 import { ROUTES } from 'utils/constants/routes';
 
