@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
-export function useAsyncAction(callback: any, errorCallback?: any) {
-  const [loading, setLoading] = useState<boolean>(false);
+export function useAsyncAction(successCallback: (...args: any[]) => any, errorCallback?: any) {
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const execute = useCallback(
     async (...data) => {
       try {
         setLoading(true);
-        await Promise.resolve(callback(...data));
+        await Promise.resolve(successCallback(...data));
       } catch (error) {
         enqueueSnackbar(error.message, { variant: 'error' });
         // eslint-disable-next-line no-unused-expressions
@@ -18,7 +18,7 @@ export function useAsyncAction(callback: any, errorCallback?: any) {
         setLoading(false);
       }
     },
-    [callback, enqueueSnackbar, errorCallback],
+    [successCallback, enqueueSnackbar, errorCallback],
   );
 
   return {

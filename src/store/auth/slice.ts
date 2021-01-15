@@ -7,7 +7,7 @@ import {
   setFetchingRequest,
   setFetchingSuccess,
 } from '../helpers';
-import { confirmPasswordReset, resetPassword, signIn, signUp } from 'store/auth/asyncActions';
+import { confirmPasswordReset, resetPassword, signIn, signUp } from 'store/auth/asyncThunks';
 
 const initialState: IAuthState = {
   user: null,
@@ -28,8 +28,8 @@ const authSlice = createSlice({
   reducers: {
     setUser(state: any, action: UserActionPayloadType) {
       if (action.payload) {
-        const { uid, displayName, email, emailVerified } = action.payload;
-        state.user = { uid, displayName, email, emailVerified };
+        const { uid, displayName, email, emailVerified, photoURL } = action.payload;
+        state.user = { uid, displayName, email, emailVerified, photoURL };
         state.isUserConfirmed = emailVerified;
       } else {
         state.user = action.payload;

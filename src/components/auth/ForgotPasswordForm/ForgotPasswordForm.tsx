@@ -14,7 +14,7 @@ import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { UiButton } from 'components/ui';
 
 // Other
-import { SIGN_IN, SIGN_UP } from 'utils/constants/routes';
+import { ROUTES } from 'utils/constants/routes';
 import { getDefaultAuthStyles } from 'containers/auth/styles';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
@@ -23,6 +23,8 @@ type ForgotPasswordFormProps = {
   onForgotPassword: (data: { email: string }) => void;
   loading: boolean;
 };
+
+const { SIGN_IN, SIGN_UP } = ROUTES;
 
 export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = props => {
   const { onForgotPassword, loading } = props;

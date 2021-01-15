@@ -18,16 +18,6 @@ export interface IUserRegisterCredentials {
 
 const auth = app.auth();
 
-export function createUserProfile(userData: any) {
-  return db.collection(PROFILES_COLLECTION).doc(userData?.uid).set(userData);
-}
-
-export async function getUserProfile(uid: string): Promise<IUserProfile> {
-  const snapshot = await db.collection(PROFILES_COLLECTION).doc(uid).get();
-  const { displayName, emailVerified, email } = snapshot.data()!;
-  return { uid, displayName, emailVerified, email };
-}
-
 export async function doCreateUserWithEmailAndPassword({
   email,
   password,
@@ -56,7 +46,9 @@ export const onAuthStateChanged = (callback: authStateChangedCallbackType) =>
 
 export const doLogout = (): Promise<any> => auth.signOut();
 
-export const applyActionCode = (code: string): Promise<any> => auth.applyActionCode(code);
+export const applyActionCode = (code: string) => auth.applyActionCode(code);
+
+export const handleResetPassword = (code: string) => auth.verifyPasswordResetCode(code);
 
 export const sendPasswordResetEmail = (email: string): Promise<any> =>
   auth.sendPasswordResetEmail(email);
@@ -76,12 +68,19 @@ export interface IPostData {
   user: any;
 }
 
-// const googleProvider = new app.auth.GoogleAuthProvider();
+const googleProvider = new app.auth.GoogleAuthProvider();
 
-// export const doSignInWithGoogle = () => {
-//   auth.signInWithPopup(googleProvider).then(res => console.log(res));
-// };
+export const doSignInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
+export function createUserProfile(userData: any) {
+  return db.collection(PROFILES_COLLECTION).doc(userData?.uid).set(userData);
+}
+
+export async function getUserProfile(uid: string): Promise<IUserProfile> {
+  const snapshot = await db.collection(PROFILES_COLLECTION).doc(uid).get();
+  const { displayName, emailVerified, email, photoURL } = snapshot.data()!;
+  return { uid, displayName, emailVerified, email, photoURL };
+}
 //
 // doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
 //

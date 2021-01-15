@@ -15,8 +15,8 @@ import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { AuthFormLayout } from '../../layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 // Other
-import { FORGOT_PASSWORD, SIGN_IN } from 'utils/constants/routes';
-import * as AuthApi from 'api/main/auth';
+import { ROUTES } from 'utils/constants/routes';
+import * as AuthApi from 'api/firebase/auth';
 
 type SignUpFormProps = {
   onSignUp: (data: AuthApi.IUserRegisterCredentials) => void;
@@ -24,6 +24,7 @@ type SignUpFormProps = {
 };
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
+const { FORGOT_PASSWORD, SIGN_IN } = ROUTES;
 
 export const SignUpForm: React.FC<SignUpFormProps> = props => {
   const { onSignUp, loading } = props;

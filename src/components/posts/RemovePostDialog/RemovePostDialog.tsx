@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertDialog, AlertDialogProps } from '../../dialogs/AlertDialog/AlertDialog';
-import { IPostData } from '../../../api/main/auth';
+import { IPostData } from '../../../api/firebase/auth';
 
 type RemovePostDialogProps = AlertDialogProps & {
   post?: IPostData;

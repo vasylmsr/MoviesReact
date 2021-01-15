@@ -13,7 +13,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { HOME, MAIN, MOVIES_ROUTE, USER_PROFILE_ROUTE } from 'utils/constants/routes';
+import { ROUTES } from 'utils/constants/routes';
 import { RootStateType } from 'store';
 
 interface ISidebarProps {
@@ -26,6 +26,8 @@ const useStyles = makeStyles({
     width: 250,
   },
 });
+
+const { HOME, MAIN, MOVIES, USER_PROFILE } = ROUTES;
 
 export const Sidebar: React.FC<ISidebarProps> = props => {
   const { onClose, isVisible } = props;
@@ -50,11 +52,11 @@ export const Sidebar: React.FC<ISidebarProps> = props => {
             <ListItemText primary="Posts" />
           </ListItem>
 
-          <ListItem button onClick={() => history.push(USER_PROFILE_ROUTE)}>
+          <ListItem button onClick={() => history.push(USER_PROFILE)}>
             <ListItemText primary="Profile" />
           </ListItem>
 
-          <ListItem button onClick={() => history.push(MOVIES_ROUTE)}>
+          <ListItem button onClick={() => history.push(MOVIES)}>
             <ListItemText primary="Movies" />
           </ListItem>
         </List>

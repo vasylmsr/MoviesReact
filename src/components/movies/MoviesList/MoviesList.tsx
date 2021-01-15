@@ -3,7 +3,7 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 import MovieSimpleCard from '../MovieSimpleCard/MovieSimpleCard';
 import { IMovie, MoviesType } from 'api/axios/theMovieDb/moviesApi/types';
 import { useHistory } from 'react-router';
-import { MOVIES_ROUTE } from 'utils/constants/routes';
+import { ROUTES } from 'utils/constants/routes';
 
 type MoviesListProps = {
   movies: MoviesType;
@@ -26,7 +26,7 @@ const MoviesList: React.FC<MoviesListProps> = props => {
 
   const goToMovieDetails = useCallback(
     (id: number) => {
-      history.push(`${MOVIES_ROUTE}/${id}`);
+      history.push(`${ROUTES.MOVIES}/${id}`);
     },
     [history],
   );

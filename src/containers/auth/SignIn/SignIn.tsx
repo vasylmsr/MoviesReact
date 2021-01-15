@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from 'store';
 
 import { clearSignInState } from 'store/auth/slice';
-import { signIn } from 'store/auth/asyncActions';
+import { signIn } from 'store/auth/asyncThunks';
 
 import { MetaTitle } from 'components/MetaTitle';
 import { SignInForm } from 'components/auth/SignInForm/SignInForm';
 import { LOADING_STATUS } from 'utils/constants/other';
 import useErrorNotificator from 'hooks/useErrorNotificator';
-import { IUserLoginCredentials } from 'api/main/auth';
+import { IUserLoginCredentials } from 'api/firebase/auth';
 
 const SignIn: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

@@ -9,8 +9,8 @@ import { MetaTitle } from 'components/MetaTitle';
 import { clearSignUpState } from 'store/auth/slice';
 import useErrorNotificator from 'hooks/useErrorNotificator';
 import { LOADING_STATUS } from 'utils/constants/other';
-import { signUp } from 'store/auth/asyncActions';
-import * as AuthApi from 'api/main/auth';
+import { signUp } from 'store/auth/asyncThunks';
+import * as AuthApi from 'api/firebase/auth';
 
 const SignUp: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

@@ -12,7 +12,7 @@ import { UiButton, UiTextField } from 'components/ui';
 import { UiDialogActions, UiDialogContent, UiDialogTitle } from 'components/ui/UiDialog/UiDialog';
 
 // Other
-import * as AuthApi from 'api/main/auth';
+import * as AuthApi from 'api/firebase/auth';
 
 type CreatePostDialogProps = DialogProps & {
   onClose: () => void;

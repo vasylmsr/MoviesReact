@@ -1,9 +1,11 @@
-export const MAIN = '/';
-export const SIGN_IN = '/sign-in';
-export const SIGN_UP = '/sign-up';
-export const HOME = '/home';
-export const FORGOT_PASSWORD = '/forgot-password';
-export const CONFIRM_EMAIL_LINK = '/confirm';
-export const USER_PROFILE_ROUTE = '/profile';
-export const MOVIES_ROUTE = '/movies';
-export const SINGLE_MOVIE = '/movies/:id';
+export const ROUTES = {
+  MAIN: '/',
+  SIGN_IN: '/sign-in',
+  SIGN_UP: '/sign-up',
+  HOME: '/home',
+  FORGOT_PASSWORD: '/forgot-password',
+  CONFIRM_EMAIL_LINK: '/confirm',
+  USER_PROFILE: '/profile',
+  MOVIES: '/movies',
+  SINGLE_MOVIE: '/movies/:id',
+};

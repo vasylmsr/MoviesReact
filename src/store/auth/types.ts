@@ -8,6 +8,7 @@ export interface IUserProfile {
   displayName: string;
   email: string;
   emailVerified: boolean;
+  photoURL: string;
 }
 
 export interface IAuthState {

@@ -10,16 +10,16 @@ import { useHistory } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import { UiButton } from 'components/ui';
 import { clearConfirmResetPasswordState } from 'store/auth/slice';
-import { confirmPasswordReset } from 'store/auth/asyncActions';
+import { confirmPasswordReset } from 'store/auth/asyncThunks';
 import { AuthTextField } from 'components/auth/AuthTextField/AuthTextField';
-import { SIGN_IN, SIGN_UP } from 'utils/constants/routes';
+import { ROUTES } from 'utils/constants/routes';
 import { password } from 'utils/validationRules';
 import { useAsyncAction } from 'hooks/useAsyncAction';
-import { AuthFormLayout } from 'components/layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 import { getDefaultAuthStyles } from '../styles';
 import { MetaTitle } from 'components/MetaTitle';
 
 const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
+const { SIGN_IN, SIGN_UP } = ROUTES;
 
 const forgotPasswordValidationSchema = yup.object({
   newPassword: password().required(),
@@ -29,11 +29,11 @@ const forgotPasswordValidationSchema = yup.object({
     .required(),
 });
 
-type ConfirmPasswordResetProps = {
+type PropsType = {
   code: string;
 };
 
-export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({ code }) => {
+export const ConfirmPasswordReset: React.FC<PropsType> = ({ code }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -62,7 +62,7 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({ code
   return (
     <>
       <MetaTitle title="Reset Password" />
-      <AuthFormLayout>
+      <>
         <Typography component="h1" variant="h5">
           Forgot password
         </Typography>
@@ -102,7 +102,7 @@ export const ConfirmPasswordReset: React.FC<ConfirmPasswordResetProps> = ({ code
             Set new password
           </UiButton>
         </form>
-      </AuthFormLayout>
+      </>
     </>
   );
 };

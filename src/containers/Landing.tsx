@@ -10,7 +10,7 @@ import landingCity from 'assets/images/landing_city3.jpg';
 // Other
 import clsx from 'clsx';
 import { MetaTitle } from 'components/MetaTitle';
-import { MOVIES_ROUTE } from 'utils/constants/routes';
+import { ROUTES } from 'utils/constants/routes';
 
 const animations = {
   '@keyframes upToDown': {
@@ -93,7 +93,7 @@ const Landing: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
   const quote = useMemo(() => getRandomQuote(), []);
-  const goToApplication = () => history.push(MOVIES_ROUTE);
+  const goToApplication = () => history.push(ROUTES.MOVIES);
 
   return (
     <>

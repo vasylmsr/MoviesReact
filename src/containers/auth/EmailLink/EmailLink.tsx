@@ -1,54 +1,69 @@
-// Core
-import React from 'react';
-import { useLocation } from 'react-router';
-// import { useDispatch } from 'react-redux';
+// Todo: implement other actions; refactor
 
-// Other
-// import { applyActionCode } from 'store/auth/sagas';
-// import { HOME, SIGN_IN } from 'utils/constants/routes';
+// Core
+import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+
 import { ConfirmPasswordReset } from '../ConfirmPasswordReset/ConfirmPasswordReset';
-// import { useAsyncAction } from 'components/hooks/useAsyncAction';
-import * as AuthApi from 'api/main/auth';
-// import { useSnackbar } from 'notistack';
+import * as AuthApi from 'api/firebase/auth';
+import { ROUTES } from 'utils/constants/routes';
+import { useAsyncAction } from 'hooks/useAsyncAction';
+import { useSnackbar } from 'notistack';
+import { FullSizeProgress } from 'components/ui';
+import { getQueryStringValues } from 'utils/queryString';
+import { AuthFormLayout } from 'components/layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
 
 const EmailLink: React.FC = () => {
-  // const dispatch = useDispatch();
-  const { search } = useLocation();
-  // const history = useHistory();
-  const queryParams = new URLSearchParams(search);
-  // const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
+  const [C, setComponent] = useState<React.FC<any>>(() => <FullSizeProgress />);
 
-  const mode = queryParams.get('mode');
-  const code = queryParams.get('oobCode') || '';
+  // Get data from query string
+  const qs = getQueryStringValues();
+  const { mode } = qs;
+  const code = qs.oobCode || '';
 
-  // const { execute: callVerifyEmail } = useAsyncAction(
-  //   async () => {
-  //     console.log('before Q');
-  //     const q = await dispatch(applyActionCode(code!));
-  //     console.log('q', q);
-  //     // enqueueSnackbar('Email has been verified successfully', { variant: 'success' });
-  //     // history.push(HOME);
-  //   },
-  //   () => history.push(SIGN_IN),
-  // );
-  // AuthApi.applyActionCode(code!
-  console.log('mode', mode);
-  switch (mode) {
-    case 'resetPassword':
-      // Display reset password handler and UI.
-      // handleResetPassword(auth, actionCode, continueUrl, lang);
+  // Verify email
+  const verifyEmailCallback = useCallback(
+    async codeQ => {
+      await AuthApi.applyActionCode(codeQ);
+      enqueueSnackbar('Email has been verified successfully. Please, sign in.', {
+        variant: 'success',
+      });
+      history.push(ROUTES.SIGN_IN);
+    },
+    [history, enqueueSnackbar],
+  );
+  const { execute: callVerifyEmail } = useAsyncAction(verifyEmailCallback);
 
-      return <ConfirmPasswordReset code={code} />;
-    case 'recoverEmail':
-      // Display email recovery handler and UI.
-      // handleRecoverEmail(auth, actionCode, lang);
-      return <div>recoverEmail</div>;
-    case 'verifyEmail':
-      AuthApi.applyActionCode(code);
-      return <div>Email verification...</div>;
-    default:
-      return <div>Invalid mode</div>;
-  }
+  // Reset password
+  const resetPasswordCallback = useCallback(async someCode => {
+    await AuthApi.handleResetPassword(someCode);
+    setComponent(() => <ConfirmPasswordReset code={someCode} />);
+  }, []);
+  const { execute: resetPassword } = useAsyncAction(resetPasswordCallback);
+
+  useEffect(() => {
+    async function callback() {
+      switch (mode) {
+        case 'resetPassword':
+          await resetPassword(code);
+          break;
+        case 'recoverEmail':
+          setComponent(() => <div>recoverEmail</div>);
+          break;
+        case 'verifyEmail':
+          await callVerifyEmail(code);
+          break;
+        default:
+          setComponent(() => <div>Invalid mode</div>);
+      }
+    }
+
+    callback();
+  }, [callVerifyEmail, resetPassword, mode, code]);
+
+  return <AuthFormLayout>{C}</AuthFormLayout>;
 };
 
 export default EmailLink;

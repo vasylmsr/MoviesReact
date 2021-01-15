@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authModuleName } from 'store/auth/types';
-import * as AuthApi from 'api/main/auth';
+import * as AuthApi from 'api/firebase/auth';
 import { IFirebaseApiError } from 'utils/constants/other';
 
 const asyncHelper = async (asyncCallback: () => any, rejectWithValue: any) => {

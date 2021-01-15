@@ -1,16 +1,7 @@
 import React, { lazy } from 'react';
 import { AUTH_LAYOUT } from 'utils/constants/layouts';
-import {
-  CONFIRM_EMAIL_LINK,
-  FORGOT_PASSWORD,
-  HOME,
-  MAIN,
-  MOVIES_ROUTE,
-  SIGN_IN,
-  SIGN_UP,
-  SINGLE_MOVIE,
-  USER_PROFILE_ROUTE,
-} from 'utils/constants/routes';
+
+import { ROUTES } from 'utils/constants/routes';
 
 const SignIn = lazy(() => import('./containers/auth/SignIn/SignIn'));
 const SignUp = lazy(() => import('./containers/auth/SignUp/SignUp'));
@@ -32,6 +23,18 @@ export interface ISingleRoute {
 
 export type routesType = Array<ISingleRoute>;
 
+const {
+  CONFIRM_EMAIL_LINK,
+  FORGOT_PASSWORD,
+  HOME,
+  MAIN,
+  MOVIES,
+  SIGN_IN,
+  SIGN_UP,
+  SINGLE_MOVIE,
+  USER_PROFILE,
+} = ROUTES;
+
 const routes: routesType = [
   {
     path: MAIN,
@@ -48,7 +51,7 @@ const routes: routesType = [
     layout: AUTH_LAYOUT,
   },
   {
-    path: USER_PROFILE_ROUTE,
+    path: USER_PROFILE,
     component: UserProfile,
     isPrivate: true,
     isUserEmailConfirmed: false,
@@ -70,7 +73,7 @@ const routes: routesType = [
     layout: AUTH_LAYOUT,
   },
   {
-    path: MOVIES_ROUTE,
+    path: MOVIES,
     component: MoviesPage,
     isPrivate: true,
   },

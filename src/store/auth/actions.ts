@@ -1,4 +1,4 @@
-import * as AuthApi from '../../api/main/auth';
+import * as AuthApi from '../../api/firebase/auth';
 import { logoutSuccess } from './slice';
 
 export const applyActionCode = (code: string) => () => AuthApi.applyActionCode(code!);

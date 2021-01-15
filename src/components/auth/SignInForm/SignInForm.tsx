@@ -8,24 +8,32 @@ import { yupResolver } from '@hookform/resolvers';
 import SignInValidation from './SignInValidation';
 
 // UI
-import { Avatar, Grid, Typography, makeStyles, CssBaseline } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Grid, Typography, makeStyles, Button, Theme } from '@material-ui/core';
 import { UiButton } from 'components/ui';
 import { getDefaultAuthStyles } from 'containers/auth/styles';
 import { AuthTextField } from '../AuthTextField/AuthTextField';
 import { AuthFormLayout } from '../../layouts/AuthLayout/AuthFormLayout/AuthFormLayout';
+import googleLogo from 'assets/images/google.png';
 
 // Other
-import { FORGOT_PASSWORD, SIGN_UP } from 'utils/constants/routes';
-import * as AuthApi from 'api/main/auth';
-import { IUserLoginCredentials } from 'api/main/auth';
+import { ROUTES } from 'utils/constants/routes';
+import * as AuthApi from 'api/firebase/auth';
+import { doSignInWithGoogle, IUserLoginCredentials } from 'api/firebase/auth';
 
-const useStyles = makeStyles(theme => getDefaultAuthStyles(theme));
+const useStyles = makeStyles((theme: Theme) => ({
+  ...getDefaultAuthStyles(theme),
+  googleBtn: {
+    background: '#ffffff',
+    margin: `${theme.spacing(1)}px 0`,
+  },
+}));
 
 type SignInProps = {
   onSignIn: (data: IUserLoginCredentials) => void;
   loading: boolean;
 };
+
+const { FORGOT_PASSWORD, SIGN_UP } = ROUTES;
 
 export const SignInForm: React.FC<SignInProps> = props => {
   const { onSignIn, loading } = props;
@@ -44,10 +52,6 @@ export const SignInForm: React.FC<SignInProps> = props => {
 
   return (
     <AuthFormLayout>
-      <CssBaseline />
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
@@ -85,6 +89,15 @@ export const SignInForm: React.FC<SignInProps> = props => {
             <RouterLink to={SIGN_UP}>Don`t have an account? Sign Up</RouterLink>
           </Grid>
         </Grid>
+
+        <Button
+          variant="contained"
+          fullWidth
+          className={classes.googleBtn}
+          onClick={doSignInWithGoogle}
+        >
+          <img style={{ maxWidth: 30 }} src={googleLogo} alt="Google" />
+        </Button>
       </form>
     </AuthFormLayout>
   );

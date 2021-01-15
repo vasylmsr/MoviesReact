@@ -10,8 +10,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { UiButton } from 'components/ui';
 
 // Other
-import { logout } from 'store/auth/sagas';
-import { SIGN_IN } from 'utils/constants/routes';
+import { logout } from 'store/auth/actions';
+import { ROUTES } from 'utils/constants/routes';
 import { RootStateType } from 'store';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,7 +51,7 @@ export const MainMenu: React.FC<IMainMenuProps> = props => {
 
   const signOut = async () => {
     await dispatch(logout());
-    history.push(SIGN_IN);
+    history.push(ROUTES.SIGN_IN);
   };
   const { openSidebar } = props;
   return (

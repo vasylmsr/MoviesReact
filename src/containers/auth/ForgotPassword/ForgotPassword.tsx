@@ -8,7 +8,7 @@ import { ForgotPasswordForm } from 'components/auth/ForgotPasswordForm/ForgotPas
 import { clearResetPasswordState } from 'store/auth/slice';
 import { LOADING_STATUS, SUCCESS_STATUS } from 'utils/constants/other';
 import useErrorNotificator from 'hooks/useErrorNotificator';
-import { resetPassword } from 'store/auth/asyncActions';
+import { resetPassword } from 'store/auth/asyncThunks';
 
 const ForgotPassword: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();

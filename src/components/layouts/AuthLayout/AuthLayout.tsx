@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, Paper, makeStyles, Box } from '@material-ui/core';
+import { Grid, Paper, makeStyles, Box, Theme } from '@material-ui/core';
 import Copyright from '../../Copyright/Copyright';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minHeight: '100vh',
   },

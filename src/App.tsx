@@ -10,7 +10,7 @@ import { AppRoutes } from 'components/routing/AppRoutes';
 
 // Other
 import { SnackbarProvider } from 'notistack';
-import * as AuthApi from './api/main/auth';
+import * as AuthApi from './api/firebase/auth';
 import { setUser } from 'store/auth/slice';
 import './App.css';
 

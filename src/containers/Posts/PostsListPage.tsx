@@ -13,7 +13,7 @@ import { useModalState } from '../../hooks/useModalState';
 import { useModalWithData } from '../../hooks/useModalWithState';
 import { useAsyncAction } from '../../hooks/useAsyncAction';
 import { RemovePostDialog } from '../../components/posts/RemovePostDialog/RemovePostDialog';
-import { IPostData } from '../../api/main/auth';
+import { IPostData } from '../../api/firebase/auth';
 import { MetaTitle } from '../../components/MetaTitle';
 
 const useStyles = makeStyles(theme => ({

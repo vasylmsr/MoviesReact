@@ -11,7 +11,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import PlayCircleOutlineIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import MovieGenresList from 'components/movies/detailedMovie/movieGenres/MovieGenresList';
 import YoutubeDialog from 'components/dialogs/YoutubeDialog/YoutubeDialog';
 
@@ -21,7 +21,19 @@ import { TMDB_IMAGE_URL } from 'utils/constants/other';
 import { IMovie, IMovieVideo } from 'api/axios/theMovieDb/moviesApi/types';
 import { useModalWithData } from 'hooks/useModalWithState';
 
+const animations = {
+  '@keyframes scaleDown': {
+    '0%': {
+      transform: 'scale(1.1)',
+    },
+    '100%': {
+      transform: 'scale(1)',
+    },
+  },
+};
+
 const useStyles = makeStyles((theme: Theme) => ({
+  ...animations,
   card: {
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
@@ -38,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card__poster: {
     width: 250,
+    height: '100%',
+    animation: '$scaleDown 1.5s',
   },
   card__content: {
     position: 'relative',
@@ -66,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     height: '100%',
     background:
-      'linear-gradient(to right, rgba(88.63%, 91.37%, 91.76%, 1.00), rgba(88.63%, 91.37%, 91.76%, 0.84))',
+      'linear-gradient(to right, rgba(88.63%, 91.37%, 91.76%, 0.9), rgba(88.63%, 91.37%, 91.76%, 0.84))',
   },
   card__body: {
     position: 'relative',
@@ -142,19 +156,21 @@ const MovieMainCard: React.FC<PropsType> = props => {
               </div>
             )}
 
-            <Grid
-              container
-              spacing={1}
-              onClick={() => setVideoForModal(() => movie.videos!.results[0])}
-              className={clsx(styles.card__blockContainer, styles.card__playTrailer)}
-            >
-              <Grid item>
-                <PlayCircleOutlineIcon />
+            {Boolean(movie.videos!.results.length) && (
+              <Grid
+                container
+                spacing={1}
+                onClick={() => setVideoForModal(() => movie.videos!.results[0])}
+                className={clsx(styles.card__blockContainer, styles.card__playTrailer)}
+              >
+                <Grid item>
+                  <PlayCircleOutlineIcon />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">Play trailer</Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography variant="body2">Play trailer</Typography>
-              </Grid>
-            </Grid>
+            )}
           </div>
         </CardContent>
       </Card>
