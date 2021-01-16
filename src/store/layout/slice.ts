@@ -1,7 +1,7 @@
-import { ILayoutReducer } from 'store/layout/types';
+import { ILayoutState } from 'store/layout/types';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: ILayoutReducer = {
+const initialState: ILayoutState = {
   mainLayoutLoading: {
     status: false,
     counter: 0,

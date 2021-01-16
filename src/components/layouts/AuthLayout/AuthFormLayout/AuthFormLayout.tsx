@@ -1,7 +1,12 @@
+// Core
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+// UI
 import { makeStyles } from '@material-ui/core';
 import AppLogo from 'assets/images/appLogo.png';
-import { useHistory } from 'react-router';
+
+// Constants
 import { ROUTES } from 'utils/constants/routes';
 
 const useStyles = makeStyles(theme => ({
@@ -27,18 +32,13 @@ const useStyles = makeStyles(theme => ({
 
 export const AuthFormLayout: React.FC = ({ children }) => {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <div className={classes.body}>
       <div className={classes.appLogoWrapper}>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
-        <img
-          src={AppLogo}
-          alt="App Logo"
-          className={classes.appLogo}
-          onClick={() => history.push(ROUTES.MAIN)}
-        />
+        <Link to={ROUTES.MAIN}>
+          <img src={AppLogo} alt="App Logo" className={classes.appLogo} />
+        </Link>
       </div>
       {children}
     </div>

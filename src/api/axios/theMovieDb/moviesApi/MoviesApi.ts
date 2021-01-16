@@ -18,7 +18,7 @@ class MoviesApi extends BaseMovieDbApi {
   }
 
   searchMovies(params: ISearchedMoviesFilters): Promise<AxiosResponse<IGetMoviesData>> {
-    return this.get(`search/movie`, params);
+    return this.get(`search/movie`, { params });
   }
 }
 

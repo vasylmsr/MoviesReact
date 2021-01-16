@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { commonMoviesModule } from './types';
 import moviesApi from 'api/axios/theMovieDb/moviesApi/MoviesApi';
 import { ICommonMoviesFilters, IGetMoviesData } from 'api/axios/theMovieDb/moviesApi/types';
+import store from 'store';
 
 export const fetchMovies = createAsyncThunk(
   `${commonMoviesModule}/fetchMoviesStatus`,
@@ -14,6 +15,9 @@ export const fetchMovies = createAsyncThunk(
     }
   },
 );
+
+export const boundFetchMovies = (filters: ICommonMoviesFilters) =>
+  store.dispatch(fetchMovies(filters));
 
 export const commonMoviesActions = {
   fetchMovies,

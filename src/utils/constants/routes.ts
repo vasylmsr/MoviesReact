@@ -7,5 +7,6 @@ export const ROUTES = {
   CONFIRM_EMAIL_LINK: '/confirm',
   USER_PROFILE: '/profile',
   MOVIES: '/movies',
+  SEARCH_MOVIES: '/search-movies',
   SINGLE_MOVIE: '/movies/:id',
-};
+} as const;

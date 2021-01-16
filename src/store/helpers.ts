@@ -10,26 +10,26 @@ import { ITmdbError } from 'api/axios/theMovieDb/types';
 
 export type ErrorType = IFirebaseApiError | ITmdbError | null | undefined;
 
-export const setFetchingRequest = (state: any) => {
+export type StatusType<T = {}> = T & {
+  status: LoadingType;
+  error: ErrorType;
+};
+
+export const setFetchingRequest = (state: StatusType) => {
   state.status = LOADING_STATUS;
   state.error = null;
 };
-export const setFetchingSuccess = (state: any) => {
+export const setFetchingSuccess = (state: StatusType) => {
   state.status = SUCCESS_STATUS;
   state.error = null;
 };
-export const setFetchingError = (state: any, error: ErrorType) => {
+export const setFetchingError = (state: StatusType, error: ErrorType) => {
   state.status = FAILURE_STATUS;
   state.error = error;
 };
 export const clearState = (state: any) => {
   state.status = IDLE_STATUS;
   state.error = null;
-};
-
-export type StatusType<T = {}> = T & {
-  status: LoadingType;
-  error: ErrorType;
 };
 
 export const getStatusObj = (additionalParams = {}): StatusType => ({

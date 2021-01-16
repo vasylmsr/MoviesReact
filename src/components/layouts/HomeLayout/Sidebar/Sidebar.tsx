@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-const { HOME, MAIN, MOVIES, USER_PROFILE } = ROUTES;
+const { HOME, MAIN, MOVIES, USER_PROFILE, SEARCH_MOVIES } = ROUTES;
 
 export const Sidebar: React.FC<ISidebarProps> = props => {
   const { onClose, isVisible } = props;
@@ -58,6 +58,10 @@ export const Sidebar: React.FC<ISidebarProps> = props => {
 
           <ListItem button onClick={() => history.push(MOVIES)}>
             <ListItemText primary="Movies" />
+          </ListItem>
+
+          <ListItem button onClick={() => history.push(SEARCH_MOVIES)}>
+            <ListItemText primary="Search movies" />
           </ListItem>
         </List>
       </div>

@@ -6,10 +6,13 @@ const setQueryStringWithoutReloading = (qsValue: string) => {
   window.history.pushState({ path: newURL }, '', newURL);
 };
 
-export const getQueryStringValues = (queryString = window.location.search): any =>
+export const getQueryStringValues = (queryString: string = window.location.search) =>
   getParsedQs(queryString);
 
-export function setQueryStringValues<F = {}>(filters: F, queryString = window.location.search) {
+export function setQueryStringValues<F extends {}>(
+  filters: F,
+  queryString: string | undefined = window.location.search,
+) {
   const values = qs.parse(queryString && queryString.slice(1));
   const newQsValue = qs.stringify({
     ...values,

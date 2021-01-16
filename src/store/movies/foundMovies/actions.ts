@@ -3,6 +3,9 @@ import { foundMoviesSliceModule } from './types';
 import moviesApi from 'api/axios/theMovieDb/moviesApi/MoviesApi';
 import { IGetMoviesData, ISearchedMoviesFilters } from 'api/axios/theMovieDb/moviesApi/types';
 
+import store from 'store';
+import { debounce } from 'utils/helpers';
+
 export const fetchMovies = createAsyncThunk(
   `${foundMoviesSliceModule}/fetchMoviesStatus`,
   async (filters: ISearchedMoviesFilters, { rejectWithValue }): Promise<IGetMoviesData | any> => {
@@ -13,6 +16,11 @@ export const fetchMovies = createAsyncThunk(
       return rejectWithValue(err);
     }
   },
+);
+
+export const boundFetchMoviesActionDebounce = debounce(
+  filters => store.dispatch(fetchMovies(filters)),
+  500,
 );
 
 export const foundMoviesActions = {

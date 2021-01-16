@@ -1,4 +1,4 @@
-export interface ILayoutReducer {
+export interface ILayoutState {
   mainLayoutLoading: {
     status: boolean;
     counter: number;

@@ -10,8 +10,9 @@ const Landing = lazy(() => import('./containers/Landing'));
 const EmailLink = lazy(() => import('./containers/auth/EmailLink/EmailLink'));
 const ForgotPassword = lazy(() => import('./containers/auth/ForgotPassword/ForgotPassword'));
 const UserProfile = lazy(() => import('./containers/UserProfile/UserProfile'));
-const MoviesPage = lazy(() => import('./containers/MoviesPage/MoviesPage'));
-const SingleMoviePage = lazy(() => import('./containers/MovieDetails/MovieDetails'));
+const MoviesPage = lazy(() => import('./containers/movies/MoviesPage/MoviesPage'));
+const SearchMoviePage = lazy(() => import('containers/movies/SearchMoviesPage/SearchMoviesPage'));
+const SingleMoviePage = lazy(() => import('./containers/movies/MovieDetails/MovieDetails'));
 
 export interface ISingleRoute {
   path: string;
@@ -33,6 +34,7 @@ const {
   SIGN_UP,
   SINGLE_MOVIE,
   USER_PROFILE,
+  SEARCH_MOVIES,
 } = ROUTES;
 
 const routes: routesType = [
@@ -75,6 +77,11 @@ const routes: routesType = [
   {
     path: MOVIES,
     component: MoviesPage,
+    isPrivate: true,
+  },
+  {
+    path: SEARCH_MOVIES,
+    component: SearchMoviePage,
     isPrivate: true,
   },
   {
