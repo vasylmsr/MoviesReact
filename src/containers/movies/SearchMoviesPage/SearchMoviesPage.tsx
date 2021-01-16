@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 // Store
 import { RootStateType } from 'store';
 import { setFilter } from 'store/movies/foundMovies/slice';
-import { boundFetchMoviesActionDebounce } from 'store/movies/foundMovies/actions';
 // UI
 import { Container, Grid } from '@material-ui/core';
 import { SearchTextField } from 'components/ui';
@@ -17,6 +16,7 @@ import useMoviesList from 'hooks/useMoviesList';
 import { getQueryStringValues } from 'utils/queryString';
 import { IAnyObject } from 'utils/types';
 import { capitalizeFirstLetter } from 'utils/helpers';
+import { fetchMovies } from 'store/movies/foundMovies/actions';
 
 function modifyQueryParams(data: IAnyObject): { page: number; query: string } {
   return {
@@ -31,11 +31,10 @@ const SearchMoviesPage: React.FC = () => {
   const { list, totalPages, filters, meta } = useSelector(
     (state: RootStateType) => state.movies.foundMovies,
   );
-
   const { setPaginationPage } = useMoviesList({
     filters,
     meta,
-    fetchMovies: boundFetchMoviesActionDebounce,
+    fetchMovies,
     setFilter,
   });
 
@@ -49,8 +48,8 @@ const SearchMoviesPage: React.FC = () => {
   }, [dispatch]);
 
   // Component event handlers
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFilter({ page: 1, query: event.target.value }));
+  const handleInputChange = (query: string) => {
+    dispatch(setFilter({ page: 1, query }));
   };
 
   const metaTitle = capitalizeFirstLetter(filters.query) || 'Search movies';
@@ -61,7 +60,7 @@ const SearchMoviesPage: React.FC = () => {
         <Grid container justify="center" style={{ marginBottom: 50 }}>
           <Grid item>
             <SearchTextField
-              onChange={handleInputChange}
+              onSearch={handleInputChange}
               name="search"
               value={filters.query}
               variant="outlined"

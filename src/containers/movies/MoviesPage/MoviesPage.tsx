@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Store
 import { RootStateType } from 'store';
 import { setFilter } from 'store/movies/commonMovies/slice';
-import { boundFetchMovies } from 'store/movies/commonMovies/actions';
+import { fetchMovies } from 'store/movies/commonMovies/actions';
 // UI
 import { Container, Grid } from '@material-ui/core';
 import SortingGroupButton from 'components/movies/SortingGroupButton/SortingGroupButton';
@@ -32,7 +32,7 @@ const MoviesPage: React.FC = () => {
   );
 
   const { setPaginationPage } = useMoviesList({
-    fetchMovies: boundFetchMovies,
+    fetchMovies,
     filters,
     meta,
     setFilter,

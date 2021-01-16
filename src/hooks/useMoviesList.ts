@@ -1,7 +1,7 @@
-import { StatusType } from 'store/helpers';
-import { useDispatch } from 'react-redux';
-import useMainLayoutLoading from 'hooks/useMainLayoutLoader';
 import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { StatusType } from 'store/helpers';
+import useMainLayoutLoading from 'hooks/useMainLayoutLoader';
 import { setQueryStringValues } from 'utils/queryString';
 
 interface IUseMoviesList<T extends IBaseFilter> {
@@ -29,11 +29,11 @@ export default function useMoviesList<T extends IBaseFilter>({
     if (mountRef.current) {
       setQueryStringValues(filters);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      fetchMovies(filters);
+      dispatch(fetchMovies(filters));
     } else {
       mountRef.current = true;
     }
-  }, [filters, fetchMovies, setFilter]);
+  }, [dispatch, filters, fetchMovies, setFilter]);
 
   const setPaginationPage = (e: any, page: number) => dispatch(setFilter({ page }));
 
