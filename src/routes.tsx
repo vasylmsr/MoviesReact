@@ -5,7 +5,6 @@ import { ROUTES } from 'utils/constants/routes';
 
 const SignIn = lazy(() => import('./containers/auth/SignIn/SignIn'));
 const SignUp = lazy(() => import('./containers/auth/SignUp/SignUp'));
-const PostsListPage = lazy(() => import('./containers/Posts/PostsListPage'));
 const Landing = lazy(() => import('./containers/Landing'));
 const EmailLink = lazy(() => import('./containers/auth/EmailLink/EmailLink'));
 const ForgotPassword = lazy(() => import('./containers/auth/ForgotPassword/ForgotPassword'));
@@ -27,7 +26,6 @@ export type routesType = Array<ISingleRoute>;
 const {
   CONFIRM_EMAIL_LINK,
   FORGOT_PASSWORD,
-  HOME,
   MAIN,
   MOVIES,
   SIGN_IN,
@@ -57,12 +55,6 @@ const routes: routesType = [
     component: UserProfile,
     isPrivate: true,
     isUserEmailConfirmed: false,
-  },
-  {
-    path: HOME,
-    component: PostsListPage,
-    isPrivate: true,
-    isUserEmailConfirmed: true,
   },
   {
     path: CONFIRM_EMAIL_LINK,
