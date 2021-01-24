@@ -9,7 +9,6 @@ import { useSpecialRoutes } from 'hooks/useSpecialRoutes';
 import { AuthRoutes } from './AuthRoutes/AuthRoutes';
 import { RouteSuspense } from './RouteSuspense/RouteSuspense';
 import { HomeRoutes } from './HomeRoutes/HomeRoutes';
-import './AuthRoutes/styles.css';
 
 const NotFound = React.lazy(() => import('containers/NotFound/NotFound'));
 
